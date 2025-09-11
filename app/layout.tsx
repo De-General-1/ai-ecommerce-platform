@@ -5,9 +5,9 @@ import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app',
+  title: 'AI E-Commerce Growth Agent',
+  description: 'Transform your products into trending marketing campaigns with AI-powered analysis and content generation',
+  generator: 'AI E-Commerce Growth Agent',
 }
 
 export default function RootLayout({

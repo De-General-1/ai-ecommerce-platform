@@ -1,0 +1,290 @@
+{
+    "next_step": "content_generation",
+    "created_at": "2025-09-11T17:50:29.937295",
+    "enriched_at": "2025-09-11T17:50:31.561950",
+    "imageHash": "5bzOalNt3ISbCZXQjuEnwlUSaj2W_TClHg-_B206gSc",
+    "originalData": {
+        "public_url": "https://product-images-bucket-v2.s3.amazonaws.com/uploads/14a3fe5d-23d6-4c44-a2a2-f990a0fce0e4-pens.jpg",
+        "product_labels": [
+            {
+                "name": "Page",
+                "confidence": 76.5560302734375
+            },
+            {
+                "name": "Text",
+                "confidence": 76.5560302734375
+            },
+            {
+                "name": "Baton",
+                "confidence": 73.95543670654297
+            },
+            {
+                "name": "Stick",
+                "confidence": 73.95543670654297
+            }
+        ],
+        "object_key": "",
+        "product_categories": [],
+        "bucket_name": "product-images-bucket-v2",
+        "s3_url": "s3://product-images-bucket-v2/uploads/14a3fe5d-23d6-4c44-a2a2-f990a0fce0e4-pens.jpg",
+        "raw_analysis": {
+            "product_labels": [
+                {
+                    "name": "Page",
+                    "confidence": 76.5560302734375,
+                    "categories": [
+                        "Text and Documents"
+                    ]
+                },
+                {
+                    "name": "Text",
+                    "confidence": 76.5560302734375,
+                    "categories": [
+                        "Text and Documents"
+                    ]
+                },
+                {
+                    "name": "Baton",
+                    "confidence": 73.95543670654297,
+                    "categories": [
+                        "Tools and Machinery"
+                    ]
+                },
+                {
+                    "name": "Stick",
+                    "confidence": 73.95543670654297,
+                    "categories": [
+                        "Everyday Objects"
+                    ]
+                }
+            ],
+            "is_appropriate_content": true,
+            "detected_text": [],
+            "analysis_timestamp": "2025-09-11T17:50:29.936090",
+            "moderation_labels": []
+        }
+    },
+    "pipeline_status": "completed",
+    "campaignsJSON": {
+        "output": {
+            "message": {
+                "content": [
+                    {
+                        "text": "{\n  \"fileKeys\": [\"uploads/key1.jpg\", \"uploads/key2.jpg\"],\n  \"description\": \"Discover the versatility and functionality of our innovative product, designed to enhance your daily tasks with ease. Featuring a Page, Text, Baton, and Stick, this product is a must-have for productivity enthusiasts. Whether you're organizing your workspace, drafting emails, or planning your next adventure, our product is here to support you every step of the way.\",\n  \"category\": \"General\",\n  \"platform\": \"Instagram\",\n  \"content_ideas\": [\n    {\n      \"topic\": \"Transform Your Workspace with Our Product\",\n      \"platform\": \"Instagram\",\n      \"engagement_score\": 85,\n      \"caption\": \"Say goodbye to clutter and hello to efficiency! Discover how our product can transform your workspace. #OrganizeYourLife #ProductivityHacks #WorkspaceEssentials\",\n      \"hashtags\": [\"#OrganizeYourLife\", \"#ProductivityHacks\", \"#WorkspaceEssentials\"]\n    },\n    {\n      \"topic\": \"Creative Uses for Our Product\",\n      \"platform\": \"TikTok\",\n      \"engagement_score\": 88,\n      \"caption\": \"Think outside the box! Watch as we showcase creative uses for our product that you never thought possible. #InnovateWithUs #CreativeSolutions #ThinkOutsideTheBox\",\n      \"hashtags\": [\"#InnovateWithUs\", \"#CreativeSolutions\", \"#ThinkOutsideTheBox\"]\n    },\n    {\n      \"topic\": \"Behind the Scenes: Manufacturing Journey\",\n      \"platform\": \"YouTube\",\n      \"engagement_score\": 90,\n      \"caption\": \"Ever wondered how our product is made? Join us on a journey from raw materials to the finished product. #ManufacturingJourney #QualityCraftsmanship #BehindTheScenes\",\n      \"hashtags\": [\"#ManufacturingJourney\", \"#QualityCraftsmanship\", \"#BehindTheScenes\"]\n    }\n  ],\n  \"campaigns\": [\n    {\n      \"name\": \"Product Launch Campaign\",\n      \"duration\": \"4 weeks\",\n      \"posts_per_week\": 3,\n      \"platforms\": [\"Instagram\", \"TikTok\", \"Facebook\"],\n      \"calendar\": {\n        \"Week 1\": \"Introduce the product with high-quality images and videos showcasing its features. Share user testimonials and behind-the-scenes content.\",\n        \"Week 2\": \"Focus on the benefits of using the product in daily life. Share tips and tricks for maximizing its potential.\",\n        \"Week 3\": \"Highlight creative uses and DIY projects using the product. Encourage user-generated content and feature submissions.\",\n        \"Week 4\": \"Run a giveaway contest to engage the audience and increase brand awareness. Share winners and their stories.\"\n      },\n      \"adaptations\": {\n        \"Instagram\": \"Use visually appealing images and short videos to showcase the product. Utilize Instagram Stories for behind-the-scenes content and user testimonials.\",\n        \"TikTok\": \"Create fun and engaging videos demonstrating creative uses of the product. Encourage users to participate in challenges and share their own creations.\",\n        \"Facebook\": \"Share detailed product information, customer reviews, and educational content. Utilize Facebook Groups for community engagement and support.\"\n      }\n    },\n    {\n      \"name\": \"Seasonal Campaign: Holiday Edition\",\n      \"duration\": \"6 weeks\",\n      \"posts_per_week\": 2,\n      \"platforms\": [\"Instagram\", \"TikTok\", \"Facebook\"],\n      \"calendar\": {\n        \"Week 1-2\": \"Introduce holiday-themed content featuring the product. Share gift ideas and holiday decorating tips.\",\n        \"Week 3-4\": \"Run a holiday-themed contest encouraging users to share their favorite holiday memories using the product.\",\n        \"Week 5-6\": \"Share winners of the contest and their stories. Offer exclusive discounts and promotions for the holiday season.\"\n      },\n      \"adaptations\": {\n        \"Instagram\": \"Use festive imagery and holiday-themed hashtags to engage the audience. Utilize Instagram Shopping for easy purchasing.\",\n        \"TikTok\": \"Create holiday-themed challenges and duets featuring the product. Encourage users to share their holiday creations.\",\n        \"Facebook\": \"Share holiday-themed blog posts and videos. Utilize Facebook Ads for targeted promotions and discounts.\"\n      }\n    }\n  ],\n  \"generated_assets\": {\n    \"image_prompts\": [\n      \"A sleek and modern workspace setup featuring our product prominently.\",\n      \"A creative DIY project using our product, showcasing its versatility.\",\n      \"A behind-the-scenes look at the manufacturing process of our product.\"\n    ],\n    \"video_scripts\": [\n      {\n        \"type\": \"Short form video\",\n        \"content\": \"Introducing our revolutionary product! Watch as we demonstrate its incredible features and how it can transform your daily routine. From organizing your workspace to enhancing your productivity, our product is here to make your life easier. Don't miss out\u2014get yours today!\"\n      },\n      {\n        \"type\": \"Tutorial video\",\n        \"content\": \"Learn how to maximize the potential of our product with these simple tips and tricks. Whether you're a busy professional or a creative enthusiast, our product is designed to meet your needs. Watch now and discover the endless possibilities!\"\n      }\n    ],\n    \"email_templates\": [\n      {\n        \"subject\": \"Unlock Your Productivity Potential with Our Product\",\n        \"body\": \"Dear [Customer Name],\\n\\nAre you ready to take your productivity to the next level? Introducing our innovative product, designed to streamline your daily tasks and enhance your efficiency. From organizing your workspace to drafting emails with ease, our product is here to support you every step of the way.\\n\\nDon't miss out on exclusive offers and discounts. Shop now and experience the difference!\"\n      },\n      {\n        \"subject\": \"Holiday Special: Get Ready for the Season with Our Product\",\n        \"body\": \"Dear [Customer Name],\\n\\nTis' the season to be productive! Get ready for the holidays with our exclusive holiday special. Enjoy discounts on our product and discover how it can make your holiday preparations a breeze. From gift wrapping to holiday decorating, our product is here to help you create unforgettable memories.\\n\\nShop now and make this holiday season your most productive yet!\"\n      }\n    ],\n    \"blog_outlines\": [\n      {\n        \"title\": \"10 Ways Our Product Can Transform Your Workspace\",\n        \"points\": [\"Organize your desk with ease\", \"Streamline your email communication\", \"Enhance your productivity with creative uses\", \"Discover DIY projects to try at home\", \"Maximize your efficiency with tips and tricks\"]\n      },\n      {\n        \"title\": \"The Manufacturing Journey: From Raw Materials to Finished Product\",\n        \"points\": [\"Explore the origins of our product\", \"Learn about the quality craftsmanship behind each piece\", \"Discover the journey from raw materials to the finished product\", \"Meet the team dedicated to bringing you the best\", \"Understand the commitment to sustainability and ethical practices\"]\n      }\n    ]\n  }\n}"
+                    }
+                ],
+                "role": "assistant"
+            }
+        },
+        "stopReason": "end_turn",
+        "usage": {
+            "inputTokens": 887.0,
+            "outputTokens": 1486.0,
+            "totalTokens": 2373.0,
+            "cacheWriteInputTokenCount": 0.0,
+            "cacheReadInputTokenCount": 0.0
+        }
+    },
+    "youtubeResults": [
+        {
+            "publishedAt": "2023-04-21T03:06:13Z",
+            "description": "",
+            "videoId": "dNWGK5Y8Vec",
+            "likeCount": 955.0,
+            "viewCount": 259560.0,
+            "title": "the best free AI writer for emails \ud83d\udc69\ud83c\udffb\u200d\ud83d\udcbb getmagical.con \ud83e\ude84#aitools #aiapps #productivitytips",
+            "url": "https://www.youtube.com/watch?v=dNWGK5Y8Vec",
+            "channelTitle": "Magical",
+            "thumbnailUrl": "https://i.ytimg.com/vi/dNWGK5Y8Vec/hqdefault.jpg",
+            "commentCount": 20.0
+        },
+        {
+            "publishedAt": "2024-02-20T10:11:25Z",
+            "description": "The Wait Is Over \ud83d\udcaf Finally launched Clicks To Conversions: Facebook Ads For Beginners E-Book.\n\nAnd trust me, it took almost 7 months to write this book. If you are a beginner, definitely check it out.\n\nHere' The Link - https://bit.ly/4a0UAw4\n\nDo You have a Clothing Business as well? \ud83c\udf0b\nThen this video is definitely going to help you in boosting your social media presence. \n\nSee, social media game is not going to be easy in 2024 because like you, there will be thousands of people doing the exact s",
+            "videoId": "a9egWEMKae0",
+            "likeCount": 10438.0,
+            "viewCount": 313251.0,
+            "title": "Clothing Brand Social Media Strategy That Most People Miss Out! \ud83e\udd2b\ud83d\udd25",
+            "url": "https://www.youtube.com/watch?v=a9egWEMKae0",
+            "channelTitle": "Damini Tripathi",
+            "thumbnailUrl": "https://i.ytimg.com/vi/a9egWEMKae0/hqdefault.jpg",
+            "commentCount": 281.0
+        },
+        {
+            "publishedAt": "2023-03-05T15:56:58Z",
+            "description": "",
+            "videoId": "Bpx6dRZt7AQ",
+            "likeCount": 6441.0,
+            "viewCount": 398088.0,
+            "title": "Automated Inventory Form in Google Sheets",
+            "url": "https://www.youtube.com/watch?v=Bpx6dRZt7AQ",
+            "channelTitle": "Code with Emily",
+            "thumbnailUrl": "https://i.ytimg.com/vi/Bpx6dRZt7AQ/hqdefault.jpg",
+            "commentCount": 0.0
+        },
+        {
+            "publishedAt": "2021-05-26T10:06:03Z",
+            "description": "",
+            "videoId": "fWoZnpp6Q9Y",
+            "likeCount": 13627.0,
+            "viewCount": 1209670.0,
+            "title": "Sikkim Travel Brochure Ideas",
+            "url": "https://www.youtube.com/watch?v=fWoZnpp6Q9Y",
+            "channelTitle": "Tisha Gandhi",
+            "thumbnailUrl": "https://i.ytimg.com/vi/fWoZnpp6Q9Y/hqdefault.jpg",
+            "commentCount": 124.0
+        },
+        {
+            "publishedAt": "2023-05-25T02:00:14Z",
+            "description": "We have exciting new content everyday. Please don't forget to subscribe to our channel. thank you.\n\nPlease visit our sponsors:\nQuality and Affordable Web Hosting with free AI services: https://raitora.com\n\n#shorts #youtubeshorts #raw #manufacturing #journey \n\nMusic: Electronic Disco Nights \u00b7 Luca Francini",
+            "videoId": "icetsMIjGfc",
+            "likeCount": 5009268.0,
+            "viewCount": 404528134.0,
+            "title": "From Raw Materials to Versatile Tape: Clear Packing tape manufacturing journey\ud83e\udd17",
+            "url": "https://www.youtube.com/watch?v=icetsMIjGfc",
+            "channelTitle": "Zagao",
+            "thumbnailUrl": "https://i.ytimg.com/vi/icetsMIjGfc/hqdefault.jpg",
+            "commentCount": 2842.0
+        }
+    ],
+    "generated_at": "2025-09-11T17:50:42.625374",
+    "recordId": "0ca05f70-6968-45aa-a0d6-3f648c58cc9e",
+    "source_table": "enriched",
+    "parsedCampaigns": {
+        "fileKeys": [
+            "uploads/key1.jpg",
+            "uploads/key2.jpg"
+        ],
+        "description": "Discover the versatility and functionality of our innovative product, designed to enhance your daily tasks with ease. Featuring a Page, Text, Baton, and Stick, this product is a must-have for productivity enthusiasts. Whether you're organizing your workspace, drafting emails, or planning your next adventure, our product is here to support you every step of the way.",
+        "category": "General",
+        "platform": "Instagram",
+        "content_ideas": [
+            {
+                "topic": "Transform Your Workspace with Our Product",
+                "platform": "Instagram",
+                "engagement_score": 85,
+                "caption": "Say goodbye to clutter and hello to efficiency! Discover how our product can transform your workspace. #OrganizeYourLife #ProductivityHacks #WorkspaceEssentials",
+                "hashtags": [
+                    "#OrganizeYourLife",
+                    "#ProductivityHacks",
+                    "#WorkspaceEssentials"
+                ]
+            },
+            {
+                "topic": "Creative Uses for Our Product",
+                "platform": "TikTok",
+                "engagement_score": 88,
+                "caption": "Think outside the box! Watch as we showcase creative uses for our product that you never thought possible. #InnovateWithUs #CreativeSolutions #ThinkOutsideTheBox",
+                "hashtags": [
+                    "#InnovateWithUs",
+                    "#CreativeSolutions",
+                    "#ThinkOutsideTheBox"
+                ]
+            },
+            {
+                "topic": "Behind the Scenes: Manufacturing Journey",
+                "platform": "YouTube",
+                "engagement_score": 90,
+                "caption": "Ever wondered how our product is made? Join us on a journey from raw materials to the finished product. #ManufacturingJourney #QualityCraftsmanship #BehindTheScenes",
+                "hashtags": [
+                    "#ManufacturingJourney",
+                    "#QualityCraftsmanship",
+                    "#BehindTheScenes"
+                ]
+            }
+        ],
+        "campaigns": [
+            {
+                "name": "Product Launch Campaign",
+                "duration": "4 weeks",
+                "posts_per_week": 3,
+                "platforms": [
+                    "Instagram",
+                    "TikTok",
+                    "Facebook"
+                ],
+                "calendar": {
+                    "Week 1": "Introduce the product with high-quality images and videos showcasing its features. Share user testimonials and behind-the-scenes content.",
+                    "Week 2": "Focus on the benefits of using the product in daily life. Share tips and tricks for maximizing its potential.",
+                    "Week 3": "Highlight creative uses and DIY projects using the product. Encourage user-generated content and feature submissions.",
+                    "Week 4": "Run a giveaway contest to engage the audience and increase brand awareness. Share winners and their stories."
+                },
+                "adaptations": {
+                    "Instagram": "Use visually appealing images and short videos to showcase the product. Utilize Instagram Stories for behind-the-scenes content and user testimonials.",
+                    "TikTok": "Create fun and engaging videos demonstrating creative uses of the product. Encourage users to participate in challenges and share their own creations.",
+                    "Facebook": "Share detailed product information, customer reviews, and educational content. Utilize Facebook Groups for community engagement and support."
+                }
+            },
+            {
+                "name": "Seasonal Campaign: Holiday Edition",
+                "duration": "6 weeks",
+                "posts_per_week": 2,
+                "platforms": [
+                    "Instagram",
+                    "TikTok",
+                    "Facebook"
+                ],
+                "calendar": {
+                    "Week 1-2": "Introduce holiday-themed content featuring the product. Share gift ideas and holiday decorating tips.",
+                    "Week 3-4": "Run a holiday-themed contest encouraging users to share their favorite holiday memories using the product.",
+                    "Week 5-6": "Share winners of the contest and their stories. Offer exclusive discounts and promotions for the holiday season."
+                },
+                "adaptations": {
+                    "Instagram": "Use festive imagery and holiday-themed hashtags to engage the audience. Utilize Instagram Shopping for easy purchasing.",
+                    "TikTok": "Create holiday-themed challenges and duets featuring the product. Encourage users to share their holiday creations.",
+                    "Facebook": "Share holiday-themed blog posts and videos. Utilize Facebook Ads for targeted promotions and discounts."
+                }
+            }
+        ],
+        "generated_assets": {
+            "image_prompts": [
+                "A sleek and modern workspace setup featuring our product prominently.",
+                "A creative DIY project using our product, showcasing its versatility.",
+                "A behind-the-scenes look at the manufacturing process of our product."
+            ],
+            "video_scripts": [
+                {
+                    "type": "Short form video",
+                    "content": "Introducing our revolutionary product! Watch as we demonstrate its incredible features and how it can transform your daily routine. From organizing your workspace to enhancing your productivity, our product is here to make your life easier. Don't miss out\u2014get yours today!"
+                },
+                {
+                    "type": "Tutorial video",
+                    "content": "Learn how to maximize the potential of our product with these simple tips and tricks. Whether you're a busy professional or a creative enthusiast, our product is designed to meet your needs. Watch now and discover the endless possibilities!"
+                }
+            ],
+            "email_templates": [
+                {
+                    "subject": "Unlock Your Productivity Potential with Our Product",
+                    "body": "Dear [Customer Name],\n\nAre you ready to take your productivity to the next level? Introducing our innovative product, designed to streamline your daily tasks and enhance your efficiency. From organizing your workspace to drafting emails with ease, our product is here to support you every step of the way.\n\nDon't miss out on exclusive offers and discounts. Shop now and experience the difference!"
+                },
+                {
+                    "subject": "Holiday Special: Get Ready for the Season with Our Product",
+                    "body": "Dear [Customer Name],\n\nTis' the season to be productive! Get ready for the holidays with our exclusive holiday special. Enjoy discounts on our product and discover how it can make your holiday preparations a breeze. From gift wrapping to holiday decorating, our product is here to help you create unforgettable memories.\n\nShop now and make this holiday season your most productive yet!"
+                }
+            ],
+            "blog_outlines": [
+                {
+                    "title": "10 Ways Our Product Can Transform Your Workspace",
+                    "points": [
+                        "Organize your desk with ease",
+                        "Streamline your email communication",
+                        "Enhance your productivity with creative uses",
+                        "Discover DIY projects to try at home",
+                        "Maximize your efficiency with tips and tricks"
+                    ]
+                },
+                {
+                    "title": "The Manufacturing Journey: From Raw Materials to Finished Product",
+                    "points": [
+                        "Explore the origins of our product",
+                        "Learn about the quality craftsmanship behind each piece",
+                        "Discover the journey from raw materials to the finished product",
+                        "Meet the team dedicated to bringing you the best",
+                        "Understand the commitment to sustainability and ethical practices"
+                    ]
+                }
+            ]
+        }
+    },
+    "_processing_time_ms": 19.87
+}

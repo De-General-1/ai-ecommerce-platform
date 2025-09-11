@@ -28,6 +28,7 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await response.json()
+    console.log({data})
     return NextResponse.json(data)
   } catch (error) {
     console.error("Upload URL API error:", error)

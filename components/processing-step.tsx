@@ -85,7 +85,7 @@ export function ProcessingStep({ files, description, category, platform, onCompl
     }
 
     processFiles()
-  }, [files, description, category, platform, onComplete])
+  }, [files, description, category, platform])
 
   const handleRetry = () => {
     setCurrentStepIndex(0)

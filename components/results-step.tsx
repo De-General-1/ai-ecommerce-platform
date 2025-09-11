@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -35,9 +35,10 @@ export function ResultsStep({ results, onReset }: ResultsStepProps) {
     return <div>Loading results...</div>
   }
 
-  const avgEngagementScore =
-    results.content_ideas?.reduce((acc: number, idea: any) => acc + idea.engagement_score, 0) /
-      results.content_ideas?.length || 0
+  const contentIdeas = results.parsedCampaigns?.content_ideas || []
+  const avgEngagementScore = contentIdeas.length > 0 
+    ? contentIdeas.reduce((acc: number, idea: any) => acc + idea.engagement_score, 0) / contentIdeas.length 
+    : 0
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
@@ -100,55 +101,44 @@ export function ResultsStep({ results, onReset }: ResultsStepProps) {
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
-          {/* Product Section */}
-          {results.product && (
-            <Card>
-              <CardContent className="pt-6">
-                <div className="flex gap-6">
-                  <img 
-                    src={results.product.image.public_url} 
-                    alt="Product" 
-                    className="w-32 h-32 object-cover rounded-lg"
-                  />
-                  <div className="flex-1">
-                    <h3 className="font-medium mb-2">Product Analysis</h3>
-                    <p className="text-sm text-muted-foreground mb-3">{results.product.description}</p>
-                    <div className="flex flex-wrap gap-1">
-                      {results.product.image.labels.map((label, index) => (
-                        <Badge key={index} variant="outline" className="text-xs">{label}</Badge>
-                      ))}
-                    </div>
-                  </div>
+          {/* Processing Summary */}
+          <Card>
+            <CardContent className="pt-6">
+              <h3 className="font-medium mb-4">Campaign Summary</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                <div>
+                  <span className="text-muted-foreground">Category:</span>
+                  <p className="font-medium capitalize">{results.parsedCampaigns?.category || 'N/A'}</p>
                 </div>
-              </CardContent>
-            </Card>
-          )}
+                <div>
+                  <span className="text-muted-foreground">Platform:</span>
+                  <p className="font-medium capitalize">{results.parsedCampaigns?.platform || 'N/A'}</p>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">Content Ideas:</span>
+                  <p className="font-medium">{contentIdeas.length}</p>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">Campaigns:</span>
+                  <p className="font-medium">{results.parsedCampaigns?.campaigns?.length || 0}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
           
-          {/* Errors */}
-          {results.errors && results.errors.length > 0 && (
-            <Card className="border-destructive">
-              <CardContent className="pt-6">
-                <h3 className="font-medium text-destructive mb-2">Processing Warnings</h3>
-                {results.errors.map((error, index) => (
-                  <p key={index} className="text-sm text-destructive">{error.message}</p>
-                ))}
-              </CardContent>
-            </Card>
-          )}
-          
-          <AnalyticsDashboard results={results} />
+          <AnalyticsDashboard results={results.parsedCampaigns || results} />
         </TabsContent>
 
         <TabsContent value="campaigns" className="space-y-6">
-          <CampaignCards campaigns={results.campaigns} />
+          <CampaignCards campaigns={results.parsedCampaigns?.campaigns || []} />
         </TabsContent>
 
         <TabsContent value="content" className="space-y-6">
-          <ContentIdeas ideas={results.content_ideas} />
+          <ContentIdeas ideas={results.parsedCampaigns?.content_ideas || []} />
         </TabsContent>
 
         <TabsContent value="assets" className="space-y-6">
-          <GeneratedAssets assets={results.generated_assets} />
+          <GeneratedAssets assets={results.parsedCampaigns?.generated_assets || {}} />
         </TabsContent>
 
         <TabsContent value="videos" className="space-y-6">
@@ -156,18 +146,23 @@ export function ResultsStep({ results, onReset }: ResultsStepProps) {
             <CardContent className="pt-6">
               <h3 className="font-medium mb-4">Related YouTube Videos</h3>
               <div className="grid gap-4">
-                {results.related_youtube_videos?.map((video, index) => (
-                  <div key={index} className="flex items-center gap-4 p-4 border rounded-lg">
+                {results.youtubeResults?.map((video: any, index: any) => (
+                  <div key={index} className="flex items-start gap-4 p-4 border rounded-lg">
+                    <img src={video.thumbnailUrl} alt={video.title} className="w-20 h-15 object-cover rounded" />
                     <div className="flex-1">
-                      <h4 className="font-medium">{video.title}</h4>
-                      <p className="text-sm text-muted-foreground">{video.channel}</p>
-                      <p className="text-xs text-muted-foreground">{video.views.toLocaleString()} views</p>
+                      <h4 className="font-medium line-clamp-2">{video.title}</h4>
+                      <p className="text-sm text-muted-foreground">{video.channelTitle}</p>
+                      <div className="flex gap-4 text-xs text-muted-foreground mt-1">
+                        <span>{video.viewCount?.toLocaleString()} views</span>
+                        <span>{video.likeCount?.toLocaleString()} likes</span>
+                        <span>{video.commentCount?.toLocaleString()} comments</span>
+                      </div>
                     </div>
                     <Button variant="outline" size="sm" asChild>
-                      <a href={video.url} target="_blank" rel="noopener noreferrer">Watch</a>
+                      <a href={video.url} target="blank" rel="noopener noreferrer">Watch</a>
                     </Button>
                   </div>
-                ))}
+                )) || <p className="text-muted-foreground">No YouTube videos available</p>}
               </div>
             </CardContent>
           </Card>

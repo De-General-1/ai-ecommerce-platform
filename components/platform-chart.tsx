@@ -9,8 +9,8 @@ interface PlatformChartProps {
 
 export function PlatformChart({ campaigns }: PlatformChartProps) {
   // Process platform data from campaigns
-  const platformData =
-    campaigns?.reduce((acc: any, campaign) => {
+  const platformData: Record<string, number> =
+    campaigns?.reduce((acc: Record<string, number>, campaign) => {
       campaign.platforms?.forEach((platform: string) => {
         acc[platform] = (acc[platform] || 0) + 1
       })
@@ -21,7 +21,7 @@ export function PlatformChart({ campaigns }: PlatformChartProps) {
     name: platform,
     value: count as number,
     percentage: Math.round(
-      ((count as number) / Object.values(platformData).reduce((a: number, b: number) => a + b, 0)) * 100,
+      ((count as number) / (Object.values(platformData) as number[]).reduce((a: number, b: number) => a + b, 0)) * 100,
     ),
   }))
 
@@ -46,7 +46,12 @@ export function PlatformChart({ campaigns }: PlatformChartProps) {
               cx="50%"
               cy="50%"
               labelLine={false}
-              label={({ name, percentage }) => `${name} ${percentage}%`}
+              label={({ name, value }) => {
+                const numValue = Number(value) || 0
+                const total = chartData.reduce((sum, item) => sum + item.value, 0)
+                const percentage = Math.round((numValue / total) * 100)
+                return `${name} ${percentage}%`
+              }}
               outerRadius={80}
               fill="#8884d8"
               dataKey="value"

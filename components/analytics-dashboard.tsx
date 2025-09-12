@@ -93,7 +93,7 @@ export function AnalyticsDashboard({ results }: AnalyticsDashboardProps) {
                   <span className={`text-sm font-medium ${isPositive ? "text-green-500" : "text-red-500"}`}>
                     {kpi.change}
                   </span>
-                  <span className="text-sm text-muted-foreground">vs last month</span>
+                  {/* <span className="text-sm text-muted-foreground">vs last month</span> */}
                 </div>
                 <p className="text-xs text-muted-foreground mt-2">{kpi.description}</p>
               </CardContent>

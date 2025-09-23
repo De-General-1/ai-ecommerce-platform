@@ -1,6 +1,6 @@
 "use client"
 
-import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -10,6 +10,7 @@ import { CampaignCards } from "@/components/campaign-cards"
 import { ContentIdeas } from "@/components/content-ideas"
 import { GeneratedAssets } from "@/components/generated-assets"
 import { Download, RefreshCw, Share2, TrendingUp } from "lucide-react"
+import { useProductData } from "@/lib/queries"
 
 interface ResultsStepProps {
   results: any
@@ -18,10 +19,26 @@ interface ResultsStepProps {
 
 export function ResultsStep({ results, onReset }: ResultsStepProps) {
   const [activeTab, setActiveTab] = useState("overview")
+  const [imageHash, setImageHash] = useState<string | null>(null)
+  
+  // Get stored image hash for background refetching
+  useEffect(() => {
+    const stored = localStorage.getItem('imageHashes')
+    if (stored) {
+      const hashes = JSON.parse(stored)
+      setImageHash(hashes[0])
+    }
+  }, [])
+  
+  // Background refetch of product data
+  const productDataQuery = useProductData(imageHash, !!imageHash)
+  
+  // Use fresh data if available, fallback to passed results
+  const displayResults = productDataQuery.data || results
 
   const handleExport = (format: "pdf" | "csv" | "json") => {
     // Mock export functionality
-    const data = JSON.stringify(results, null, 2)
+    const data = JSON.stringify(displayResults, null, 2)
     const blob = new Blob([data], { type: "application/json" })
     const url = URL.createObjectURL(blob)
     const a = document.createElement("a")
@@ -31,11 +48,11 @@ export function ResultsStep({ results, onReset }: ResultsStepProps) {
     URL.revokeObjectURL(url)
   }
 
-  if (!results) {
+  if (!displayResults) {
     return <div>Loading results...</div>
   }
 
-  const contentIdeas = results.parsedCampaigns?.content_ideas || []
+  const contentIdeas = displayResults?.parsedCampaigns?.content_ideas || []
   const avgEngagementScore = contentIdeas.length > 0 
     ? contentIdeas.reduce((acc: number, idea: any) => acc + idea.engagement_score, 0) / contentIdeas.length 
     : 0
@@ -53,6 +70,12 @@ export function ResultsStep({ results, onReset }: ResultsStepProps) {
             <TrendingUp className="w-4 h-4" />
             {avgEngagementScore.toFixed(0)}% Avg. Engagement
           </Badge>
+          {productDataQuery.isFetching && (
+            <Badge variant="outline" className="flex items-center gap-1">
+              <RefreshCw className="w-3 h-3 animate-spin" />
+              Updating...
+            </Badge>
+          )}
           <Button variant="outline" onClick={onReset}>
             <RefreshCw className="w-4 h-4 mr-2" />
             New Campaign
@@ -108,11 +131,11 @@ export function ResultsStep({ results, onReset }: ResultsStepProps) {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 <div>
                   <span className="text-muted-foreground">Category:</span>
-                  <p className="font-medium capitalize">{results.parsedCampaigns?.category || 'N/A'}</p>
+                  <p className="font-medium capitalize">{displayResults.parsedCampaigns?.category || 'N/A'}</p>
                 </div>
                 <div>
                   <span className="text-muted-foreground">Platform:</span>
-                  <p className="font-medium capitalize">{results.parsedCampaigns?.platform || 'N/A'}</p>
+                  <p className="font-medium capitalize">{displayResults.parsedCampaigns?.platform || 'N/A'}</p>
                 </div>
                 <div>
                   <span className="text-muted-foreground">Content Ideas:</span>
@@ -120,25 +143,25 @@ export function ResultsStep({ results, onReset }: ResultsStepProps) {
                 </div>
                 <div>
                   <span className="text-muted-foreground">Campaigns:</span>
-                  <p className="font-medium">{results.parsedCampaigns?.campaigns?.length || 0}</p>
+                  <p className="font-medium">{displayResults.parsedCampaigns?.campaigns?.length || 0}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
           
-          <AnalyticsDashboard results={results.parsedCampaigns || results} />
+          <AnalyticsDashboard results={displayResults.parsedCampaigns || displayResults} />
         </TabsContent>
 
         <TabsContent value="campaigns" className="space-y-6">
-          <CampaignCards campaigns={results.parsedCampaigns?.campaigns || []} />
+          <CampaignCards campaigns={displayResults.parsedCampaigns?.campaigns || []} />
         </TabsContent>
 
         <TabsContent value="content" className="space-y-6">
-          <ContentIdeas ideas={results.parsedCampaigns?.content_ideas || []} />
+          <ContentIdeas ideas={displayResults.parsedCampaigns?.content_ideas || []} />
         </TabsContent>
 
         <TabsContent value="assets" className="space-y-6">
-          <GeneratedAssets assets={results.parsedCampaigns?.generated_assets || {}} />
+          <GeneratedAssets assets={displayResults.parsedCampaigns?.generated_assets || {}} />
         </TabsContent>
 
         <TabsContent value="videos" className="space-y-6">
@@ -146,7 +169,7 @@ export function ResultsStep({ results, onReset }: ResultsStepProps) {
             <CardContent className="pt-6">
               <h3 className="font-medium mb-4">Related YouTube Videos</h3>
               <div className="grid gap-4">
-                {results.youtubeResults?.map((video: any, index: any) => (
+                {displayResults.youtubeResults?.map((video: any, index: any) => (
                   <div key={index} className="flex items-start gap-4 p-4 border rounded-lg">
                     <img src={video.thumbnailUrl} alt={video.title} className="w-20 h-15 object-cover rounded" />
                     <div className="flex-1">

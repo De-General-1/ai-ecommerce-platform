@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { config } from "@/lib/config"
 
 export async function POST(request: NextRequest) {
   try {
@@ -9,7 +10,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Forward request to the actual AWS API Gateway endpoint
-    const response = await fetch("https://n5zmtvleqj.execute-api.us-east-1.amazonaws.com/generate-upload-url", {
+    const response = await fetch(config.api.uploadUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

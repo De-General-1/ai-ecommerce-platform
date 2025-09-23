@@ -6,7 +6,7 @@ import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
 import { Check, Loader2, Upload, Brain, Sparkles, BarChart3, AlertCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { apiClient } from "@/lib/api-client"
+import { useProcessFiles, useStatusPolling, useProductData } from "@/lib/queries"
 
 interface ProcessingStepProps {
   files: File[]
@@ -47,85 +47,107 @@ export function ProcessingStep({ files, description, category, platform, onCompl
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
   const [progress, setProgress] = useState(0)
   const [completedSteps, setCompletedSteps] = useState<string[]>([])
-  const [error, setError] = useState<string | null>(null)
-  const [isProcessing, setIsProcessing] = useState(true)
+  const [primaryHash, setPrimaryHash] = useState<string | null>(null)
 
+  const processFilesMutation = useProcessFiles()
+  const statusQuery = useStatusPolling(primaryHash, !!primaryHash)
+  const productDataQuery = useProductData(primaryHash, statusQuery.data?.pipeline_status === 'completed')
+
+  // Start file upload on mount
   useEffect(() => {
-    const processFiles = async () => {
-      try {
-        setIsProcessing(true)
-        setError(null)
+    processFilesMutation.mutate({
+      files,
+      description,
+      category,
+      platform,
+      onProgress: (step: string, stepProgress: number) => {
+        const stepIndex = processingSteps.findIndex((s) => s.id === step)
+        if (stepIndex !== -1) {
+          setCurrentStepIndex(stepIndex)
+          setProgress(stepProgress)
+          if (stepProgress === 100) {
+            setCompletedSteps((prev) => [...prev, step])
+            setProgress(0)
+          }
+        }
+      }
+    })
+  }, [])
 
-        const results = await apiClient.processFiles(
-          files,
-          description,
-          category,
-          platform,
-          (step: string, stepProgress: number) => {
-            const stepIndex = processingSteps.findIndex((s) => s.id === step)
-            if (stepIndex !== -1) {
-              setCurrentStepIndex(stepIndex)
-              setProgress(stepProgress)
+  // Handle upload success
+  useEffect(() => {
+    if (processFilesMutation.isSuccess) {
+      setPrimaryHash(processFilesMutation.data.primaryHash)
+    }
+  }, [processFilesMutation.isSuccess, processFilesMutation.data])
 
-              if (stepProgress === 100) {
-                setCompletedSteps((prev) => [...prev, step])
-                setProgress(0)
-              }
-            }
-          },
-        )
-
-        setIsProcessing(false)
-        onComplete(results)
-      } catch (err) {
-        console.error("Processing error:", err)
-        setError(err instanceof Error ? err.message : "An unexpected error occurred")
-        setIsProcessing(false)
+  // Handle status updates
+  useEffect(() => {
+    if (statusQuery.data) {
+      const { next_step, pipeline_status } = statusQuery.data
+      
+      if (pipeline_status === 'completed') {
+        setCurrentStepIndex(3)
+        setProgress(100)
+        setCompletedSteps(['upload', 'analysis', 'generation', 'optimization'])
+        return
+      }
+      
+      switch (next_step) {
+        case 'content_generation':
+          if (!completedSteps.includes('analysis')) {
+            setCurrentStepIndex(2)
+            setCompletedSteps(prev => [...prev, 'analysis'])
+            setProgress(0)
+          }
+          break
+        case 'optimization':
+          if (!completedSteps.includes('generation')) {
+            setCurrentStepIndex(3)
+            setCompletedSteps(prev => [...prev, 'generation'])
+            setProgress(0)
+          }
+          break
+        default:
+          setProgress(50)
       }
     }
+  }, [statusQuery.data, completedSteps])
 
-    processFiles()
-  }, [files, description, category, platform])
+  // Handle completion
+  useEffect(() => {
+    if (productDataQuery.isSuccess && productDataQuery.data) {
+      onComplete(productDataQuery.data)
+    }
+  }, [productDataQuery.isSuccess, productDataQuery.data, onComplete])
+
+  const error = processFilesMutation.error || statusQuery.error || productDataQuery.error
+  const isProcessing = processFilesMutation.isPending || statusQuery.isFetching || productDataQuery.isFetching
 
   const handleRetry = () => {
     setCurrentStepIndex(0)
     setProgress(0)
     setCompletedSteps([])
-    setError(null)
-    setIsProcessing(true)
-
-    // Restart the processing
-    const processFiles = async () => {
-      try {
-        const results = await apiClient.processFiles(
-          files,
-          description,
-          category,
-          platform,
-          (step: string, stepProgress: number) => {
-            const stepIndex = processingSteps.findIndex((s) => s.id === step)
-            if (stepIndex !== -1) {
-              setCurrentStepIndex(stepIndex)
-              setProgress(stepProgress)
-
-              if (stepProgress === 100) {
-                setCompletedSteps((prev) => [...prev, step])
-                setProgress(0)
-              }
-            }
-          },
-        )
-
-        setIsProcessing(false)
-        onComplete(results)
-      } catch (err) {
-        console.error("Processing error:", err)
-        setError(err instanceof Error ? err.message : "An unexpected error occurred")
-        setIsProcessing(false)
+    setPrimaryHash(null)
+    processFilesMutation.reset()
+    
+    processFilesMutation.mutate({
+      files,
+      description,
+      category,
+      platform,
+      onProgress: (step: string, stepProgress: number) => {
+        const stepIndex = processingSteps.findIndex((s) => s.id === step)
+        if (stepIndex !== -1) {
+          setCurrentStepIndex(stepIndex)
+          setProgress(stepProgress)
+          if (stepProgress === 100) {
+            setCompletedSteps((prev) => [...prev, step])
+            setProgress(0)
+          }
+        }
       }
-    }
-
-    processFiles()
+    })
   }
 
   return (
@@ -145,7 +167,7 @@ export function ProcessingStep({ files, description, category, platform, onCompl
                 <AlertCircle className="w-5 h-5 text-destructive" />
                 <h4 className="font-medium text-destructive">Processing Failed</h4>
               </div>
-              <p className="text-sm text-destructive/80 mb-4">{error}</p>
+              <p className="text-sm text-destructive/80 mb-4">{error?.message || 'An error occurred'}</p>
               <Button onClick={handleRetry} variant="outline" size="sm">
                 Try Again
               </Button>

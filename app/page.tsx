@@ -5,6 +5,7 @@ import { UploadStep } from "@/components/upload-step"
 import { ProcessingStep } from "@/components/processing-step"
 import { ResultsStep } from "@/components/results-step"
 import { StepIndicator } from "@/components/step-indicator"
+import { ErrorBoundary } from "@/components/error-boundary"
 
 export default function HomePage() {
   const [currentStep, setCurrentStep] = useState(1)
@@ -49,19 +50,21 @@ export default function HomePage() {
         <StepIndicator currentStep={currentStep} />
 
         <div className="mt-8">
-          {currentStep === 1 && <UploadStep onComplete={handleUploadComplete} />}
+          <ErrorBoundary>
+            {currentStep === 1 && <UploadStep onComplete={handleUploadComplete} />}
 
-          {currentStep === 2 && (
-            <ProcessingStep
-              files={uploadedFiles}
-              description={productDescription}
-              category={category}
-              platform={targetPlatform}
-              onComplete={handleProcessingComplete}
-            />
-          )}
+            {currentStep === 2 && (
+              <ProcessingStep
+                files={uploadedFiles}
+                description={productDescription}
+                category={category}
+                platform={targetPlatform}
+                onComplete={handleProcessingComplete}
+              />
+            )}
 
-          {currentStep === 3 && <ResultsStep results={analysisResults} onReset={resetWorkflow} />}
+            {currentStep === 3 && <ResultsStep results={analysisResults} onReset={resetWorkflow} />}
+          </ErrorBoundary>
         </div>
       </main>
     </div>

@@ -9,7 +9,7 @@ import { AnalyticsDashboard } from "@/components/analytics-dashboard"
 import { CampaignCards } from "@/components/campaign-cards"
 import { ContentIdeas } from "@/components/content-ideas"
 import { GeneratedAssets } from "@/components/generated-assets"
-import { Download, RefreshCw, Share2, TrendingUp } from "lucide-react"
+import { Download, RefreshCw, Share2, TrendingUp, CheckCircle, BarChart3, Rocket, Lightbulb, Palette, Video, Folder, Target } from "lucide-react"
 import { useProductData } from "@/lib/queries"
 
 interface ResultsStepProps {
@@ -71,7 +71,7 @@ export function ResultsStep({ results, onReset }: ResultsStepProps) {
               </svg>
             </div>
             <h1 className="text-4xl lg:text-5xl font-bold mb-4">
-              🎉 Your Campaigns Are Ready!
+              Your Campaigns Are Ready!
             </h1>
             <p className="text-xl text-green-100 mb-6">
               AI has generated {displayResults.parsedCampaigns?.campaigns?.length || 0} complete marketing campaigns for your product
@@ -109,7 +109,7 @@ export function ResultsStep({ results, onReset }: ResultsStepProps) {
             <div className="flex flex-wrap gap-3">
               <Button 
                 variant="outline" 
-                className="bg-white/50 hover:bg-white border-slate-200 text-slate-700"
+                className="bg-white/50 cursor-pointer hover:bg-white border-slate-200 text-slate-700"
                 onClick={() => handleExport("pdf")}
               >
                 <Download className="w-4 h-4 mr-2" />
@@ -117,7 +117,7 @@ export function ResultsStep({ results, onReset }: ResultsStepProps) {
               </Button>
               <Button 
                 variant="outline" 
-                className="bg-white/50 hover:bg-white border-slate-200 text-slate-700"
+                className="bg-white/50 cursor-pointer hover:bg-white border-slate-200 text-slate-700"
                 onClick={() => handleExport("csv")}
               >
                 <Download className="w-4 h-4 mr-2" />
@@ -125,7 +125,7 @@ export function ResultsStep({ results, onReset }: ResultsStepProps) {
               </Button>
               <Button 
                 variant="outline" 
-                className="bg-white/50 hover:bg-white border-slate-200 text-slate-700"
+                className="bg-white/50 cursor-pointer hover:bg-white border-slate-200 text-slate-700"
                 onClick={() => handleExport("json")}
               >
                 <Download className="w-4 h-4 mr-2" />
@@ -137,7 +137,7 @@ export function ResultsStep({ results, onReset }: ResultsStepProps) {
               </Button>
               <Button 
                 variant="outline" 
-                className="bg-white/50 hover:bg-white border-slate-200 text-slate-700"
+                className="bg-white/50 cursor-pointer hover:bg-white border-slate-200 text-slate-700"
                 onClick={onReset}
               >
                 <RefreshCw className="w-4 h-4 mr-2" />
@@ -156,31 +156,36 @@ export function ResultsStep({ results, onReset }: ResultsStepProps) {
                   value="overview" 
                   className="data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-none border-b-2 border-transparent data-[state=active]:border-indigo-500 py-4 px-6 font-medium"
                 >
-                  📊 Overview
+                  <BarChart3 className="w-4 h-4 mr-2" />
+                  Overview
                 </TabsTrigger>
                 <TabsTrigger 
                   value="campaigns" 
                   className="data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-none border-b-2 border-transparent data-[state=active]:border-indigo-500 py-4 px-6 font-medium"
                 >
-                  🚀 Campaigns
+                  <Rocket className="w-4 h-4 mr-2" />
+                  Campaigns
                 </TabsTrigger>
                 <TabsTrigger 
                   value="content" 
                   className="data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-none border-b-2 border-transparent data-[state=active]:border-indigo-500 py-4 px-6 font-medium"
                 >
-                  💡 Content Ideas
+                  <Lightbulb className="w-4 h-4 mr-2" />
+                  Content Ideas
                 </TabsTrigger>
                 <TabsTrigger 
                   value="assets" 
                   className="data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-none border-b-2 border-transparent data-[state=active]:border-indigo-500 py-4 px-6 font-medium"
                 >
-                  🎨 Assets
+                  <Palette className="w-4 h-4 mr-2" />
+                  Assets
                 </TabsTrigger>
                 <TabsTrigger 
                   value="videos" 
                   className="data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-none border-b-2 border-transparent data-[state=active]:border-indigo-500 py-4 px-6 font-medium"
                 >
-                  📹 Videos
+                  <Video className="w-4 h-4 mr-2" />
+                  Videos
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -189,28 +194,28 @@ export function ResultsStep({ results, onReset }: ResultsStepProps) {
               {/* Campaign Summary Cards */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
                 <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl p-6 border border-blue-200/50">
-                  <div className="text-2xl mb-2">📂</div>
+                  <Folder className="w-6 h-6 mb-2 text-blue-600" />
                   <div className="text-sm text-slate-600 mb-1">Category</div>
                   <div className="text-lg font-semibold text-slate-900 capitalize">
                     {displayResults.parsedCampaigns?.category || 'N/A'}
                   </div>
                 </div>
                 <div className="bg-gradient-to-br from-purple-50 to-pink-100 rounded-xl p-6 border border-purple-200/50">
-                  <div className="text-2xl mb-2">🎯</div>
+                  <Target className="w-6 h-6 mb-2 text-purple-600" />
                   <div className="text-sm text-slate-600 mb-1">Platform</div>
                   <div className="text-lg font-semibold text-slate-900 capitalize">
                     {displayResults.parsedCampaigns?.platform || 'N/A'}
                   </div>
                 </div>
                 <div className="bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl p-6 border border-green-200/50">
-                  <div className="text-2xl mb-2">💡</div>
+                  <Lightbulb className="w-6 h-6 mb-2 text-green-600" />
                   <div className="text-sm text-slate-600 mb-1">Content Ideas</div>
                   <div className="text-lg font-semibold text-slate-900">
                     {contentIdeas.length}
                   </div>
                 </div>
                 <div className="bg-gradient-to-br from-orange-50 to-yellow-100 rounded-xl p-6 border border-orange-200/50">
-                  <div className="text-2xl mb-2">🚀</div>
+                  <Rocket className="w-6 h-6 mb-2 text-orange-600" />
                   <div className="text-sm text-slate-600 mb-1">Campaigns</div>
                   <div className="text-lg font-semibold text-slate-900">
                     {displayResults.parsedCampaigns?.campaigns?.length || 0}
@@ -236,7 +241,10 @@ export function ResultsStep({ results, onReset }: ResultsStepProps) {
             <TabsContent value="videos" className="p-8">
               <div className="space-y-6">
                 <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-slate-900 mb-2">📹 Related YouTube Videos</h3>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-2 flex items-center gap-2">
+                    <Video className="w-6 h-6 text-red-600" />
+                    Related YouTube Videos
+                  </h3>
                   <p className="text-slate-600">Discover trending content in your niche for inspiration</p>
                 </div>
                 

@@ -1,33 +1,53 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
+  console.log('Upload URL route called')
+  
   try {
-    const { filename, filetype, description, category, platform } = await request.json()
+    console.log('Parsing request body...')
+    const body = await request.json()
+    console.log('Request body:', body)
+    
+    const { filename, filetype, description, category, platform } = body
 
     if (!filename || !filetype) {
+      console.log('Missing filename or filetype')
       return NextResponse.json({ error: "filename and filetype are required" }, { status: 400 })
     }
 
-    console.log('🎬 DEMO MODE: Mock upload URL generation')
+    const uploadUrl = 'https://1mpyrh4oq9.execute-api.eu-west-2.amazonaws.com/dev/generate-upload-url'
+    console.log('Making request to:', uploadUrl)
+
+    const response = await fetch(uploadUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // "x-api-key": process.env.AWS_API_KEY || "",
+        // "Authorization": process.env.AWS_AUTH_TOKEN || ""
+      },
+      body: JSON.stringify({
+        filename,
+        filetype,
+        description,
+        category,
+        platform
+      }),
+    })
+
+    console.log('Response status:', response.status)
     
-    // Mock response for demo purposes
-    const mockResponse = {
-      uploadUrl: `https://demo-bucket.s3.amazonaws.com/uploads/demo-${Date.now()}-${filename}?mock=true`,
-      imageHash: `demo-hash-${Math.random().toString(36).substr(2, 16)}`,
-      metadata: {
-        'product-details': description || '',
-        'product-category': category || '',
-        'platform': platform || ''
-      }
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.log('Error response:', errorText)
+      return NextResponse.json({ error: `API error: ${response.status}` }, { status: 500 })
     }
+
+    const data = await response.json()
+    console.log('Success response:', data)
+    return NextResponse.json(data)
     
-    // Simulate some processing time
-    await new Promise(resolve => setTimeout(resolve, 200))
-    
-    console.log('Mock upload URL generated:', mockResponse)
-    return NextResponse.json(mockResponse)
   } catch (error) {
-    console.error("Upload URL API error:", error)
-    return NextResponse.json({ error: "Failed to generate upload URL" }, { status: 500 })
+    console.error('Route error:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

@@ -6,7 +6,7 @@ import { ProcessingStep } from "@/components/processing-step"
 import { ResultsStep } from "@/components/results-step"
 import { StepIndicator } from "@/components/step-indicator"
 import { ErrorBoundary } from "@/components/error-boundary"
-import { Play, Upload, Zap, TrendingUp, CheckCircle, ArrowRight } from "lucide-react"
+import { Upload, Zap, TrendingUp, CheckCircle, ArrowRight } from "lucide-react"
 
 export default function HomePage() {
   const [currentStep, setCurrentStep] = useState(0) // 0 = landing, 1 = upload, 2 = processing, 3 = results
@@ -63,173 +63,13 @@ export default function HomePage() {
                   Upload your product image and watch our AI create platform-specific content, engagement strategies, and complete marketing campaigns that drive real results.
                 </p>
                 
-                <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+                <div className="flex justify-center">
                   <button 
                     onClick={handleGetStarted}
                     className="inline-flex items-center px-8 py-4 text-lg font-semibold text-indigo-900 bg-white rounded-full hover:bg-blue-50 transform hover:scale-105 transition-all duration-200 shadow-2xl hover:shadow-white/25"
                   >
                     Get Started Free
                     <ArrowRight className="ml-2 w-5 h-5" />
-                  </button>
-                  
-                  <button 
-                    onClick={() => {
-                      const mockResults = {
-                        parsedCampaigns: {
-                          category: "Electronics",
-                          platform: "Instagram",
-                          description: "Revolutionary wireless charging pad with MagSafe technology",
-                          content_ideas: [
-                            {
-                              topic: "Wireless Freedom Revolution",
-                              platform: "Instagram",
-                              engagement_score: 92,
-                              caption: "Say goodbye to tangled cables! 🔋 Experience the future of charging with our MagSafe wireless pad. Clean setup, fast charging, perfect alignment every time. #WirelessCharging #MagSafe #TechLife #CleanSetup",
-                              hashtags: ["#WirelessCharging", "#MagSafe", "#TechLife", "#CleanSetup", "#Innovation"]
-                            },
-                            {
-                              topic: "Perfect Workspace Aesthetic",
-                              platform: "TikTok",
-                              engagement_score: 88,
-                              caption: "POV: Your desk setup just got an upgrade ✨ Watch how this wireless charger transforms any workspace into a tech paradise. No more cable chaos! #DeskSetup #Aesthetic #TechTok #Minimalist",
-                              hashtags: ["#DeskSetup", "#Aesthetic", "#TechTok", "#Minimalist", "#WorkspaceGoals"]
-                            },
-                            {
-                              topic: "Travel Tech Essential",
-                              platform: "YouTube",
-                              engagement_score: 85,
-                              caption: "Why this wireless charger is my #1 travel essential! Compact, powerful, and works with all my devices. Perfect for digital nomads and frequent travelers. #TravelTech #DigitalNomad #TechReview",
-                              hashtags: ["#TravelTech", "#DigitalNomad", "#TechReview", "#Portable", "#Essential"]
-                            }
-                          ],
-                          campaigns: [
-                            {
-                              name: "Wireless Revolution Campaign",
-                              duration: "6 weeks",
-                              posts_per_week: 4,
-                              platforms: ["Instagram", "TikTok", "YouTube", "Facebook"],
-                              calendar: {
-                                "Week 1-2": "Product introduction with unboxing content, first impressions, and setup tutorials. Focus on the 'wow factor' of wireless charging.",
-                                "Week 3-4": "Lifestyle integration content showing the charger in different environments - home office, bedroom, kitchen counter, travel scenarios.",
-                                "Week 5-6": "User-generated content campaign with hashtag challenges, customer testimonials, and comparison videos with traditional chargers."
-                              },
-                              adaptations: {
-                                "Instagram": "High-quality product photography with lifestyle shots. Stories showing time-lapse charging, polls about charging habits, and behind-the-scenes content.",
-                                "TikTok": "Quick setup videos, aesthetic desk transformation content, 'satisfying' charging alignment videos, and trending audio overlays.",
-                                "YouTube": "Detailed review videos, comparison tests, setup tutorials, and integration with popular tech YouTuber collaboration opportunities.",
-                                "Facebook": "Educational posts about wireless charging technology, customer service integration, and community building through groups."
-                              }
-                            },
-                            {
-                              name: "Holiday Gift Campaign",
-                              duration: "4 weeks",
-                              posts_per_week: 3,
-                              platforms: ["Instagram", "Facebook", "Pinterest"],
-                              calendar: {
-                                "Week 1": "Gift guide positioning - 'Perfect gift for tech lovers' with elegant packaging shots and gift-wrapping content.",
-                                "Week 2-3": "Holiday lifestyle content showing the charger as part of cozy home setups, holiday morning routines, and family tech moments.",
-                                "Week 4": "Last-minute gift promotion with fast shipping highlights and gift card options."
-                              },
-                              adaptations: {
-                                "Instagram": "Festive flat-lay photography, gift guide carousels, and holiday-themed Stories with countdown stickers.",
-                                "Facebook": "Holiday shopping posts with clear CTAs, customer testimonials from gift recipients, and seasonal promotions.",
-                                "Pinterest": "Gift guide pins, holiday tech setup boards, and seasonal home office inspiration featuring the product."
-                              }
-                            }
-                          ],
-                          generated_assets: {
-                            image_prompts: [
-                              "Minimalist flat-lay of the wireless charger on a clean white marble desk with iPhone, AirPods, and a coffee cup, soft natural lighting from the side",
-                              "Cozy bedroom nightstand setup with the charger, warm ambient lighting, book, and plant in the background, golden hour lighting",
-                              "Modern home office workspace featuring the charger as part of a tech setup with laptop, monitor, and clean cable management",
-                              "Travel scene with the charger in a hotel room or airplane tray table, showing portability and convenience"
-                            ],
-                            video_scripts: [
-                              {
-                                type: "Short form video (15-30s)",
-                                content: "🔋 STOP scrolling if you're tired of cable chaos! This MagSafe wireless charger just changed my entire setup game. Watch this satisfying alignment... *shows phone snapping into perfect position* No more fumbling in the dark, no more worn-out cables. Just place and charge! Who else needs this level of zen in their life? #WirelessCharging #TechHacks #CleanSetup"
-                              },
-                              {
-                                type: "Tutorial video (60s)",
-                                content: "How to create the PERFECT charging station in under 2 minutes! ✨ Step 1: Find your ideal spot (nightstand, desk, or kitchen counter). Step 2: Place the MagSafe charger - no cables to manage! Step 3: Connect the single USB-C cable to power. Step 4: Enjoy effortless charging every time! Pro tip: The magnetic alignment means you'll never miss the sweet spot again. Your future self will thank you! #TechTutorial #HomeOrganization"
-                              },
-                              {
-                                type: "Long form video (3-5 min)",
-                                content: "I tested this wireless charger for 30 days - here's what happened. Day 1: Skeptical about wireless charging speed. Day 7: Noticed my phone battery health improving. Day 15: Realized I haven't touched a charging cable in weeks. Day 30: This is now essential to my daily routine. Let me show you the real-world performance, heat management, and why this beats every other wireless charger I've tried..."
-                              }
-                            ],
-                            email_templates: [
-                              {
-                                subject: "🔋 Your Wireless Charging Revolution Starts Now!",
-                                body: "Hi [Name],\n\nTired of cable chaos? Ready to experience the future of charging?\n\nYour MagSafe Wireless Charger is ready to transform your daily routine:\n\n✅ Perfect magnetic alignment every time\n✅ Fast 15W wireless charging\n✅ Sleek design that complements any space\n✅ Compatible with iPhone 12+ and MagSafe accessories\n\nWhat customers are saying:\n'This charger has completely changed my bedside routine!' - Sarah M.\n'Finally, a wireless charger that actually works perfectly!' - Mike T.\n\nReady to upgrade your charging game?\n\n[SHOP NOW - Free Shipping]\n\nQuestions? Reply to this email - we're here to help!\n\nBest,\nThe Wireless Revolution Team"
-                              }
-                            ],
-                            blog_outlines: [
-                              {
-                                title: "The Complete Guide to MagSafe Wireless Charging: Everything You Need to Know in 2024",
-                                points: [
-                                  "What is MagSafe technology and how does it work?",
-                                  "MagSafe vs. traditional wireless charging: speed and efficiency comparison",
-                                  "Setting up your perfect MagSafe charging station at home and office",
-                                  "Compatible devices and accessories that work with MagSafe",
-                                  "Troubleshooting common MagSafe charging issues",
-                                  "Future of wireless charging: what's coming next?"
-                                ]
-                              },
-                              {
-                                title: "5 Ways Wireless Charging Will Transform Your Daily Routine",
-                                points: [
-                                  "Morning routine: effortless phone pickup without cable untangling",
-                                  "Workspace productivity: cleaner desk setup improves focus",
-                                  "Bedtime charging: safer and more convenient nightstand setup",
-                                  "Travel convenience: one less cable to pack and manage",
-                                  "Device longevity: reduced wear on charging ports extends phone life"
-                                ]
-                              }
-                            ]
-                          }
-                        },
-                        youtubeResults: [
-                          {
-                            title: "MagSafe Wireless Charger Review - Is It Worth The Hype?",
-                            channelTitle: "Tech Reviews Pro",
-                            viewCount: 245000,
-                            likeCount: 18500,
-                            commentCount: 2840,
-                            thumbnailUrl: "https://images.unsplash.com/photo-1556656793-08538906a9f8?w=320&h=180&fit=crop",
-                            url: "https://youtube.com/watch?v=demo1"
-                          },
-                          {
-                            title: "Wireless Charging Setup Tour - Clean Desk Aesthetic",
-                            channelTitle: "Minimalist Tech",
-                            viewCount: 156000,
-                            likeCount: 12200,
-                            commentCount: 1650,
-                            thumbnailUrl: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=320&h=180&fit=crop",
-                            url: "https://youtube.com/watch?v=demo2"
-                          },
-                          {
-                            title: "Why I Switched to Wireless Charging - 6 Month Update",
-                            channelTitle: "Everyday Tech Tips",
-                            viewCount: 89000,
-                            likeCount: 7800,
-                            commentCount: 890,
-                            thumbnailUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=320&h=180&fit=crop",
-                            url: "https://youtube.com/watch?v=demo3"
-                          }
-                        ],
-                        generated_at: new Date().toISOString(),
-                        recordId: "demo-wireless-charger-campaign",
-                        source_table: "demo",
-                        _processing_time_ms: 2150
-                      }
-                      setAnalysisResults(mockResults)
-                      setCurrentStep(3)
-                    }}
-                    className="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-full hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-200 shadow-lg"
-                  >
-                    <Play className="w-4 h-4 mr-2" />
-                    View Demo Results
                   </button>
                 </div>
               </div>

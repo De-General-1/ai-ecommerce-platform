@@ -36,10 +36,10 @@ export const apiClient = {
           platform
         })
       })
-      const { uploadUrl, imageHash } = await response.json()
-      await fetch(uploadUrl, { method: "PUT", body: file })
+      const { uploadUrl, imageHash,requiredHeaders } = await response.json()
+      await fetch(uploadUrl, { method: "PUT", body: file, headers: requiredHeaders })
       
-      
+      console.log({imageHash})
       imageHashes.push(imageHash)
       
       onProgress?.("upload", ((i + 1) / files.length) * 100)
@@ -98,13 +98,13 @@ export const apiClient = {
 
   // Check status using image hash
   async checkStatus(imageHash: string) {
-    const response = await fetch(`https://n5zmtvleqj.execute-api.us-east-1.amazonaws.com/status/${imageHash}`)
+    const response = await fetch(`https://x3dp4d9bib.execute-api.eu-west-2.amazonaws.com/dev/status/${imageHash}`)
     return await response.json()
   },
 
   // Get product data using image hash
   async getProductData(imageHash: string) {
-    const response = await fetch(`https://n5zmtvleqj.execute-api.us-east-1.amazonaws.com/product/${imageHash}`)
+    const response = await fetch(`https://x3dp4d9bib.execute-api.eu-west-2.amazonaws.com/dev/product/${imageHash}`)
     return await response.json()
   },
 

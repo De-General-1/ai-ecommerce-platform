@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Forward request to the actual AWS API Gateway endpoint
-    const response = await fetch("https://n5zmtvleqj.execute-api.us-east-1.amazonaws.com/generate-upload-url", {
+    const response = await fetch("https://x3dp4d9bib.execute-api.eu-west-2.amazonaws.com/dev/presigned-url", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

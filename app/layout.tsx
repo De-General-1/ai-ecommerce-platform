@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   title: 'AI E-Commerce Growth Agent',
   description: 'Transform your products into trending marketing campaigns with AI-powered analysis and content generation',
   generator: 'AI E-Commerce Growth Agent',
+  icons: {
+    icon: '/AI-.png',
+    shortcut: '/AI-.png',
+    apple: '/AI-.png',
+  },
 }
 
 export default function RootLayout({

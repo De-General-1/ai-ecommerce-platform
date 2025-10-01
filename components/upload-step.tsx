@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useMemo } from "react"
 import { useDropzone } from "react-dropzone"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -18,6 +18,11 @@ export function UploadStep({ onComplete }: UploadStepProps) {
   const [description, setDescription] = useState("")
   const [category, setCategory] = useState("")
   const [platform, setPlatform] = useState("")
+  
+  // Memoize blob URLs to prevent recreation on every render
+  const fileUrls = useMemo(() => {
+    return files.map(file => URL.createObjectURL(file))
+  }, [files])
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFiles((prev) => [...prev, ...acceptedFiles])
@@ -29,7 +34,7 @@ export function UploadStep({ onComplete }: UploadStepProps) {
       "image/png": [".png"],
       "image/jpeg": [".jpg", ".jpeg"],
     },
-    multiple: true,
+    multiple: false,
   })
 
   const removeFile = (index: number) => {
@@ -81,7 +86,7 @@ export function UploadStep({ onComplete }: UploadStepProps) {
                   <div key={index} className="relative group">
                     <div className="aspect-square bg-muted rounded-lg overflow-hidden">
                       <img
-                        src={URL.createObjectURL(file) || "/placeholder.svg"}
+                        src={fileUrls[index] || "/placeholder.svg"}
                         alt={file.name}
                         className="w-full h-full object-cover"
                       />

@@ -1,53 +1,13 @@
 "use client"
 
-import { useState } from "react"
-import { UploadStep } from "@/components/upload-step"
-import { ProcessingStep } from "@/components/processing-step"
-import { ResultsStep } from "@/components/results-step"
-import { StepIndicator } from "@/components/step-indicator"
-import { ErrorBoundary } from "@/components/error-boundary"
 import { Upload, Zap, TrendingUp, CheckCircle, ArrowRight } from "lucide-react"
+import Link from "next/link"
 
 export default function HomePage() {
-  const [currentStep, setCurrentStep] = useState(0) // 0 = landing, 1 = upload, 2 = processing, 3 = results
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
-  const [productDescription, setProductDescription] = useState("")
-  const [category, setCategory] = useState("")
-  const [targetPlatform, setTargetPlatform] = useState("")
-  const [analysisResults, setAnalysisResults] = useState<any>(null)
-
-  const handleGetStarted = () => {
-    setCurrentStep(1)
-  }
-
-  const handleUploadComplete = (files: File[], description: string, cat: string, platform: string) => {
-    setUploadedFiles(files)
-    setProductDescription(description)
-    setCategory(cat)
-    setTargetPlatform(platform)
-    setCurrentStep(2)
-  }
-
-  const handleProcessingComplete = (results: any) => {
-    setAnalysisResults(results)
-    setCurrentStep(3)
-  }
-
-  const resetWorkflow = () => {
-    setCurrentStep(0)
-    setUploadedFiles([])
-    setProductDescription("")
-    setCategory("")
-    setTargetPlatform("")
-    setAnalysisResults(null)
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-      {currentStep === 0 ? (
-        // Landing Page
-        <>
-          {/* Hero Section */}
+      {/* Hero Section */}
           <section className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 text-white">
             <div className={`absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20`}></div>
 
@@ -64,13 +24,13 @@ export default function HomePage() {
                 </p>
                 
                 <div className="flex justify-center">
-                  <button 
-                    onClick={handleGetStarted}
+                  <Link 
+                    href="/campaign"
                     className="inline-flex items-center px-8 py-4 text-lg font-semibold text-indigo-900 bg-white rounded-full hover:bg-blue-50 transform hover:scale-105 transition-all duration-200 shadow-2xl hover:shadow-white/25"
                   >
                     Get Started Free
                     <ArrowRight className="ml-2 w-5 h-5" />
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -174,13 +134,13 @@ export default function HomePage() {
               <p className="text-xl text-indigo-100 mb-8 max-w-2xl mx-auto">
                 Join thousands of businesses already using AI to create viral marketing campaigns
               </p>
-              <button 
-                onClick={handleGetStarted}
+              <Link 
+                href="/campaign"
                 className="inline-flex items-center px-8 py-4 text-lg font-semibold text-indigo-600 bg-white rounded-full hover:bg-blue-50 transform hover:scale-105 transition-all duration-200 shadow-2xl"
               >
                 Start Creating Campaigns
                 <ArrowRight className="ml-2 w-5 h-5" />
-              </button>
+              </Link>
             </div>
           </section>
 
@@ -192,53 +152,6 @@ export default function HomePage() {
               <p className="text-slate-500 text-sm">© 2025 AI E-Commerce Growth Agent. All rights reserved.</p>
             </div>
           </footer>
-        </>
-      ) : (
-        // Application Flow
-        <>
-          {/* Header */}
-          <header className="relative overflow-hidden bg-white/80 backdrop-blur-md border-b border-slate-200/60 shadow-elegant">
-            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 via-purple-500/5 to-cyan-500/5"></div>
-            <div className="relative container mx-auto px-4 py-6">
-              <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                  AI E-Commerce Growth Agent
-                </h1>
-                <button 
-                  onClick={resetWorkflow}
-                  className="text-slate-600 hover:text-slate-900 text-sm font-medium"
-                >
-                  ← Back to Home
-                </button>
-              </div>
-            </div>
-          </header>
-
-          <main className="container mx-auto px-4 py-12">
-            <div className="max-w-6xl mx-auto">
-              {currentStep > 0 && <StepIndicator currentStep={currentStep} />}
-
-              <div className="mt-12">
-                <ErrorBoundary>
-                  {currentStep === 1 && <UploadStep onComplete={handleUploadComplete} />}
-
-                  {currentStep === 2 && (
-                    <ProcessingStep
-                      files={uploadedFiles}
-                      description={productDescription}
-                      category={category}
-                      platform={targetPlatform}
-                      onComplete={handleProcessingComplete}
-                    />
-                  )}
-
-                  {currentStep === 3 && <ResultsStep results={analysisResults} onReset={resetWorkflow} />}
-                </ErrorBoundary>
-              </div>
-            </div>
-          </main>
-        </>
-      )}
     </div>
   )
 }

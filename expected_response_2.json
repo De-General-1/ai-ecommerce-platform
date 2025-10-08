@@ -1,0 +1,108 @@
+{
+    "next_step": "content_generation",
+    "campaigns": {
+        "campaigns": [
+            {
+                "coreContent": "{\"campaigns\": [{\"campaignName\": \"Basic Campaign\", \"coreContent\": \"Showcase product features and benefits\", \"targetAudience\": \"General audience\", \"platform\": \"Multi-platform\"}], \"analytics_projections\": [{\"title\": \"Estimated Reach\", \"value\": \"4.5K\", \"change\": \"+8.2%\", \"trend\": \"up\", \"description\": \"Projected audience reach\"}]}",
+                "targetAudience": "General audience",
+                "campaignName": "Generated Campaign",
+                "platform": "Multi-platform"
+            }
+        ],
+        "analytics_projections": [
+            {
+                "description": "Projected audience reach",
+                "title": "Estimated Reach",
+                "value": "4.0K",
+                "trend": "up",
+                "change": "+10.0%"
+            }
+        ],
+        "rawContent": "{\"campaigns\": [{\"campaignName\": \"Basic Campaign\", \"coreContent\": \"Showcase product features and benefits\", \"targetAudience\": \"General audience\", \"platform\": \"Multi-platform\"}], \"analytics_projections\": [{\"title\": \"Estimated Reach\", \"value\": \"4.5K\", \"change\": \"+8.2%\", \"trend\": \"up\", \"description\": \"Projected audience reach\"}]}"
+    },
+    "created_at": "2025-10-02T12:40:46.844645",
+    "enriched_at": "2025-10-02T12:40:49.267803",
+    "imageHash": "p1RhK6HA0E30MojPD9YdiZeJJQZiYJg2sZ7sGzSPVSw",
+    "campaign_generated_at": "2025-10-02T12:40:50.921642",
+    "originalData": {
+        "public_url": "https://degenerals-mi-sandbox-product-images-6rmydh8p.s3.amazonaws.com/uploads/af484904-9191-446b-b5a2-66aa678fb579-my-product-image.jpg",
+        "product_labels": [],
+        "object_key": "",
+        "product_categories": [],
+        "bucket_name": "degenerals-mi-sandbox-product-images-6rmydh8p",
+        "s3_url": "s3://degenerals-mi-sandbox-product-images-6rmydh8p/uploads/af484904-9191-446b-b5a2-66aa678fb579-my-product-image.jpg",
+        "raw_analysis": {
+            "product_labels": [],
+            "is_appropriate_content": true,
+            "detected_text": [],
+            "analysis_timestamp": "2025-10-02T12:40:46.841393",
+            "moderation_labels": []
+        }
+    },
+    "pipeline_status": "completed",
+    "youtubeResults": [
+        {
+            "publishedAt": "2022-05-09T15:00:21Z",
+            "description": "Before starting your international marketing strategy, there are some basic concepts you need to know. In this video, you'll learn the fundamentals of international marketing, as long as how to use Hreflang tags and canonical url, and 4 examples of successful business international marketing strategies. Master Your International Digital Marketing 👉 https://youtu.be/dvNYUgca6O0\n\n📚 Do you want to learn what Hreflang tags are? 👉https://bit.ly/cybHref\n\n00:00 Intro\n00:38 What Is International Marketi",
+            "videoId": "t3Yf75xtDNg",
+            "likeCount": 973.0,
+            "viewCount": 62869.0,
+            "title": "🌎 What is International Marketing? | 4 Successful Examples 💸",
+            "url": "https://www.youtube.com/watch?v=t3Yf75xtDNg",
+            "channelTitle": "Marketing Explained",
+            "thumbnailUrl": "https://i.ytimg.com/vi/t3Yf75xtDNg/hqdefault.jpg",
+            "commentCount": 26.0
+        },
+        {
+            "publishedAt": "2015-05-29T06:41:52Z",
+            "description": "Global Business",
+            "videoId": "WbYMBG2o7dk",
+            "likeCount": 8.0,
+            "viewCount": 1142.0,
+            "title": "28. Product Adaptation - International Marketing",
+            "url": "https://www.youtube.com/watch?v=WbYMBG2o7dk",
+            "channelTitle": "Chris Cunningham",
+            "thumbnailUrl": "https://i.ytimg.com/vi/WbYMBG2o7dk/hqdefault.jpg",
+            "commentCount": 0.0
+        },
+        {
+            "publishedAt": "2025-04-06T14:00:22Z",
+            "description": "In this video, we break down the essentials of the global marketing mix, exploring how businesses adapt their 4Ps—product, price, place, and promotion—for international markets. \n\nWe'll discuss distribution challenges in foreign countries, pricing complexities, and the creative ways companies adapt products and messages for local markets. \n\nWith examples from McDonald's in India, Toyota's luxury positioning, and GE's frugal innovations, this video provides a comprehensive look at thriving in glo",
+            "videoId": "MUeiBgHeC-Q",
+            "likeCount": 0.0,
+            "viewCount": 30.0,
+            "title": "Mastering the Global Marketing Mix: Distribution, Pricing, and Product Adaptation",
+            "url": "https://www.youtube.com/watch?v=MUeiBgHeC-Q",
+            "channelTitle": "School of Learning",
+            "thumbnailUrl": "https://i.ytimg.com/vi/MUeiBgHeC-Q/hqdefault.jpg",
+            "commentCount": 0.0
+        },
+        {
+            "publishedAt": "2025-09-17T07:31:11Z",
+            "description": "Why Is Cultural Adaptation Crucial For Sports Brands Expanding Globally? Have you ever wondered how sports brands expand successfully into new markets around the world? In this informative video, we'll explore the importance of cultural adaptation for sports brands looking to grow globally. We'll start by explaining what cultural adaptation involves and why it's essential for building strong connections with local fans. We'll discuss how understanding local customs, values, and social norms infl",
+            "videoId": "zB6sHFgVBJE",
+            "likeCount": 0.0,
+            "viewCount": 2.0,
+            "title": "Why Is Cultural Adaptation Crucial For Sports Brands Expanding Globally? - Business In Sports",
+            "url": "https://www.youtube.com/watch?v=zB6sHFgVBJE",
+            "channelTitle": "Business In Sports",
+            "thumbnailUrl": "https://i.ytimg.com/vi/zB6sHFgVBJE/hqdefault.jpg",
+            "commentCount": 0.0
+        },
+        {
+            "publishedAt": "2025-06-10T13:00:49Z",
+            "description": "🎀 How did Korean dumplings become a symbol of cultural adaptation?\n\nThis is Practice 2-1 for **Chapter 2** of our *International Business* series, featuring Bibigo's global expansion story.  \nIn this case, we explore:  \n- How Bibigo adapted dumpling designs to fit cultural preferences  \n- The brand's communication strategy in diverse regions  \n- Role of CJ CheilJedang in shaping global Korean food identity  \n- Lessons for managing product standardization vs. localization\n\n📘 Full case article:  \n",
+            "videoId": "T6vE2BUD15w",
+            "likeCount": 0.0,
+            "viewCount": 3.0,
+            "title": "Practice 2-1 | Bibigo's Global Strategy: How did Bibigo adapt to global cultures?",
+            "url": "https://www.youtube.com/watch?v=T6vE2BUD15w",
+            "channelTitle": "Essential Bizmarketing",
+            "thumbnailUrl": "https://i.ytimg.com/vi/T6vE2BUD15w/hqdefault.jpg",
+            "commentCount": 0.0
+        }
+    ],
+    "recordId": "ca6e5df6-5777-4588-81e0-0f62d3a6ec8c",
+    "source_table": "enriched",
+    "_processing_time_ms": 4.88
+}

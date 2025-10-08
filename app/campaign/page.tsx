@@ -4,9 +4,9 @@ import { useState } from "react"
 import { UploadStep } from "@/components/upload-step"
 import { ProcessingStep } from "@/components/processing-step"
 import { ResultsStep } from "@/components/results-step"
-import { StepIndicator } from "@/components/step-indicator"
+import { ModernStepIndicator } from "@/components/modern-step-indicator"
+import { CampaignHeader } from "@/components/campaign-header"
 import { ErrorBoundary } from "@/components/error-boundary"
-import Link from "next/link"
 
 export default function CampaignPage() {
   const [currentStep, setCurrentStep] = useState(1) // 1 = upload, 2 = processing, 3 = results
@@ -40,29 +40,13 @@ export default function CampaignPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-      {/* Header */}
-      <header className="relative overflow-hidden bg-white/80 backdrop-blur-md border-b border-slate-200/60 shadow-elegant">
-        <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 via-purple-500/5 to-cyan-500/5"></div>
-        <div className="relative container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              AI E-Commerce Growth Agent
-            </Link>
-            <Link 
-              href="/"
-              className="text-slate-600 hover:text-slate-900 text-sm font-medium"
-            >
-              ← Back to Home
-            </Link>
-          </div>
-        </div>
-      </header>
+      <CampaignHeader currentStep={currentStep} />
 
-      <main className="container mx-auto px-4 py-12">
-        <div className="max-w-6xl mx-auto">
-          <StepIndicator currentStep={currentStep} />
+      <main className="container mx-auto px-4 py-16">
+        <div className="max-w-7xl mx-auto">
+          <ModernStepIndicator currentStep={currentStep} />
 
-          <div className="mt-12">
+          <div className="mt-16">
             <ErrorBoundary>
               {currentStep === 1 && <UploadStep onComplete={handleUploadComplete} />}
 

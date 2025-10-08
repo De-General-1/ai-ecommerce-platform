@@ -151,10 +151,7 @@
     "recordId": "0ca05f70-6968-45aa-a0d6-3f648c58cc9e",
     "source_table": "enriched",
     "parsedCampaigns": {
-        "fileKeys": [
-            "uploads/key1.jpg",
-            "uploads/key2.jpg"
-        ],
+        "fileKeys": [],
         "description": "Discover the versatility and functionality of our innovative product, designed to enhance your daily tasks with ease. Featuring a Page, Text, Baton, and Stick, this product is a must-have for productivity enthusiasts. Whether you're organizing your workspace, drafting emails, or planning your next adventure, our product is here to support you every step of the way.",
         "category": "General",
         "platform": "Instagram",

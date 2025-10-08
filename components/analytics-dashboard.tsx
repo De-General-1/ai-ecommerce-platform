@@ -19,49 +19,31 @@ export function AnalyticsDashboard({ results }: AnalyticsDashboardProps) {
   const totalCampaigns = results.campaigns?.length || 0
   const totalContentIdeas = results.content_ideas?.length || 0
 
-  // Mock additional analytics data
-  const analyticsData = {
-    estimatedReach: Math.floor(avgEngagementScore * 1000),
-    projectedEngagement: avgEngagementScore,
-    conversionRate: Math.floor(avgEngagementScore * 0.15),
-    roi: Math.floor(avgEngagementScore * 3.2),
-    weeklyGrowth: 12.5,
-    monthlyGrowth: 34.2,
-  }
-
   const kpiCards = [
     {
       title: "Estimated Reach",
-      value: `${(analyticsData.estimatedReach / 1000).toFixed(1)}K`,
-      change: "+12.5%",
-      trend: "up",
+      value: results.analytics?.estimatedReach ? `${(results.analytics.estimatedReach / 1000).toFixed(1)}K` : "--",
+      change: results.analytics?.reachChange || "--",
+      trend: results.analytics?.reachTrend || "neutral",
       icon: Users,
       description: "Projected audience reach",
     },
     {
       title: "Avg. Engagement",
-      value: `${analyticsData.projectedEngagement.toFixed(1)}%`,
-      change: "+8.2%",
-      trend: "up",
+      value: avgEngagementScore > 0 ? `${avgEngagementScore.toFixed(1)}%` : "--",
+      change: results.analytics?.engagementChange || "--",
+      trend: results.analytics?.engagementTrend || "neutral",
       icon: Heart,
       description: "Expected engagement rate",
     },
     {
       title: "Conversion Rate",
-      value: `${analyticsData.conversionRate}%`,
-      change: "+5.1%",
-      trend: "up",
+      value: results.analytics?.conversionRate ? `${results.analytics.conversionRate}%` : "--",
+      change: results.analytics?.conversionChange || "--",
+      trend: results.analytics?.conversionTrend || "neutral",
       icon: Target,
       description: "Projected conversion rate",
     },
-    // {
-    //   title: "ROI Projection",
-    //   value: `${analyticsData.roi}x`,
-    //   change: "+15.3%",
-    //   trend: "up",
-    //   icon: DollarSign,
-    //   description: "Return on investment",
-    // },
   ]
 
   return (
@@ -85,15 +67,19 @@ export function AnalyticsDashboard({ results }: AnalyticsDashboardProps) {
                   </div>
                 </div>
                 <div className="flex items-center gap-2 mt-4">
-                  {isPositive ? (
+                  {kpi.change === "--" ? (
+                    <div className="w-4 h-4" />
+                  ) : isPositive ? (
                     <TrendingUp className="w-4 h-4 text-green-500" />
                   ) : (
                     <TrendingDown className="w-4 h-4 text-red-500" />
                   )}
-                  <span className={`text-sm font-medium ${isPositive ? "text-green-500" : "text-red-500"}`}>
+                  <span className={`text-sm font-medium ${
+                    kpi.change === "--" ? "text-muted-foreground" :
+                    isPositive ? "text-green-500" : "text-red-500"
+                  }`}>
                     {kpi.change}
                   </span>
-                  {/* <span className="text-sm text-muted-foreground">vs last month</span> */}
                 </div>
                 <p className="text-xs text-muted-foreground mt-2">{kpi.description}</p>
               </CardContent>
@@ -143,17 +129,17 @@ export function AnalyticsDashboard({ results }: AnalyticsDashboardProps) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center p-4 bg-primary/5 rounded-lg">
                 <Eye className="w-8 h-8 mx-auto mb-2 text-primary" />
-                <p className="text-2xl font-bold">{(analyticsData.estimatedReach * 2.5).toLocaleString()}</p>
+                <p className="text-2xl font-bold">{results.analytics?.estimatedViews?.toLocaleString() || "--"}</p>
                 <p className="text-sm text-muted-foreground">Estimated Views</p>
               </div>
               <div className="text-center p-4 bg-green-50 rounded-lg">
                 <Share2 className="w-8 h-8 mx-auto mb-2 text-green-600" />
-                <p className="text-2xl font-bold">{Math.floor(analyticsData.estimatedReach * 0.15).toLocaleString()}</p>
+                <p className="text-2xl font-bold">{results.analytics?.projectedShares?.toLocaleString() || "--"}</p>
                 <p className="text-sm text-muted-foreground">Projected Shares</p>
               </div>
               <div className="text-center p-4 bg-blue-50 rounded-lg">
                 <Users className="w-8 h-8 mx-auto mb-2 text-blue-600" />
-                <p className="text-2xl font-bold">{Math.floor(analyticsData.estimatedReach * 0.08).toLocaleString()}</p>
+                <p className="text-2xl font-bold">{results.analytics?.newFollowers?.toLocaleString() || "--"}</p>
                 <p className="text-sm text-muted-foreground">New Followers</p>
               </div>
             </div>
@@ -163,24 +149,23 @@ export function AnalyticsDashboard({ results }: AnalyticsDashboardProps) {
           <div>
             <h4 className="font-medium mb-4">AI Recommendations</h4>
             <div className="space-y-3">
-              <div className="p-4 border-l-4 border-primary bg-primary/5 rounded-r-lg">
-                <p className="font-medium text-sm">Optimize Posting Times</p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Based on your audience, post between 6-9 PM for maximum engagement
-                </p>
-              </div>
-              <div className="p-4 border-l-4 border-green-500 bg-green-50 rounded-r-lg">
-                <p className="font-medium text-sm">High-Performing Content</p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Your {results.content_ideas?.[0]?.platform} content shows 23% higher engagement than average
-                </p>
-              </div>
-              <div className="p-4 border-l-4 border-blue-500 bg-blue-50 rounded-r-lg">
-                <p className="font-medium text-sm">Cross-Platform Opportunity</p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Consider adapting your top-performing content for Instagram Reels
-                </p>
-              </div>
+              {results.recommendations?.length > 0 ? (
+                results.recommendations.map((rec: any, index: number) => (
+                  <div key={index} className={`p-4 border-l-4 rounded-r-lg ${
+                    rec.type === 'timing' ? 'border-primary bg-primary/5' :
+                    rec.type === 'performance' ? 'border-green-500 bg-green-50' :
+                    'border-blue-500 bg-blue-50'
+                  }`}>
+                    <p className="font-medium text-sm">{rec.title}</p>
+                    <p className="text-sm text-muted-foreground mt-1">{rec.description}</p>
+                  </div>
+                ))
+              ) : (
+                <div className="p-4 border-l-4 border-muted bg-muted/5 rounded-r-lg">
+                  <p className="font-medium text-sm">No recommendations available</p>
+                  <p className="text-sm text-muted-foreground mt-1">AI recommendations will appear here once analysis is complete</p>
+                </div>
+              )}
             </div>
           </div>
         </CardContent>

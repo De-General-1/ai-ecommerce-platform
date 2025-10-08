@@ -1,5 +1,5 @@
 // Environment configuration with fallbacks
-const BASE_URL = 'https://ws1omcsil8.execute-api.eu-west-2.amazonaws.com/dev'
+const BASE_URL = 'https://itnxzfea8b.execute-api.eu-west-1.amazonaws.com/sandbox'
 
 export const config = {
   api: {

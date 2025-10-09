@@ -10,14 +10,14 @@ interface ModernStepIndicatorProps {
 const steps = [
   {
     id: 1,
-    title: "Upload",
+    title: "Collect",
     description: "Product details",
     icon: Upload
   },
   {
     id: 2,
     title: "Process",
-    description: "AI analysis",
+    description: "AI collaboration",
     icon: Brain
   },
   {

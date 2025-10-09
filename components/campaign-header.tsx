@@ -11,18 +11,22 @@ interface CampaignHeaderProps {
 export function CampaignHeader({ currentStep }: CampaignHeaderProps) {
   const getStepTitle = () => {
     switch (currentStep) {
-      case 1: return "Upload Your Product"
-      case 2: return "AI Processing"
-      case 3: return "Your Campaigns"
+      case 1: return "Choose Your Goal"
+      case 2: return "AI Team Assembly"
+      case 3: return "Smart Data Collection"
+      case 4: return "AI Collaboration"
+      case 5: return "Your Campaigns"
       default: return "Create Campaign"
     }
   }
 
   const getStepDescription = () => {
     switch (currentStep) {
-      case 1: return "Upload product images and provide details to get started"
-      case 2: return "Our AI is analyzing your product and creating campaigns"
-      case 3: return "Your personalized marketing campaigns are ready"
+      case 1: return "Select your marketing objective to get started"
+      case 2: return "Your AI specialists are being assembled"
+      case 3: return "Provide details for your AI team to work with"
+      case 4: return "Your AI team is collaborating to create campaigns"
+      case 5: return "Your personalized marketing campaigns are ready"
       default: return "Transform your product into viral campaigns"
     }
   }
@@ -51,7 +55,7 @@ export function CampaignHeader({ currentStep }: CampaignHeaderProps) {
         <div className="text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-6">
             <Sparkles className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium">Step {currentStep} of 3</span>
+            <span className="text-sm font-medium">Step {currentStep} of 5</span>
           </div>
 
           <h1 className="text-4xl lg:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">

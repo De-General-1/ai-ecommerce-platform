@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Upload, X, ImageIcon, Sparkles, Target, Globe, Users, Brain, Lightbulb, MapPin, DollarSign } from "lucide-react"
+import { Upload, X, ImageIcon, Sparkles, Target, Globe, Users, Brain, Lightbulb, MapPin, DollarSign, TrendingUp } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface SmartDataCollectionProps {
@@ -57,20 +57,53 @@ export function SmartDataCollection({ selectedGoal, aiTeam, onComplete }: SmartD
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
-  const addTargetMarket = (market: string) => {
-    if (market && !formData.targetMarkets.includes(market)) {
-      updateFormData("targetMarkets", [...formData.targetMarkets, market])
+  const regions = [
+    { id: "north-america", name: "North America", flag: "🇺🇸", cost: 8 },
+    { id: "europe", name: "Europe", flag: "🇪🇺", cost: 12 },
+    { id: "asia-pacific", name: "Asia Pacific", flag: "🇯🇵", cost: 15 },
+    { id: "latin-america", name: "Latin America", flag: "🇧🇷", cost: 10 },
+    { id: "middle-east", name: "Middle East", flag: "🇦🇪", cost: 14 },
+    { id: "africa", name: "Africa", flag: "🇿🇦", cost: 11 }
+  ]
+
+  const addRegion = (regionId: string) => {
+    if (!selectedRegions.includes(regionId)) {
+      const newRegions = [...selectedRegions, regionId]
+      setSelectedRegions(newRegions)
+      const additionalCost = regions.find(r => r.id === regionId)?.cost || 0
+      setCurrentPrice((prev: number) => prev + additionalCost)
     }
   }
 
-  const removeTargetMarket = (market: string) => {
-    updateFormData("targetMarkets", formData.targetMarkets.filter(m => m !== market))
+  const removeRegion = (regionId: string) => {
+    const newRegions = selectedRegions.filter(r => r !== regionId)
+    setSelectedRegions(newRegions)
+    const removedCost = regions.find(r => r.id === regionId)?.cost || 0
+    setCurrentPrice((prev: number) => prev - removedCost)
+  }
+
+  const addCompetitor = (url: string) => {
+    if (url && !competitorUrls.includes(url)) {
+      setCompetitorUrls([...competitorUrls, url])
+      setCurrentPrice((prev: number) => prev + 5)
+    }
+  }
+
+  const removeCompetitor = (url: string) => {
+    setCompetitorUrls(competitorUrls.filter(u => u !== url))
+    setCurrentPrice((prev: number) => prev - 5)
   }
 
   const handleSubmit = () => {
     const isValid = files.length > 0 && formData.productDescription && formData.category
     if (isValid) {
-      onComplete({ files, ...formData })
+      onComplete({ 
+        files, 
+        ...formData, 
+        selectedRegions: isGlobalGoal ? selectedRegions : [],
+        competitorUrls: isPerformanceGoal ? competitorUrls : [],
+        finalPrice: currentPrice
+      })
     }
   }
 
@@ -78,9 +111,13 @@ export function SmartDataCollection({ selectedGoal, aiTeam, onComplete }: SmartD
   const isAdvancedValid = isBasicValid && formData.targetPlatform
 
   // Dynamic form fields based on selected goal and AI team
-  const showAdvancedFields = selectedGoal.complexity === "Advanced"
-  const showGlobalFields = aiTeam.some(agent => agent.id === "cultural-expert")
-  const showMarketFields = aiTeam.some(agent => agent.id === "market-researcher")
+  const [selectedRegions, setSelectedRegions] = useState<string[]>([])
+  const [currentPrice, setCurrentPrice] = useState(selectedGoal.price || 0)
+  const [competitorUrls, setCompetitorUrls] = useState<string[]>([])
+  
+  const isGlobalGoal = selectedGoal.id === "global-viral"
+  const isPerformanceGoal = selectedGoal.id === "improve-existing"
+  const isViralGoal = selectedGoal.id === "viral-content"
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">
@@ -278,111 +315,230 @@ export function SmartDataCollection({ selectedGoal, aiTeam, onComplete }: SmartD
         </Card>
       </div>
 
-      {/* Advanced Fields */}
-      {showAdvancedFields && (
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Global Markets */}
-          {showGlobalFields && (
-            <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-              <CardHeader className="pb-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
-                    <Globe className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <CardTitle className="text-xl text-slate-900">Target Markets</CardTitle>
-                    <p className="text-slate-600 text-sm mt-1">Select markets for cultural adaptation</p>
-                  </div>
+      {/* Goal-Specific Fields */}
+      {isGlobalGoal && (
+        <Card className="border-0 shadow-xl bg-gradient-to-br from-blue-50 to-indigo-50">
+          <CardHeader className="pb-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                  <Globe className="w-6 h-6 text-white" />
                 </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-2">
-                  {["United States", "United Kingdom", "Japan", "Germany", "France", "Brazil", "India", "Australia"].map((market) => (
-                    <Button
-                      key={market}
-                      variant="outline"
-                      size="sm"
-                      className={`justify-start ${formData.targetMarkets.includes(market) ? 'bg-green-50 border-green-300 text-green-700' : ''}`}
-                      onClick={() => formData.targetMarkets.includes(market) ? removeTargetMarket(market) : addTargetMarket(market)}
-                    >
-                      <MapPin className="w-4 h-4 mr-2" />
-                      {market}
-                    </Button>
+                <div>
+                  <CardTitle className="text-xl text-slate-900">Target Regions</CardTitle>
+                  <p className="text-slate-600 text-sm mt-1">Select regions for global viral campaigns</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-2xl font-bold text-blue-600">${currentPrice}</div>
+                <div className="text-xs text-slate-500">total cost</div>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+              {regions.map((region) => {
+                const isSelected = selectedRegions.includes(region.id)
+                return (
+                  <Button
+                    key={region.id}
+                    variant="outline"
+                    className={`h-auto p-4 justify-start transition-all ${
+                      isSelected 
+                        ? 'bg-blue-50 border-blue-300 text-blue-700 shadow-md' 
+                        : 'hover:bg-blue-50/50 hover:border-blue-200'
+                    }`}
+                    onClick={() => isSelected ? removeRegion(region.id) : addRegion(region.id)}
+                  >
+                    <div className="flex flex-col items-start gap-2 w-full">
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg">{region.flag}</span>
+                        <span className="font-medium text-sm">{region.name}</span>
+                      </div>
+                      <div className="text-xs text-slate-500">+${region.cost}</div>
+                    </div>
+                  </Button>
+                )
+              })}
+            </div>
+            {selectedRegions.length > 0 && (
+              <div className="p-4 bg-blue-50 rounded-xl">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-medium text-slate-900">Selected Regions</span>
+                  <span className="text-sm text-blue-600">{selectedRegions.length} regions</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {selectedRegions.map((regionId) => {
+                    const region = regions.find(r => r.id === regionId)
+                    return (
+                      <Badge key={regionId} className="bg-blue-100 text-blue-700 border-blue-200">
+                        {region?.flag} {region?.name}
+                        <X className="w-3 h-3 ml-1 cursor-pointer" onClick={() => removeRegion(regionId)} />
+                      </Badge>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
+      {isPerformanceGoal && (
+        <Card className="border-0 shadow-xl bg-gradient-to-br from-green-50 to-emerald-50">
+          <CardHeader className="pb-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
+                  <TrendingUp className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <CardTitle className="text-xl text-slate-900">Competitor Analysis</CardTitle>
+                  <p className="text-slate-600 text-sm mt-1">Add competitors for deeper insights</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-2xl font-bold text-green-600">${currentPrice}</div>
+                <div className="text-xs text-slate-500">total cost</div>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-3">
+              <Input
+                placeholder="Enter competitor YouTube channel or website URL"
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    const target = e.target as HTMLInputElement
+                    if (target.value) {
+                      addCompetitor(target.value)
+                      target.value = ''
+                    }
+                  }
+                }}
+                className="border-slate-200 rounded-xl"
+              />
+              <p className="text-xs text-slate-500">Press Enter to add • Each competitor adds $5</p>
+            </div>
+            {competitorUrls.length > 0 && (
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-slate-900">Competitors to Analyze</span>
+                  <span className="text-sm text-green-600">{competitorUrls.length} added</span>
+                </div>
+                <div className="space-y-2">
+                  {competitorUrls.map((url, index) => (
+                    <div key={index} className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                      <span className="text-sm text-slate-700 truncate flex-1">{url}</span>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeCompetitor(url)}
+                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                      >
+                        <X className="w-4 h-4" />
+                      </Button>
+                    </div>
                   ))}
                 </div>
-                {formData.targetMarkets.length > 0 && (
-                  <div className="flex flex-wrap gap-2 pt-2">
-                    {formData.targetMarkets.map((market) => (
-                      <Badge key={market} variant="secondary" className="bg-green-100 text-green-700">
-                        {market}
-                        <X className="w-3 h-3 ml-1 cursor-pointer" onClick={() => removeTargetMarket(market)} />
-                      </Badge>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          )}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
-          {/* Market Research */}
-          {showMarketFields && (
-            <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-              <CardHeader className="pb-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center">
-                    <Lightbulb className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <CardTitle className="text-xl text-slate-900">Additional Context</CardTitle>
-                    <p className="text-slate-600 text-sm mt-1">Help your team with extra insights</p>
-                  </div>
+      {isViralGoal && (
+        <Card className="border-0 shadow-xl bg-gradient-to-br from-orange-50 to-red-50">
+          <CardHeader className="pb-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center">
+                  <Sparkles className="w-6 h-6 text-white" />
                 </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <label className="text-sm font-semibold text-slate-900">Budget Range</label>
-                  <Select value={formData.budget} onValueChange={(value) => updateFormData("budget", value)}>
-                    <SelectTrigger className="border-slate-200 rounded-xl">
-                      <SelectValue placeholder="Select budget range" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="under-1k">Under $1,000</SelectItem>
-                      <SelectItem value="1k-5k">$1,000 - $5,000</SelectItem>
-                      <SelectItem value="5k-10k">$5,000 - $10,000</SelectItem>
-                      <SelectItem value="10k-plus">$10,000+</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <div>
+                  <CardTitle className="text-xl text-slate-900">Viral Content Preferences</CardTitle>
+                  <p className="text-slate-600 text-sm mt-1">Optimize for maximum engagement</p>
                 </div>
-
-                <div className="space-y-3">
-                  <label className="text-sm font-semibold text-slate-900">Competitor URLs</label>
-                  <Textarea
-                    placeholder="Share competitor websites or social profiles for analysis..."
-                    value={formData.competitorUrls}
-                    onChange={(e) => updateFormData("competitorUrls", e.target.value)}
-                    rows={3}
-                    className="resize-none border-slate-200 rounded-xl"
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
+              </div>
+              <div className="text-right">
+                <div className="text-2xl font-bold text-orange-600">${currentPrice}</div>
+                <div className="text-xs text-slate-500">total cost</div>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-3">
+                <label className="text-sm font-semibold text-slate-900">Content Style</label>
+                <Select value={formData.brandVoice} onValueChange={(value) => updateFormData("brandVoice", value)}>
+                  <SelectTrigger className="border-slate-200 rounded-xl">
+                    <SelectValue placeholder="Select style" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="trendy">Trendy & Hip</SelectItem>
+                    <SelectItem value="educational">Educational</SelectItem>
+                    <SelectItem value="entertaining">Entertaining</SelectItem>
+                    <SelectItem value="inspirational">Inspirational</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-3">
+                <label className="text-sm font-semibold text-slate-900">Target Audience</label>
+                <Select value={formData.timeline} onValueChange={(value) => updateFormData("timeline", value)}>
+                  <SelectTrigger className="border-slate-200 rounded-xl">
+                    <SelectValue placeholder="Select audience" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="gen-z">Gen Z (16-24)</SelectItem>
+                    <SelectItem value="millennials">Millennials (25-40)</SelectItem>
+                    <SelectItem value="gen-x">Gen X (41-56)</SelectItem>
+                    <SelectItem value="all">All Ages</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       )}
 
       {/* Submit Button */}
       <div className="text-center pt-8">
+        <div className="mb-6 p-6 bg-slate-50 rounded-2xl max-w-md mx-auto">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-slate-600">Base Campaign</span>
+            <span className="font-medium">${selectedGoal.price}</span>
+          </div>
+          {isGlobalGoal && selectedRegions.length > 0 && (
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-slate-600">{selectedRegions.length} Additional Regions</span>
+              <span className="font-medium">+${currentPrice - selectedGoal.price}</span>
+            </div>
+          )}
+          {isPerformanceGoal && competitorUrls.length > 0 && (
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-slate-600">{competitorUrls.length} Competitor Analysis</span>
+              <span className="font-medium">+${competitorUrls.length * 5}</span>
+            </div>
+          )}
+          <div className="border-t pt-2 mt-2">
+            <div className="flex items-center justify-between">
+              <span className="font-semibold text-slate-900">Total Cost</span>
+              <span className="text-2xl font-bold text-blue-600">${currentPrice}</span>
+            </div>
+          </div>
+        </div>
+        
         <Button
           onClick={handleSubmit}
           disabled={!isBasicValid}
           size="lg"
-          className="px-12 py-4 text-lg font-semibold bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50"
+          className="px-12 py-4 text-lg font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50"
         >
           <Sparkles className="w-5 h-5 mr-2" />
-          Start Marketing Collaboration
+          Generate Campaign • ${currentPrice}
         </Button>
         <p className="text-sm text-slate-500 mt-3">
-          Your marketing team will begin working immediately after you submit
+          Your specialized team will create your {selectedGoal.title.toLowerCase()} campaign
         </p>
       </div>
     </div>

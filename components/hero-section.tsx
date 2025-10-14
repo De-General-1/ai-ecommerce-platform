@@ -51,7 +51,7 @@ export function HeroSection() {
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
             <div className="text-center">
-              <div className="text-3xl font-bold text-white mb-1">10K+</div>
+              <div className="text-3xl font-bold text-white mb-1">100</div>
               <div className="text-sm text-slate-400">Campaigns Created</div>
             </div>
             <div className="text-center">
@@ -59,11 +59,11 @@ export function HeroSection() {
               <div className="text-sm text-slate-400">Engagement Boost</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-white mb-1">50+</div>
+              <div className="text-3xl font-bold text-white mb-1">10+</div>
               <div className="text-sm text-slate-400">Countries Supported</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-white mb-1">2 min</div>
+              <div className="text-3xl font-bold text-white mb-1">10 min</div>
               <div className="text-sm text-slate-400">Average Setup</div>
             </div>
           </div>

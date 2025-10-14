@@ -15,6 +15,7 @@ interface Goal {
   agents: string[]
   complexity: "Simple" | "Advanced"
   estimatedTime: string
+  price: number
   features: string[]
 }
 
@@ -117,6 +118,10 @@ export function GoalSelection({ onGoalSelect }: GoalSelectionProps) {
                     <Icon className="w-8 h-8 text-white" />
                   </div>
                   <div className="flex flex-col items-end gap-2">
+                    <div className="text-right">
+                      <div className="text-2xl font-bold text-slate-900">${goal.price}</div>
+                      <div className="text-xs text-slate-500">per campaign</div>
+                    </div>
                     <Badge variant={goal.complexity === 'Simple' ? 'secondary' : 'default'}>
                       {goal.complexity}
                     </Badge>
@@ -167,9 +172,10 @@ export function GoalSelection({ onGoalSelect }: GoalSelectionProps) {
                         </li>
                       ))}
                       {goal.features.length > 3 && (
-                        <li className="text-sm text-slate-500 italic">
-                          +{goal.features.length - 3} more features
-                        </li>
+                        // <li className="text-sm text-slate-500 italic">
+                        //   +{goal.features.length - 3} more features
+                        // </li>
+                        <li className="text-sm text-slate-500 italic">+ more features</li>
                       )}
                     </ul>
                   </div>
@@ -189,7 +195,7 @@ export function GoalSelection({ onGoalSelect }: GoalSelectionProps) {
       </div>
 
       {/* Mode Toggle */}
-      <div className="text-center pt-8">
+      {/* <div className="text-center pt-8">
         <div className="inline-flex items-center gap-4 p-2 bg-slate-100 rounded-full">
           <Button variant="ghost" size="sm" className="rounded-full">
             <Zap className="w-4 h-4 mr-2" />
@@ -203,7 +209,7 @@ export function GoalSelection({ onGoalSelect }: GoalSelectionProps) {
         <p className="text-sm text-slate-500 mt-2">
           Switch between simplified and advanced campaign creation
         </p>
-      </div>
+      </div> */}
     </div>
   )
 }

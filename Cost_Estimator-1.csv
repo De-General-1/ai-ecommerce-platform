@@ -1,0 +1,45 @@
+Service,Resource Type,Region,Pricing Metric,Use_Defaults,Quantity,Unit,Unit Price,Notes
+,,,,Yes,,,,
+API Gateway,HTTP APIs,eu-central-1,Api Calls,1,1.00,Million,$1.080000000,"HTTP APIs have two pricing tiers, for the first 300 million requests per month, it is billed at $1.20 per million per month,then $1.08 per million per month."
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+Lambda,x86,eu-central-1,Requests,1,1.00,value,$0.000041667,"AWS Lambda pricing has three compute tiers and a flat request charge. For the first 6 billion GB-seconds per month, compute is billed at $0.0000166667 per GB-second. The next 9 billion GB-seconds are billed at $0.000015 per GB-second, and usage beyond 15 billion GB-seconds is billed at $0.0000133334 per GB-second. In addition, requests are billed at $0.20 per 1 million requests."
+,,,Duration,20,60.00,sec,,
+,,,Memory,0.125,0.25,GB,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+Dynamo DB,On-demand Capacity,eu-central-1,Storage,25,25.00,GB,$0.000000000,
+,,,Writes,1,1.00,Million,$0.000000763,"DynamoDB charges per million read/write request units (transactional and strongly consistent operations count as 2 units each), per million stream read units, per GB of backup storage, and follows standard AWS data transfer pricing."
+,,,Reads,1,1.00,Million,$0.000000153,
+,,,Streams,1,10.00,Million,$0.024500000,
+,,,Backups,0,1.00,GB,$0.000000000,
+,,,Data Transfer out,0.00001526,1.00,GB,$0.000001373,
+,,,,,,,,
+S3,Standard,eu-central-1,Storage,5,1.00,GB,$0.000119629,"Charged per GB per month stored. Tiered pricing — first 50TB, next 450TB, beyond 500TB."
+,,,Data Transfer out,5,1.00,GB,$0.000439453,Tiered by GB transferred out to the internet. Free for transfers to the same region AWS service.
+,,,,,,,,
+Eventbridge,,eu-central-1,Number of events,1,1.00,Million,,
+,,,Avg Payload size,0.00001526,128.00,KB,$0.000001000,Charged per million published events. Events over 64KB are billed as multiple events (rounded up in 64KB chunks). Extra charges apply if you enable event archiving and replay.
+,,,SameAccount,,,,,
+,,,,,,,,
+SQS,Requests,eu-central-1,Standard,1,5.00,Million,$0.000000000,Charged per million API requests. Messages over 64KB billed as multiple requests (same as EventBridge). FIFO Queues: Cost is higher than Standard queues (currently ~$0.50 per million requests).
+,,,,,,,,
+Rekognition,Image Properties,eu-central-1,Api Calls,1,1.00,value,$0.000750000,"Billed per 100 characters, minimum 3 units per request. First 10M units at base rate, next 40M discounted, beyond 50M further discounted."
+,,,,,,,,
+Comprehend,,eu-central-1,Sentiment Analysis,1,1.00,Million,$0.000100000,"Amazon Comprehend sentiment analysis is billed per unit of 100 characters, with a minimum of 3 units per request. The first 10M units are billed at $0.0001 per unit, the next 40M at $0.00005, and any usage beyond 50M at $0.000025."
+,,,,,,,,
+Bedrock,Amazon Nova Lite,eu-central-1,Input Tokens,500000,"1,000,000.00",value,$0.525000000,"Amazon Bedrock pricing varies by service: text models (Nova Lite, Pro, Reel) are billed per token for input, cache hits, and output, with Lite being cheaper but slower, while Pro/Reel cost more for better quality; text-to-image (Nova Canvas) charges per image, with higher resolution and quality driving up cost; video (Nova Reel) charges per generated second, with resolution and fps multipliers; and knowledge bases are billed per query, with extra charges when retrieval-augmented generation (embeddings + vector store) is used. In practice, the billing units boil down to tokens, images, seconds, and queries, where higher quality or advanced features increase spend—making batching strategies and cache utilization key for cost optimization at scale."
+,,,Cache Read Input Tokens,10000,"10,000.00",value,$0.002625000,
+,,,Output Tokens,1000000,"1,000,000.00",value,$4.200000000,
+,,,,,,,,
+,Amazon Nova Lite Canvas,eu-central-1,2048 x 2048 - Premium Quality,1,1.00,Thousand,$0.080000000,
+,,,,,,,,
+,Amazon Nova Reel,eu-central-1,"720p, 24 fps",15,1.00,hours,$1.200000000,
+,,,,,,,,
+,Knowledge Bases,eu-central-1,Structured Data Retrieval (SQL Generation),1,10.00,Thousand,$0.002000000,

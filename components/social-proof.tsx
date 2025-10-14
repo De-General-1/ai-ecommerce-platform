@@ -34,25 +34,25 @@ const testimonials = [
 const stats = [
   {
     icon: TrendingUp,
-    value: "340%",
+    value: "80%",
     label: "Average Engagement Increase",
     color: "text-green-600"
   },
   {
     icon: Users,
-    value: "50K+",
+    value: "100",
     label: "Active Creators",
     color: "text-blue-600"
   },
   {
     icon: Globe,
-    value: "120+",
+    value: "10+",
     label: "Countries Supported",
     color: "text-purple-600"
   },
   {
     icon: Star,
-    value: "4.9/5",
+    value: "4.5/5",
     label: "Customer Rating",
     color: "text-yellow-600"
   }

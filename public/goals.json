@@ -1,57 +1,38 @@
 [
   {
-    "id": "launch-global",
-    "title": "Launch Product Globally",
-    "description": "Create culturally-adapted campaigns for multiple markets with local insights",
+    "id": "global-viral",
+    "title": "Go Viral Globally ",
+    "description": "Launch worldwide with viral content, trending insights, and culturally-adapted campaigns across all social platforms",
     "iconName": "Rocket",
     "gradient": "from-blue-500 to-indigo-600",
-    "agents": ["Campaign Strategist", "Cultural Expert", "Market Researcher"],
+    "agents": ["Social Strategist", "Cultural Expert", "Trend Researcher", "Viral Analyst"],
     "complexity": "Advanced",
-    "estimatedTime": "5-8 minutes",
-    "features": ["Multi-market campaigns", "Cultural adaptation", "Local competitor analysis", "Regional optimization"]
+    "estimatedTime": "15-25 minutes",
+    "price": 29,
+    "features": ["Multi-platform campaigns", "Cultural adaptation", "Trend analysis", "Viral content patterns", "Influencer outreach", "Hashtag optimization"]
   },
   {
     "id": "improve-existing",
-    "title": "Optimize Existing Campaign",
-    "description": "Analyze and improve your current marketing performance with data-driven insights",
+    "title": "Boost Your Social Performance ",
+    "description": "Analyze your current social media presence and optimize for maximum engagement and reach",
     "iconName": "TrendingUp",
     "gradient": "from-green-500 to-emerald-600",
-    "agents": ["Performance Analyst", "Market Researcher", "Content Optimizer"],
+    "agents": ["Analytics Expert", "Content Optimizer", "Engagement Specialist"],
     "complexity": "Advanced",
-    "estimatedTime": "3-5 minutes",
-    "features": ["Performance analysis", "Competitor benchmarking", "Content optimization", "A/B test suggestions"]
+    "estimatedTime": "10-15 minutes",
+    "price": 21,
+    "features": ["Engagement analysis", "Competitor benchmarking", "Content optimization", "A/B testing"]
   },
   {
-    "id": "market-research",
-    "title": "Research Market Opportunity",
-    "description": "Deep dive into market trends, competitor analysis, and audience insights",
-    "iconName": "Search",
-    "gradient": "from-purple-500 to-pink-600",
-    "agents": ["Market Researcher", "Trend Analyst", "Audience Expert"],
-    "complexity": "Advanced",
-    "estimatedTime": "4-6 minutes",
-    "features": ["Market sizing", "Competitor analysis", "Trend identification", "Audience profiling"]
-  },
-  {
-    "id": "create-viral",
-    "title": "Create Viral Content",
-    "description": "Generate engaging, shareable content designed to maximize reach and engagement",
+    "id": "viral-content",
+    "title": "Create Viral Content & Launch ",
+    "description": "Generate scroll-stopping content and launch it instantly with smart automation and platform optimization",
     "iconName": "Palette",
     "gradient": "from-orange-500 to-red-600",
-    "agents": ["Creative Director", "Viral Strategist", "Content Creator"],
+    "agents": ["Viral Creator", "Content Strategist", "Social Designer", "Launch Assistant"],
     "complexity": "Simple",
-    "estimatedTime": "2-4 minutes",
-    "features": ["Viral content ideas", "Platform optimization", "Engagement hooks", "Trending formats"]
-  },
-  {
-    "id": "quick-campaign",
-    "title": "Quick Campaign Setup",
-    "description": "Fast-track campaign creation with smart defaults and AI recommendations",
-    "iconName": "Zap",
-    "gradient": "from-yellow-500 to-amber-600",
-    "agents": ["Campaign Assistant", "Content Creator"],
-    "complexity": "Simple",
-    "estimatedTime": "1-3 minutes",
-    "features": ["Smart templates", "Auto-optimization", "Platform suggestions", "Quick deployment"]
+    "estimatedTime": "8-12 minutes",
+    "price": 15,
+    "features": ["Viral hooks", "Platform-specific formats", "Trending sounds", "Ready-to-post content", "Auto-scheduling", "Quick setup"]
   }
 ]

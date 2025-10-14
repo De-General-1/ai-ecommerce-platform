@@ -25,7 +25,7 @@ export function CTASection() {
 
           <h2 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight">
             Ready to Transform Your
-            <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <span className="block text-white">
               Marketing Forever?
             </span>
           </h2>
@@ -52,7 +52,7 @@ export function CTASection() {
           </div>
 
           {/* Trust indicators */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-sm text-slate-400">
+          {/* <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-sm text-slate-400">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-green-400 rounded-full"></div>
               <span>Free 14-day trial</span>
@@ -65,7 +65,7 @@ export function CTASection() {
               <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
               <span>Cancel anytime</span>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

@@ -9,19 +9,19 @@ import { ErrorBoundary } from "@/components/error-boundary"
 
 // Dynamic imports for heavy components
 const AITeamAssembly = dynamic(() => import("@/components/ai-team-assembly").then(mod => ({ default: mod.AITeamAssembly })), {
-  loading: () => <div className="flex items-center justify-center py-16"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div></div>
+  loading: () => <div className="flex items-center justify-center py-16"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>
 })
 
 const SmartDataCollection = dynamic(() => import("@/components/smart-data-collection").then(mod => ({ default: mod.SmartDataCollection })), {
-  loading: () => <div className="flex items-center justify-center py-16"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div></div>
+  loading: () => <div className="flex items-center justify-center py-16"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>
 })
 
 const AICollaborationProcessing = dynamic(() => import("@/components/ai-collaboration-processing").then(mod => ({ default: mod.AICollaborationProcessing })), {
-  loading: () => <div className="flex items-center justify-center py-16"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div></div>
+  loading: () => <div className="flex items-center justify-center py-16"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>
 })
 
 const EnhancedResults = dynamic(() => import("@/components/enhanced-results").then(mod => ({ default: mod.EnhancedResults })), {
-  loading: () => <div className="flex items-center justify-center py-16"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div></div>
+  loading: () => <div className="flex items-center justify-center py-16"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>
 })
 
 export default function CampaignPage() {
@@ -60,7 +60,7 @@ export default function CampaignPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-slate-50">
       <CampaignHeader currentStep={currentStep} />
 
       <main className="container mx-auto px-4 py-16">

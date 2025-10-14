@@ -24,7 +24,7 @@ export default function HomePage() {
       <FeaturesShowcase />
       <HowItWorks />
       <SocialProof />
-      <PricingSection />
+      {/* <PricingSection /> */}
       <CTASection />
       <Footer />
     </div>

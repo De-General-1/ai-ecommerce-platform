@@ -59,18 +59,18 @@ export function GoalSelection({ onGoalSelect }: GoalSelectionProps) {
     <div className="max-w-7xl mx-auto space-y-8">
       {/* Header */}
       <div className="text-center space-y-4">
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium">
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">
           <Zap className="w-4 h-4" />
-          AI-Powered Marketing Goals
+          Marketing Goals
         </div>
         <h2 className="text-4xl lg:text-5xl font-bold text-slate-900">
           What's Your
-          <span className="block bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          <span className="block bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
             Marketing Goal?
           </span>
         </h2>
         <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-          Choose your objective and our AI specialists will assemble the perfect team to achieve your goals
+          Choose your objective and our marketing specialists will assemble the perfect strategy to achieve your goals
         </p>
       </div>
 
@@ -98,17 +98,17 @@ export function GoalSelection({ onGoalSelect }: GoalSelectionProps) {
           return (
             <Card
               key={goal.id}
-              className={`relative overflow-hidden border-2 cursor-pointer transition-all duration-300 hover:shadow-2xl group text-white ${
+              className={`relative overflow-hidden border-2 cursor-pointer transition-all duration-300 hover:shadow-2xl group ${
                 isSelected 
-                  ? 'border-indigo-500 shadow-2xl scale-105' 
-                  : 'border-slate-200 hover:border-indigo-300'
+                  ? 'border-blue-500 shadow-2xl scale-105' 
+                  : 'border-slate-200 hover:border-blue-300'
               }`}
               onMouseEnter={() => setHoveredGoal(goal.id)}
               onMouseLeave={() => setHoveredGoal(null)}
               onClick={() => handleGoalSelect(goal)}
             >
               {/* Background Gradient */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${goal.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
+              <div className={`absolute inset-0 bg-gradient-to-br from-blue-50 to-slate-50 opacity-0 group-hover:opacity-50 transition-opacity duration-300`}></div>
               
               <CardContent className="p-8 relative">
                 {/* Header */}
@@ -139,7 +139,7 @@ export function GoalSelection({ onGoalSelect }: GoalSelectionProps) {
                   <div>
                     <h4 className="text-sm font-semibold text-slate-900 mb-2 flex items-center gap-2">
                       <Users className="w-4 h-4" />
-                      Your AI Team
+                      Your Marketing Team
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {goal.agents.map((agent: string, index: number) => (
@@ -162,7 +162,7 @@ export function GoalSelection({ onGoalSelect }: GoalSelectionProps) {
                     <ul className="space-y-1">
                       {goal.features.slice(0, 3).map((feature, index) => (
                         <li key={index} className="text-sm text-slate-600 flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full"></div>
+                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
                           {feature}
                         </li>
                       ))}
@@ -177,7 +177,7 @@ export function GoalSelection({ onGoalSelect }: GoalSelectionProps) {
 
                 {/* Selection Indicator */}
                 {isSelected && (
-                  <div className="absolute top-4 right-4 w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center">
+                  <div className="absolute top-4 right-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
                     <div className="w-4 h-4 bg-white rounded-full animate-pulse"></div>
                   </div>
                 )}

@@ -40,10 +40,10 @@ export function AITeamAssembly({ selectedGoal, onTeamReady }: AITeamAssemblyProp
 
   const phases = [
     "Analyzing your marketing goal...",
-    "Selecting optimal AI specialists...", 
+    "Selecting optimal marketing specialists...", 
     "Configuring team collaboration...",
     "Preparing specialized tools...",
-    "Your AI team is ready!"
+    "Your marketing team is ready!"
   ]
 
   useEffect(() => {
@@ -121,13 +121,13 @@ export function AITeamAssembly({ selectedGoal, onTeamReady }: AITeamAssemblyProp
     <div className="max-w-6xl mx-auto space-y-8">
       {/* Header */}
       <div className="text-center space-y-4">
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium">
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">
           <Users className="w-4 h-4" />
-          AI Team Assembly
+          Team Assembly
         </div>
         <h2 className="text-4xl lg:text-5xl font-bold text-slate-900">
-          Your AI Marketing Team
-          <span className="block bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          Your Marketing Team
+          <span className="block bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
             Is Assembling
           </span>
         </h2>
@@ -137,12 +137,12 @@ export function AITeamAssembly({ selectedGoal, onTeamReady }: AITeamAssemblyProp
       </div>
 
       {/* Progress Section */}
-      <Card className="border-0 shadow-xl bg-gradient-to-br from-indigo-50 to-purple-50">
+      <Card className="border-0 shadow-xl bg-blue-50">
         <CardContent className="p-8">
           <div className="space-y-6">
             <div className="text-center">
               <h3 className="text-2xl font-bold text-slate-900 mb-2">{currentPhase}</h3>
-              <div className="flex items-center justify-center gap-2 text-indigo-600">
+              <div className="flex items-center justify-center gap-2 text-blue-600">
                 <Loader2 className="w-5 h-5 animate-spin" />
                 <span className="font-medium">{Math.round(assemblyProgress)}% Complete</span>
               </div>
@@ -171,13 +171,13 @@ export function AITeamAssembly({ selectedGoal, onTeamReady }: AITeamAssemblyProp
                   : 'border-slate-200'
               }`}
             >
-              {/* Background Gradient */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${agent.gradient} opacity-${isReady ? '10' : '5'} transition-opacity duration-500`}></div>
+              {/* Background */}
+              <div className={`absolute inset-0 bg-blue-50 opacity-${isReady ? '50' : '20'} transition-opacity duration-500`}></div>
               
               <CardContent className="p-6 relative">
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${agent.gradient} flex items-center justify-center shadow-lg transition-transform duration-500 ${
+                  <div className={`w-14 h-14 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg transition-transform duration-500 ${
                     isReady ? 'scale-110' : ''
                   }`}>
                     <Icon className="w-7 h-7 text-white" />
@@ -202,7 +202,7 @@ export function AITeamAssembly({ selectedGoal, onTeamReady }: AITeamAssemblyProp
                 <div className="space-y-3">
                   <div>
                     <h3 className="text-lg font-bold text-slate-900">{agent.name}</h3>
-                    <p className="text-sm text-indigo-600 font-medium">{agent.role}</p>
+                    <p className="text-sm text-blue-600 font-medium">{agent.role}</p>
                   </div>
                   
                   <p className="text-slate-600 text-sm leading-relaxed">

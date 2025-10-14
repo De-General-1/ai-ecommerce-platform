@@ -44,7 +44,7 @@ export function Footer() {
         <div className="grid lg:grid-cols-5 gap-8">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <Link href="/" className="text-2xl font-bold text-white">
               AI E-Commerce Growth Agent
             </Link>
             <p className="text-slate-400 mt-4 max-w-md">

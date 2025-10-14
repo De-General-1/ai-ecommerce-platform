@@ -67,7 +67,7 @@ export function PricingSection() {
           <Badge variant="outline" className="mb-4">Simple Pricing</Badge>
           <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
             Choose Your
-            <span className="block bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mt-5">
+            <span className="block bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent mt-5">
               Growth Plan
             </span>
           </h2>

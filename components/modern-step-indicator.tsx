@@ -35,7 +35,7 @@ export function ModernStepIndicator({ currentStep }: ModernStepIndicatorProps) {
         {/* Progress line */}
         <div className="absolute top-8 left-0 right-0 h-0.5 bg-slate-200 -z-10">
           <div 
-            className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-500 ease-out"
+            className="h-full bg-gradient-to-r from-blue-600 to-blue-500 transition-all duration-500 ease-out"
             style={{ width: `${((currentStep - 1) / (steps.length - 1)) * 100}%` }}
           />
         </div>
@@ -52,9 +52,9 @@ export function ModernStepIndicator({ currentStep }: ModernStepIndicatorProps) {
                 className={cn(
                   "w-16 h-16 rounded-full flex items-center justify-center border-4 transition-all duration-300 shadow-lg",
                   isCompleted
-                    ? "bg-gradient-to-br from-indigo-500 to-purple-600 border-indigo-500 text-white"
+                    ? "bg-gradient-to-br from-blue-600 to-blue-500 border-blue-600 text-white"
                     : isCurrent
-                      ? "bg-white border-indigo-500 text-indigo-600 shadow-indigo-200"
+                      ? "bg-white border-blue-600 text-blue-600 shadow-blue-200"
                       : "bg-white border-slate-200 text-slate-400"
                 )}
               >

@@ -57,7 +57,7 @@ export function FeaturesShowcase() {
           <Badge variant="outline" className="mb-6">Complete Marketing Suite</Badge>
           <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
             Everything You Need to
-            <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mt-4">
+            <span className="block bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent mt-4">
               Dominate Social Media
             </span>
           </h2>

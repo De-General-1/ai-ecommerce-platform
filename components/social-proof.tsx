@@ -82,7 +82,7 @@ export function SocialProof() {
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
             Trusted by
-            <span className="block bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mt-6">
+            <span className="block bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent mt-6">
               Growth-Focused Brands
             </span>
           </h2>

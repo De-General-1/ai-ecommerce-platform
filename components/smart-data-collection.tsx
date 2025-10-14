@@ -86,13 +86,13 @@ export function SmartDataCollection({ selectedGoal, aiTeam, onComplete }: SmartD
     <div className="max-w-6xl mx-auto space-y-8">
       {/* Header */}
       <div className="text-center space-y-4">
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium">
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">
           <Brain className="w-4 h-4" />
           Smart Data Collection
         </div>
         <h2 className="text-4xl lg:text-5xl font-bold text-slate-900">
           Tell Us About
-          <span className="block bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          <span className="block bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
             Your Product
           </span>
         </h2>
@@ -102,12 +102,12 @@ export function SmartDataCollection({ selectedGoal, aiTeam, onComplete }: SmartD
       </div>
 
       {/* AI Team Preview */}
-      <Card className="border-0 shadow-lg bg-gradient-to-r from-indigo-50 to-purple-50">
+      <Card className="border-0 shadow-lg bg-gradient-to-r from-blue-50 to-slate-50">
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Users className="w-6 h-6 text-indigo-600" />
-              <span className="font-semibold text-slate-900">Your AI Team is Standing By</span>
+              <Users className="w-6 h-6 text-blue-600" />
+              <span className="font-semibold text-slate-900">Your Marketing Team is Standing By</span>
             </div>
             <div className="flex -space-x-2">
               {aiTeam.map((agent, index) => {
@@ -132,7 +132,7 @@ export function SmartDataCollection({ selectedGoal, aiTeam, onComplete }: SmartD
         <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
           <CardHeader className="pb-6">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
                 <Upload className="w-6 h-6 text-white" />
               </div>
               <div>
@@ -147,26 +147,26 @@ export function SmartDataCollection({ selectedGoal, aiTeam, onComplete }: SmartD
               className={cn(
                 "border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all duration-300 group",
                 isDragActive 
-                  ? "border-indigo-400 bg-indigo-50 scale-105" 
-                  : "border-slate-300 hover:border-indigo-400 hover:bg-indigo-50/50",
+                  ? "border-blue-400 bg-blue-50 scale-105" 
+                  : "border-slate-300 hover:border-blue-400 hover:bg-blue-50/50",
               )}
             >
               <input {...getInputProps()} />
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <ImageIcon className="w-8 h-8 text-indigo-600" />
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-slate-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <ImageIcon className="w-8 h-8 text-blue-600" />
               </div>
               {isDragActive ? (
                 <div>
-                  <p className="text-indigo-600 font-semibold text-lg mb-2">Drop your images here!</p>
-                  <p className="text-indigo-500">Release to upload your product photos</p>
+                  <p className="text-blue-600 font-semibold text-lg mb-2">Drop your images here!</p>
+                  <p className="text-blue-500">Release to upload your product photos</p>
                 </div>
               ) : (
                 <div>
                   <p className="text-slate-900 font-semibold text-lg mb-2">Drag & drop images here</p>
                   <p className="text-slate-600 mb-4">PNG, JPG, JPEG up to 10MB each</p>
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
                     <Sparkles className="w-4 h-4" />
-                    AI works best with clear, well-lit photos
+                    Works best with clear, well-lit photos
                   </div>
                 </div>
               )}
@@ -206,7 +206,7 @@ export function SmartDataCollection({ selectedGoal, aiTeam, onComplete }: SmartD
         <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
           <CardHeader className="pb-6">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center">
                 <Target className="w-6 h-6 text-white" />
               </div>
               <div>
@@ -219,7 +219,7 @@ export function SmartDataCollection({ selectedGoal, aiTeam, onComplete }: SmartD
             {/* Product Description */}
             <div className="space-y-3">
               <label className="text-sm font-semibold text-slate-900 flex items-center gap-2">
-                <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                 Product Description
               </label>
               <Textarea
@@ -227,7 +227,7 @@ export function SmartDataCollection({ selectedGoal, aiTeam, onComplete }: SmartD
                 value={formData.productDescription}
                 onChange={(e) => updateFormData("productDescription", e.target.value)}
                 rows={4}
-                className="resize-none border-slate-200 focus:border-indigo-400 focus:ring-indigo-400/20 rounded-xl"
+                className="resize-none border-slate-200 focus:border-blue-400 focus:ring-blue-400/20 rounded-xl"
               />
             </div>
 
@@ -235,11 +235,11 @@ export function SmartDataCollection({ selectedGoal, aiTeam, onComplete }: SmartD
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-3">
                 <label className="text-sm font-semibold text-slate-900 flex items-center gap-2">
-                  <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                  <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
                   Category
                 </label>
                 <Select value={formData.category} onValueChange={(value) => updateFormData("category", value)}>
-                  <SelectTrigger className="h-12 border-slate-200 focus:border-purple-400 rounded-xl">
+                  <SelectTrigger className="h-12 border-slate-200 focus:border-emerald-400 rounded-xl">
                     <SelectValue placeholder="Choose category" />
                   </SelectTrigger>
                   <SelectContent>
@@ -260,7 +260,7 @@ export function SmartDataCollection({ selectedGoal, aiTeam, onComplete }: SmartD
                   Primary Platform
                 </label>
                 <Select value={formData.targetPlatform} onValueChange={(value) => updateFormData("targetPlatform", value)}>
-                  <SelectTrigger className="h-12 border-slate-200 focus:border-green-400 rounded-xl">
+                  <SelectTrigger className="h-12 border-slate-200 focus:border-emerald-400 rounded-xl">
                     <SelectValue placeholder="Select platform" />
                   </SelectTrigger>
                   <SelectContent>
@@ -376,13 +376,13 @@ export function SmartDataCollection({ selectedGoal, aiTeam, onComplete }: SmartD
           onClick={handleSubmit}
           disabled={!isBasicValid}
           size="lg"
-          className="px-12 py-4 text-lg font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50"
+          className="px-12 py-4 text-lg font-semibold bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50"
         >
           <Sparkles className="w-5 h-5 mr-2" />
-          Start AI Collaboration
+          Start Marketing Collaboration
         </Button>
         <p className="text-sm text-slate-500 mt-3">
-          Your AI team will begin working immediately after you submit
+          Your marketing team will begin working immediately after you submit
         </p>
       </div>
     </div>

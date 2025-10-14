@@ -31,8 +31,8 @@
     "gradient": "from-orange-500 to-red-600",
     "agents": ["Viral Creator", "Content Strategist", "Social Designer", "Launch Assistant"],
     "complexity": "Simple",
-    "estimatedTime": "8-12 minutes",
-    "price": 15,
-    "features": ["Viral hooks", "Platform-specific formats", "Trending sounds", "Ready-to-post content", "Auto-scheduling", "Quick setup"]
+    "estimatedTime": "5-8 minutes",
+    "price": 9,
+    "features": ["Viral hooks", "Platform-specific formats", "Ready-to-post content", "Auto-scheduling", "Quick setup"]
   }
 ]

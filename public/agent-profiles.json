@@ -1,0 +1,52 @@
+{
+  "campaign-strategist": {
+    "id": "campaign-strategist",
+    "name": "Campaign Strategist",
+    "role": "Creative Director",
+    "description": "Crafts compelling marketing strategies and messaging that resonates with your audience",
+    "iconName": "Brain",
+    "gradient": "from-blue-500 to-indigo-600",
+    "status": "assembling",
+    "expertise": ["Strategy Development", "Brand Messaging", "Creative Direction", "Campaign Planning"]
+  },
+  "cultural-expert": {
+    "id": "cultural-expert", 
+    "name": "Cultural Expert",
+    "role": "Localization Specialist",
+    "description": "Adapts campaigns for different cultures and markets with deep local insights",
+    "iconName": "Globe",
+    "gradient": "from-green-500 to-emerald-600",
+    "status": "assembling",
+    "expertise": ["Cultural Adaptation", "Local Insights", "Translation", "Regional Preferences"]
+  },
+  "market-researcher": {
+    "id": "market-researcher",
+    "name": "Market Researcher", 
+    "role": "Intelligence Analyst",
+    "description": "Analyzes market trends, competitors, and audience behavior for data-driven decisions",
+    "iconName": "Search",
+    "gradient": "from-purple-500 to-pink-600",
+    "status": "assembling",
+    "expertise": ["Market Analysis", "Competitor Research", "Trend Identification", "Audience Insights"]
+  },
+  "creative-director": {
+    "id": "creative-director",
+    "name": "Creative Director",
+    "role": "Content Creator", 
+    "description": "Generates engaging, viral-worthy content optimized for maximum engagement",
+    "iconName": "Palette",
+    "gradient": "from-orange-500 to-red-600",
+    "status": "assembling",
+    "expertise": ["Content Creation", "Visual Design", "Viral Strategies", "Platform Optimization"]
+  },
+  "performance-analyst": {
+    "id": "performance-analyst",
+    "name": "Performance Analyst",
+    "role": "Data Scientist",
+    "description": "Optimizes campaigns using advanced analytics and performance metrics",
+    "iconName": "BarChart3",
+    "gradient": "from-teal-500 to-cyan-600",
+    "status": "assembling", 
+    "expertise": ["Performance Analysis", "A/B Testing", "Optimization", "ROI Tracking"]
+  }
+}

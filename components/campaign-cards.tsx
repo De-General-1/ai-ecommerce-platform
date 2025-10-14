@@ -49,7 +49,7 @@ export function CampaignCards({ campaigns }: CampaignCardsProps) {
                 <Users className="w-4 h-4 text-muted-foreground" />
                 <div>
                   <p className="text-sm text-muted-foreground">Est. Reach</p>
-                  <p className="font-medium">10K+</p>
+                  <p className="font-medium">{campaign.estimated_reach || "--"}</p>
                 </div>
               </div>
             </div>

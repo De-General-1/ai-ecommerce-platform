@@ -242,7 +242,7 @@ export function AICollaborationProcessing({
       </div>
 
       {/* Current Phase */}
-      <Card className="border-0 shadow-xl bg-gradient-to-br from-blue-50 to-slate-50">
+      <Card className="border-0 shadow-xl bg-blue-50">
         <CardContent className="p-8">
           <div className="text-center space-y-4">
             <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/80 rounded-full shadow-lg">
@@ -275,10 +275,10 @@ export function AICollaborationProcessing({
                 <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300">
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
-                      <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${agent.gradient} flex items-center justify-center shadow-lg ${
+                      <div className={`w-14 h-14 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg ${
                         state.status === 'active' ? 'animate-pulse' : ''
                       }`}>
-                        <Icon className="w-7 h-7 text-white" />
+                        {Icon && <Icon className="w-7 h-7 text-white" />}
                       </div>
                       
                       <div className="flex-1 min-w-0">
@@ -330,8 +330,8 @@ export function AICollaborationProcessing({
                   const Icon = message.icon
                   return (
                     <div key={message.id} className="flex items-start gap-3 p-3 bg-slate-50 rounded-lg">
-                      <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${message.gradient} flex items-center justify-center flex-shrink-0`}>
-                        <Icon className="w-4 h-4 text-white" />
+                      <div className={`w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0`}>
+                        {Icon && <Icon className="w-4 h-4 text-white" />}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">

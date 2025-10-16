@@ -10,11 +10,12 @@ import { Upload, X, ImageIcon, Sparkles, Target, Globe, Shirt, Palette, Home, Sm
 import { cn } from "@/lib/utils"
 
 interface UploadStepProps {
-  onComplete: (files: File[], description: string, category: string, platform: string) => void
+  onComplete: (productData: { name: string, description: string, category: string, platform: string }) => void
 }
 
 export function UploadStep({ onComplete }: UploadStepProps) {
   const [files, setFiles] = useState<File[]>([])
+  const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [category, setCategory] = useState("")
   const [platform, setPlatform] = useState("")
@@ -42,12 +43,12 @@ export function UploadStep({ onComplete }: UploadStepProps) {
   }
 
   const handleSubmit = () => {
-    if (files.length > 0 && description && category && platform) {
-      onComplete(files, description, category, platform)
+    if (name && description && category && platform) {
+      onComplete({ name, description, category, platform })
     }
   }
 
-  const isValid = files.length > 0 && description && category && platform
+  const isValid = name && description && category && platform
 
   return (
     <div className="max-w-5xl mx-auto space-y-8">
@@ -138,6 +139,20 @@ export function UploadStep({ onComplete }: UploadStepProps) {
           </div>
         </CardHeader>
         <CardContent className="space-y-6 px-8 pb-8">
+          <div className="space-y-3">
+            <label className="text-sm font-semibold text-slate-900 flex items-center gap-2">
+              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+              Product Name
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your product name..."
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-4 py-3 border border-slate-200 focus:border-blue-400 focus:ring-blue-400/20 rounded-xl"
+            />
+          </div>
+          
           <div className="space-y-3">
             <label className="text-sm font-semibold text-slate-900 flex items-center gap-2">
               <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>

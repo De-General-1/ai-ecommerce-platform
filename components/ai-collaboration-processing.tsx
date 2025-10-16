@@ -1,13 +1,13 @@
 "use client"
 
-import { useState, useEffect, useCallback, useRef } from "react"
+import { useState, useEffect, useCallback, useRef, SetStateAction } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Check, Loader2, AlertCircle, MessageSquare, Brain, Users, Sparkles } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { useProcessFiles, useStatusPolling, useProductData } from "@/lib/queries"
+import { useProcessCampaign, useCampaignStatus, useCampaignResults } from "@/lib/queries"
 
 interface AICollaborationProcessingProps {
   files: File[]
@@ -31,19 +31,12 @@ export function AICollaborationProcessing({
   const [currentPhase, setCurrentPhase] = useState(0)
   const [agentStates, setAgentStates] = useState<Record<string, any>>({})
   const [agentMessages, setAgentMessages] = useState<any[]>([])
-  const [primaryHash, setPrimaryHash] = useState<string | null>(null)
-  const [pollingHash, setPollingHash] = useState<string | null>(null)
+  const [campaignId, setCampaignId] = useState<string | null>(null)
   const hasStarted = useRef(false)
 
-  const processFilesMutation = useProcessFiles({
-    onSuccess: (data) => {
-      setPrimaryHash(data.primaryHash)
-      setTimeout(() => setPollingHash(data.primaryHash), 2000)
-    }
-  })
-  
-  const statusQuery = useStatusPolling(pollingHash, !!pollingHash)
-  const productDataQuery = useProductData(pollingHash, statusQuery.data?.pipeline_status === 'completed')
+  const processCampaignMutation = useProcessCampaign()
+  const statusQuery = useCampaignStatus(campaignId, !!campaignId)
+  const resultsQuery = useCampaignResults(campaignId, statusQuery.data?.status === 'completed')
 
   const phases = [
     {
@@ -123,16 +116,27 @@ export function AICollaborationProcessing({
       }), {})
       setAgentStates(initialStates)
 
-      // Start file processing
-      processFilesMutation.mutate({
+      // Start campaign processing with real data from form
+      const campaignData = JSON.parse(localStorage.getItem('campaignData') || '{}')
+      
+      processCampaignMutation.mutate({
         files,
         description,
         category,
         platform,
-        onProgress: () => {}
+        selectedRegions: campaignData.selectedRegions || [],
+        competitorUrls: campaignData.competitorUrls || [],
+        finalPrice: campaignData.finalPrice || 29
+      }, {
+        onSuccess: (data) => {
+          setCampaignId(data.campaignId)
+        },
+        onError: (error) => {
+          console.error('Campaign processing failed:', error)
+        }
       })
 
-      // Simulate agent collaboration
+      // Start UI simulation for better UX
       simulateAgentCollaboration()
     }
   }, [])
@@ -213,14 +217,24 @@ export function AICollaborationProcessing({
     runPhase()
   }
 
-  // Handle completion
+  // Handle completion with real API results
   useEffect(() => {
-    if (productDataQuery.isSuccess && productDataQuery.data) {
-      onComplete(productDataQuery.data)
+    if (resultsQuery.isSuccess && resultsQuery.data) {
+      onComplete(resultsQuery.data)
     }
-  }, [productDataQuery.isSuccess, productDataQuery.data, onComplete])
+  }, [resultsQuery.isSuccess, resultsQuery.data, onComplete])
 
-  const error = processFilesMutation.error || statusQuery.error || productDataQuery.error
+  // Update phases based on API status
+  useEffect(() => {
+    if (statusQuery.data?.currentPhase) {
+      const phaseIndex = phases.findIndex(p => p.title.toLowerCase().includes(statusQuery.data.currentPhase.toLowerCase()))
+      if (phaseIndex >= 0) {
+        setCurrentPhase(phaseIndex)
+      }
+    }
+  }, [statusQuery.data?.currentPhase, phases])
+
+  const error = processCampaignMutation.error || statusQuery.error || resultsQuery.error
 
   return (
     <div className="max-w-7xl mx-auto space-y-8">
@@ -371,7 +385,7 @@ export function AICollaborationProcessing({
                 <p className="text-red-700">Something went wrong during the AI team collaboration</p>
               </div>
             </div>
-            <p className="text-red-800 mb-6 bg-red-100 p-4 rounded-xl">{error?.message || 'An unexpected error occurred'}</p>
+            <p className="text-red-800 mb-6 bg-red-100 p-4 rounded-xl">{error || 'An unexpected error occurred'}</p>
             <Button className="bg-red-600 hover:bg-red-700 text-white">
               <Loader2 className="w-4 h-4 mr-2" />
               Restart Collaboration

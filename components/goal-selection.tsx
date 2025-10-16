@@ -53,7 +53,13 @@ export function GoalSelection({ onGoalSelect }: GoalSelectionProps) {
 
   const handleGoalSelect = (goal: Goal) => {
     setSelectedGoal(goal)
-    setTimeout(() => onGoalSelect(goal), 300)
+    // Navigate to setup page with goal data
+    const goalData = encodeURIComponent(JSON.stringify(goal))
+    const teamData = encodeURIComponent(JSON.stringify([
+      { id: 'strategist', name: 'Social Strategist', iconName: 'Brain', gradient: 'from-blue-500 to-indigo-600' },
+      { id: 'creator', name: 'Content Creator', iconName: 'Palette', gradient: 'from-orange-500 to-red-600' }
+    ]))
+    window.location.href = `/campaign/setup?goal=${goalData}&team=${teamData}`
   }
 
   return (

@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Upload, X, ImageIcon, Sparkles, Target, Globe, Users, Brain, Lightbulb, MapPin, DollarSign, TrendingUp } from "lucide-react"
+import { Upload, X, ImageIcon, Sparkles, Target, Globe, Users, Brain, Lightbulb, MapPin, DollarSign, TrendingUp, Palette } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface SmartDataCollectionProps {
@@ -148,7 +148,8 @@ export function SmartDataCollection({ selectedGoal, aiTeam, onComplete }: SmartD
             </div>
             <div className="flex -space-x-2">
               {aiTeam.map((agent, index) => {
-                const Icon = agent.icon
+                const iconMap = { Brain, Palette, TrendingUp, Globe, Users }
+                const Icon = iconMap[agent.iconName as keyof typeof iconMap] || Brain
                 return (
                   <div
                     key={index}

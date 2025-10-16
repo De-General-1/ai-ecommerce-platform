@@ -1,12 +1,12 @@
 "use client"
 
 import { useSearchParams, useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import { SmartDataCollection } from "@/components/smart-data-collection"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 
-export default function CampaignSetupPage() {
+function CampaignSetupContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const [selectedGoal, setSelectedGoal] = useState<any>(null)
@@ -72,5 +72,25 @@ export default function CampaignSetupPage() {
         />
       </div>
     </div>
+  )
+}
+
+export default function CampaignSetupPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="w-16 h-16 mx-auto">
+            <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-xl font-semibold text-slate-900">Loading Setup</h3>
+            <p className="text-slate-600">Preparing your campaign setup...</p>
+          </div>
+        </div>
+      </div>
+    }>
+      <CampaignSetupContent />
+    </Suspense>
   )
 }

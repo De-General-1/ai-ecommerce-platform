@@ -31,4 +31,3 @@ export const config = {
     bucketUrl: "https://degenerals-mi-dev-images.s3.eu-west-1.amazonaws.com",
   },
 };
-w

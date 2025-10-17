@@ -69,15 +69,9 @@ export function EnhancedResults({
 }: EnhancedResultsProps) {
   const [activeTab, setActiveTab] = useState("overview");
 
-  // For basic campaigns, we use the results directly
+  // Use results directly from the new API response format
   const displayResults = results;
-
-  // Check if this is a basic campaign response
-  const isBasicCampaign =
-    results?.status === "completed" && results?.campaign_data;
-
-  // Extract campaign data for basic campaigns
-  const campaignData = isBasicCampaign ? results.campaign_data : results;
+  const campaignData = results;
 
   const handleExport = (format: "pdf" | "csv" | "json") => {
     const data = JSON.stringify(displayResults, null, 2);
@@ -94,37 +88,21 @@ export function EnhancedResults({
     return <div>Loading results...</div>;
   }
 
-  // Extract data based on campaign type
-  let contentIdeas = [];
-  let avgEngagementScore = 85; // Default score for basic campaigns
-  let campaignCount = 1;
-  let platformContent = {};
-
-  if (isBasicCampaign) {
-    // Basic campaign structure
-    platformContent = campaignData?.platform_content || {};
-    campaignCount = Object.keys(platformContent).length || 1;
-    // Create mock content ideas from platform content
-    contentIdeas = Object.entries(platformContent).map(
-      ([platform, content]: [string, any]) => ({
-        platform,
-        content_themes: content.content_themes || [],
-        recommended_formats: content.recommended_formats || [],
-        sample_post: content.sample_post || "",
-        engagement_score: 85 + Math.random() * 10, // Mock score 85-95
-      })
-    );
-  } else {
-    // Legacy data structure
-    contentIdeas = displayResults?.parsedCampaigns?.content_ideas || [];
-    avgEngagementScore =
-      contentIdeas.length > 0
-        ? contentIdeas.reduce(
-            (acc: number, idea: any) => acc + idea.engagement_score,
-            0
-          ) / contentIdeas.length
-        : 0;
-  }
+  // Extract data from the new API response format
+  const contentIdeas = results?.content_ideas || [];
+  const campaigns = results?.campaigns || [];
+  const generatedAssets = results?.generated_assets || {};
+  const marketTrends = results?.market_trends || {};
+  const successMetrics = results?.success_metrics || {};
+  const analytics = results?.analytics || {};
+  const productInfo = results?.product || {};
+  
+  const avgEngagementScore = contentIdeas.length > 0
+    ? contentIdeas.reduce((acc: number, idea: any) => acc + (idea.engagement_score || 0), 0) / contentIdeas.length
+    : 85;
+  
+  const campaignCount = campaigns.length || 1;
+  const platformsUsed = campaigns.length > 0 ? campaigns[0]?.platforms || [] : [];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
@@ -175,9 +153,7 @@ export function EnhancedResults({
                         </div>
 
                         <div className="text-lg font-bold text-indigo-600 mb-2">
-                          {campaignData?.visual_insights?.primary_visual_elements?.join(
-                            ", "
-                          ) || "Visual Elements"}
+                          {productInfo?.image?.labels?.join(", ") || "Visual Elements"}
                         </div>
 
                         <p className="text-sm text-slate-600 leading-relaxed">
@@ -208,9 +184,7 @@ export function EnhancedResults({
                         </div>
 
                         <div className="text-lg font-bold text-green-600 mb-2">
-                          {campaignData?.market_trends?.trending_keywords
-                            ?.length || 0}{" "}
-                          Keywords
+                          {marketTrends?.trending_keywords?.length || 0} Keywords
                         </div>
 
                         <p className="text-sm text-slate-600 leading-relaxed">
@@ -241,7 +215,7 @@ export function EnhancedResults({
                         </div>
 
                         <div className="text-lg font-bold text-purple-600 mb-2">
-                          {Object.keys(platformContent).length} Platforms
+                          {platformsUsed.length} Platforms
                         </div>
 
                         <p className="text-sm text-slate-600 leading-relaxed">
@@ -314,14 +288,12 @@ export function EnhancedResults({
           <ModernTabs activeTab={activeTab} onTabChange={setActiveTab}>
             <TabsContent value="overview" className="p-8 space-y-8">
               <OverviewStats
-                category={
-                  campaignData?.campaign_strategy?.overview || "Basic Campaign"
-                }
-                platform={Object.keys(platformContent)[0] || "Multi-Platform"}
+                category={productInfo?.description?.split('.')[0] || "Marketing Campaign"}
+                platform={platformsUsed[0] || "Multi-Platform"}
                 contentIdeasCount={contentIdeas.length}
                 campaignsCount={campaignCount}
               />
-              <AnalyticsDashboard results={campaignData} />
+              <AnalyticsDashboard results={results} />
             </TabsContent>
 
             <TabsContent value="campaigns" className="p-8">
@@ -335,83 +307,7 @@ export function EnhancedResults({
                   </p>
                 </div>
 
-                <div className="grid gap-6">
-                  {Object.entries(platformContent).map(
-                    ([platform, content]: [string, any]) => (
-                      <Card
-                        key={platform}
-                        className="border-0 shadow-lg hover:shadow-xl transition-all duration-300"
-                      >
-                        <CardContent className="p-8">
-                          <div className="flex items-center gap-4 mb-6">
-                            <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
-                              <Users className="w-6 h-6 text-white" />
-                            </div>
-                            <div>
-                              <h4 className="text-2xl font-bold text-slate-900 capitalize">
-                                {platform}
-                              </h4>
-                              <p className="text-slate-600">
-                                Platform-optimized campaign strategy
-                              </p>
-                            </div>
-                          </div>
-
-                          <div className="grid md:grid-cols-2 gap-6">
-                            <div>
-                              <h5 className="font-semibold text-slate-900 mb-3">
-                                Content Themes
-                              </h5>
-                              <div className="space-y-2">
-                                {content.content_themes?.map(
-                                  (theme: string, index: number) => (
-                                    <Badge
-                                      key={index}
-                                      variant="outline"
-                                      className="mr-2 mb-2"
-                                    >
-                                      {theme}
-                                    </Badge>
-                                  )
-                                )}
-                              </div>
-                            </div>
-
-                            <div>
-                              <h5 className="font-semibold text-slate-900 mb-3">
-                                Recommended Formats
-                              </h5>
-                              <div className="space-y-2">
-                                {content.recommended_formats?.map(
-                                  (format: string, index: number) => (
-                                    <div
-                                      key={index}
-                                      className="text-sm text-slate-600 flex items-center gap-2"
-                                    >
-                                      <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
-                                      {format}
-                                    </div>
-                                  )
-                                )}
-                              </div>
-                            </div>
-                          </div>
-
-                          {content.sample_post && (
-                            <div className="mt-6 p-4 bg-slate-50 rounded-xl">
-                              <h5 className="font-semibold text-slate-900 mb-2">
-                                Sample Post
-                              </h5>
-                              <p className="text-slate-700 italic">
-                                "{content.sample_post}"
-                              </p>
-                            </div>
-                          )}
-                        </CardContent>
-                      </Card>
-                    )
-                  )}
-                </div>
+                <CampaignCards campaigns={campaigns} />
               </div>
             </TabsContent>
 
@@ -420,21 +316,7 @@ export function EnhancedResults({
             </TabsContent>
 
             <TabsContent value="assets" className="p-8">
-              <div className="text-center py-16">
-                <div className="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Download className="w-12 h-12 text-slate-400" />
-                </div>
-                <h4 className="text-xl font-semibold text-slate-900 mb-2">
-                  Visual Assets Not Available
-                </h4>
-                <p className="text-slate-600 text-lg mb-6">
-                  Basic campaigns focus on strategy and content. Upgrade to
-                  comprehensive campaigns for visual asset generation.
-                </p>
-                <Button className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700">
-                  Upgrade to Comprehensive Campaign
-                </Button>
-              </div>
+              <GeneratedAssets assets={generatedAssets} />
             </TabsContent>
           </ModernTabs>
         </div>

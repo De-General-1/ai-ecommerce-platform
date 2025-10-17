@@ -83,7 +83,12 @@ export function AICollaborationProcessing({
         "https://a5s7rnwjm0.execute-api.eu-west-1.amazonaws.com/dev/api/upload/presigned-url",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Origin: "http://localhost:3000",
+          },
+          mode: "cors",
           body: JSON.stringify(payload),
         }
       );
@@ -121,7 +126,12 @@ export function AICollaborationProcessing({
 
       console.log("DEBUG: File uploaded successfully to S3");
 
-      // Step 3: Create campaign
+      // Step 3: Create campaign - use comprehensive endpoint for "Go Viral Globally"
+      const isComprehensiveCampaign = selectedGoal?.title?.trim() === "Go Viral Globally";
+      const endpoint = isComprehensiveCampaign 
+        ? "https://a5s7rnwjm0.execute-api.eu-west-1.amazonaws.com/dev/api/comprehensive-campaign"
+        : "https://a5s7rnwjm0.execute-api.eu-west-1.amazonaws.com/dev/api/campaigns";
+
       const campaignData = {
         product: {
           ...product,
@@ -134,12 +144,16 @@ export function AICollaborationProcessing({
         budget_range: "$5,000 - $15,000",
         target_markets: ["United States", "Germany", "Japan"],
         campaign_objectives: ["brand_awareness", "product_launch"],
+        ...(isComprehensiveCampaign && {
+          s3_image_key: imageKey,
+          image_url: `https://degenerals-mi-dev-images.s3.eu-west-1.amazonaws.com/${imageKey}`
+        })
       };
 
-      console.log("DEBUG: Creating campaign with data:", campaignData);
-      const campaignResponse = await fetch(
-        "https://a5s7rnwjm0.execute-api.eu-west-1.amazonaws.com/dev/api/campaigns",
-        {
+      console.log(`DEBUG: Selected goal title: "${selectedGoal?.title}"`);  
+      console.log(`DEBUG: Is comprehensive campaign: ${isComprehensiveCampaign}`);
+      console.log(`DEBUG: Creating ${isComprehensiveCampaign ? 'comprehensive' : 'basic'} campaign with data:`, campaignData);
+      const campaignResponse = await fetch(endpoint, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -324,100 +338,9 @@ export function AICollaborationProcessing({
       });
 
       // Simulate agent collaboration
-      simulateAgentCollaboration();
+      // simulateAgentCollaboration();
     }
   }, []);
-
-  const simulateAgentCollaboration = () => {
-    let phaseIndex = 0;
-    let totalTime = 0;
-
-    const runPhase = () => {
-      if (phaseIndex >= phases.length) return;
-
-      const phase = phases[phaseIndex];
-      setCurrentPhase(phaseIndex);
-
-      // Update agent states for this phase
-      aiTeam.forEach((agent, agentIndex) => {
-        setTimeout(() => {
-          setAgentStates((prev) => ({
-            ...prev,
-            [agent.id]: {
-              status: "active",
-              progress: 0,
-              currentTask:
-                (agentMessageTemplates as any)[agent.id]?.[
-                  Math.min(
-                    phaseIndex,
-                    (agentMessageTemplates as any)[agent.id]?.length - 1
-                  )
-                ] || "Working...",
-            },
-          }));
-
-          // Add agent message
-          setAgentMessages((prev) => [
-            ...prev,
-            {
-              id: Date.now() + agentIndex,
-              agentId: agent.id,
-              agentName: agent.name,
-              message:
-                (agentMessageTemplates as any)[agent.id]?.[
-                  Math.min(
-                    phaseIndex,
-                    (agentMessageTemplates as any)[agent.id]?.length - 1
-                  )
-                ] || "Working on your campaign...",
-              timestamp: new Date(),
-              gradient: agent.gradient,
-              icon: agent.icon,
-            },
-          ]);
-        }, agentIndex * 800);
-      });
-
-      // Simulate progress for this phase
-      let progress = 0;
-      const progressInterval = setInterval(() => {
-        progress += Math.random() * 15 + 5;
-
-        aiTeam.forEach((agent) => {
-          setAgentStates((prev) => ({
-            ...prev,
-            [agent.id]: {
-              ...prev[agent.id],
-              progress: Math.min(progress, 100),
-            },
-          }));
-        });
-
-        if (progress >= 100) {
-          clearInterval(progressInterval);
-
-          // Mark agents as complete for this phase
-          aiTeam.forEach((agent) => {
-            setAgentStates((prev) => ({
-              ...prev,
-              [agent.id]: {
-                ...prev[agent.id],
-                status: "complete",
-                progress: 100,
-              },
-            }));
-          });
-
-          phaseIndex++;
-          totalTime += phase.duration;
-
-          setTimeout(runPhase, 1000);
-        }
-      }, phase.duration / 20);
-    };
-
-    runPhase();
-  };
 
   // Handle completion is now handled in the direct API call
 

@@ -1,8 +1,8 @@
-import bundleAnalyzer from '@next/bundle-analyzer'
+import bundleAnalyzer from "@next/bundle-analyzer";
 
 const withBundleAnalyzer = bundleAnalyzer({
-  enabled: process.env.ANALYZE === 'true',
-})
+  enabled: process.env.ANALYZE === "true",
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -15,9 +15,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  experimental: {
-    serverComponentsExternalPackages: [],
-  },
-}
+  serverExternalPackages: [],
+};
 
-export default withBundleAnalyzer(nextConfig)
+export default withBundleAnalyzer(nextConfig);

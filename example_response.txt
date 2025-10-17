@@ -1,0 +1,164 @@
+{
+    "campaign_id": "f55042ba-1a83-42dd-9d51-41b4afa56b0d",
+    "status": "completed",
+    "message": "Comprehensive campaign response created successfully.",
+    "product": {
+        "description": "Crayons are a classic art supply that allow children and adults to express their creativity through coloring and drawing. The Crayola brand is a trusted name in crayons, offering a wide range of products including standard crayons, specialty crayons (e.g., metallic, neon, glitter), and crayon sets of varying sizes.",
+        "image": {
+            "labels": [
+                "crayon",
+                "art supplies",
+                "stationery"
+            ]
+        }
+    },
+    "content_ideas": [
+        {
+            "platform": "Instagram",
+            "topic": "Creative crayon art projects",
+            "engagement_score": 88,
+            "caption": "Unleash your inner artist with these fun and colorful crayon projects! #CrayolaCreativity #ArtSupplies",
+            "hashtags": [
+                "#crayons",
+                "#art",
+                "#creativity",
+                "#DIYart"
+            ]
+        },
+        {
+            "platform": "TikTok",
+            "topic": "Crayola product reviews and demos",
+            "engagement_score": 85,
+            "caption": "Check out our honest review of the latest Crayola crayon sets! #CrayolaReview #ProductDemo",
+            "hashtags": [
+                "#crayons",
+                "#crayola",
+                "#productreview"
+            ]
+        },
+        {
+            "platform": "YouTube",
+            "topic": "Educational crayon tutorials and techniques",
+            "engagement_score": 82,
+            "caption": "Learn new ways to use your Crayola crayons with these step-by-step tutorials! #CrayonTutorial #ArtEducation",
+            "hashtags": [
+                "#crayons",
+                "#art",
+                "#arttutorial",
+                "#howtodraw"
+            ]
+        }
+    ],
+    "campaigns": [
+        {
+            "name": "Crayola Creativity Campaign",
+            "duration": "4 weeks",
+            "posts_per_week": 3,
+            "platforms": [
+                "Instagram",
+                "TikTok",
+                "YouTube"
+            ],
+            "calendar": {
+                "Week 1": "Campaign launch and brand awareness building",
+                "Week 2": "Showcase creative crayon art projects",
+                "Week 3": "Highlight Crayola product reviews and demos",
+                "Week 4": "Educational crayon tutorials and techniques"
+            },
+            "adaptations": {
+                "Instagram": "Visually engaging posts showcasing colorful crayon art",
+                "TikTok": "Short, entertaining product review and demo videos",
+                "YouTube": "Detailed educational tutorials on crayon techniques"
+            }
+        }
+    ],
+    "generated_assets": {
+        "image_prompts": [
+            "Professional product photography with clean background and optimal lighting",
+            "Lifestyle image showing product in real-world usage scenario",
+            "Creative marketing visual with bold colors and engaging composition"
+        ],
+        "video_scripts": [
+            {
+                "type": "Short form video",
+                "content": "Engaging 30-second video showcasing key product benefits with compelling visuals and clear call-to-action"
+            },
+            {
+                "type": "Long form video",
+                "content": "Comprehensive 3-5 minute video with product demonstration, user testimonials, and detailed feature breakdown"
+            }
+        ],
+        "email_templates": [
+            {
+                "subject": "Your Marketing Campaign is Ready to Launch!",
+                "body": "Hi [Name],\n\nGreat news! We've created a comprehensive marketing strategy tailored specifically for your product. The campaign includes platform-specific content, engagement strategies, and conversion-focused messaging.\n\nKey highlights:\n\u2022 Multi-platform content calendar\n\u2022 Targeted audience insights\n\u2022 Performance tracking metrics\n\nReady to see amazing results? Let's launch your campaign today!\n\nBest regards,\nYour Marketing Team"
+            },
+            {
+                "subject": "Boost Your Brand with These Content Ideas",
+                "body": "Hello [Name],\n\nWe've curated exclusive content ideas that will elevate your brand presence and drive meaningful engagement with your audience.\n\nInside you'll find:\n\u2713 Platform-specific content strategies\n\u2713 Trending hashtags and keywords\n\u2713 Engagement optimization tips\n\u2713 Conversion-focused call-to-actions\n\nStart implementing these strategies today and watch your brand grow!\n\nCheers,\nMarketing Strategy Team"
+            }
+        ],
+        "blog_outlines": [
+            {
+                "title": "The Complete Guide to Modern Marketing Success",
+                "points": [
+                    "Understanding your target audience and their preferences",
+                    "Creating platform-specific content that resonates",
+                    "Measuring campaign performance and optimizing for results",
+                    "Building long-term brand loyalty through consistent engagement"
+                ]
+            },
+            {
+                "title": "5 Proven Strategies to Boost Your Brand Engagement",
+                "points": [
+                    "Leverage user-generated content to build authenticity",
+                    "Master the art of storytelling across different platforms",
+                    "Use data-driven insights to optimize content timing",
+                    "Create interactive experiences that encourage participation"
+                ]
+            }
+        ]
+    },
+    "platform_content": {},
+    "market_trends": {
+        "trending_keywords": [
+            "crayons",
+            "crayola",
+            "review",
+            "product"
+        ],
+        "competitor_insights": [
+            "Competitors offer similar crayon products, but Crayola is the market leader",
+            "Some competitors focus on specialty crayon lines (e.g., metallic, glitter)"
+        ],
+        "market_opportunities": [
+            "Opportunity to create content around creative crayon art projects",
+            "Potential to highlight Crayola's wide range of crayon products"
+        ],
+        "seasonal_trends": [
+            "Back-to-school season is a key time for crayon sales"
+        ]
+    },
+    "success_metrics": {
+        "engagement_targets": {
+            "likes": "5,000 - 10,000",
+            "comments": "500 - 1,000",
+            "shares": "250 - 500"
+        },
+        "reach_goals": {
+            "impressions": "150,000 - 250,000",
+            "unique_users": "50,000 - 75,000"
+        },
+        "conversion_metrics": {
+            "click_through_rate": "2% - 4%",
+            "conversion_rate": "1% - 2%"
+        }
+    },
+    "analytics": {
+        "estimatedReach": 200000,
+        "projectedEngagement": 7.5,
+        "conversionRate": 1.8,
+        "roi": 3.5
+    },
+    "related_youtube_videos": []
+}

@@ -98,10 +98,32 @@ export default function CampaignPage() {
                 />
               )}
 
+<<<<<<< Updated upstream
               {currentStep === 4 && campaignResults && (
                 <ResultsStep 
                   results={campaignResults}
                   onReset={resetWorkflow}
+=======
+              {currentStep === 4 && collectedData && (
+                <AICollaborationProcessing
+                  files={collectedData.files}
+                  product={collectedData.product}
+                  target_markets={collectedData.target_markets}
+                  campaign_goals={collectedData.campaign_goals}
+                  useComprehensive={collectedData.useComprehensive}
+                  selectedGoal={selectedGoal}
+                  aiTeam={aiTeam}
+                  onComplete={handleProcessingComplete}
+                />
+              )}
+
+              {currentStep === 5 && (
+                <EnhancedResults 
+                  results={analysisResults} 
+                  selectedGoal={selectedGoal}
+                  aiTeam={aiTeam}
+                  onReset={resetWorkflow} 
+>>>>>>> Stashed changes
                 />
               )}
             </ErrorBoundary>

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { AICollaborationProcessing } from "@/components/ai-collaboration-processing"
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
+import { fileStorage } from "@/lib/file-storage"
 
 
 export default function CampaignProcessingPage() {
@@ -14,7 +15,15 @@ export default function CampaignProcessingPage() {
   useEffect(() => {
     const data = localStorage.getItem('campaignData')
     if (data) {
-      setCampaignData(JSON.parse(data))
+      const parsedData = JSON.parse(data)
+      
+      // Retrieve files from file storage
+      const files = parsedData.hasFiles ? fileStorage.getFiles('campaign') : []
+      
+      setCampaignData({
+        ...parsedData,
+        files: files
+      })
     } else {
       router.push('/campaign')
     }

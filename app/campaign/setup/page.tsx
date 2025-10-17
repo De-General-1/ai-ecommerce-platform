@@ -5,6 +5,7 @@ import { useEffect, useState, Suspense } from "react"
 import { SmartDataCollection } from "@/components/smart-data-collection"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
+import { fileStorage } from "@/lib/file-storage"
 
 function CampaignSetupContent() {
   const searchParams = useSearchParams()
@@ -25,10 +26,16 @@ function CampaignSetupContent() {
   }, [searchParams])
 
   const handleComplete = (data: any) => {
+    // Store files using file storage utility
+    if (data.files && data.files.length > 0) {
+      fileStorage.storeFiles('campaign', data.files)
+    }
+    
     localStorage.setItem('campaignData', JSON.stringify({
       goal: selectedGoal,
       team: aiTeam,
-      ...data
+      ...data,
+      hasFiles: data.files && data.files.length > 0
     }))
     router.push('/campaign/processing')
   }

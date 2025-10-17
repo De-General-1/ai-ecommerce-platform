@@ -11,16 +11,21 @@ export default function ResultsPage() {
   const [selectedGoal, setSelectedGoal] = useState<any>(null)
   const [aiTeam, setAiTeam] = useState<any[]>([])
   const [analysisResults, setAnalysisResults] = useState<any>(null)
+  const [collectedData, setCollectedData] = useState<any>(null)
 
   useEffect(() => {
     const storedGoal = sessionStorage.getItem('selectedGoal')
     const storedTeam = sessionStorage.getItem('aiTeam')
     const storedResults = sessionStorage.getItem('analysisResults')
+    const storedData = sessionStorage.getItem('collectedData')
     
     if (storedGoal && storedTeam && storedResults) {
       setSelectedGoal(JSON.parse(storedGoal))
       setAiTeam(JSON.parse(storedTeam))
       setAnalysisResults(JSON.parse(storedResults))
+      if (storedData) {
+        setCollectedData(JSON.parse(storedData))
+      }
     } else {
       router.push('/campaign/goal')
     }
@@ -57,6 +62,8 @@ export default function ResultsPage() {
               results={analysisResults} 
               selectedGoal={selectedGoal}
               aiTeam={aiTeam}
+              category={collectedData?.category}
+              platform={collectedData?.targetPlatform}
               onReset={handleReset} 
             />
           </div>

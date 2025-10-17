@@ -97,13 +97,25 @@ export function SmartDataCollection({ selectedGoal, aiTeam, onComplete }: SmartD
   const handleSubmit = () => {
     const isValid = files.length > 0 && formData.productDescription && formData.category
     if (isValid) {
-      onComplete({ 
-        files, 
-        ...formData, 
+      // Map UI data to API format
+      const campaignData = {
+        files,
+        productDescription: formData.productDescription,
+        category: formData.category,
+        targetPlatform: formData.targetPlatform,
+        product: {
+          name: formData.productDescription.split(' ').slice(0, 3).join(' ') || 'Product',
+          category: formData.category,
+          description: formData.productDescription
+        },
+        target_markets: isGlobalGoal ? selectedRegions.map(r => regions.find(reg => reg.id === r)?.name || r) : [formData.targetPlatform || 'global'],
+        campaign_goals: [selectedGoal.id === 'viral-content' ? 'engagement' : selectedGoal.id === 'global-viral' ? 'brand_awareness' : 'sales'],
         selectedRegions: isGlobalGoal ? selectedRegions : [],
         competitorUrls: isPerformanceGoal ? competitorUrls : [],
-        finalPrice: currentPrice
-      })
+        finalPrice: currentPrice,
+        useComprehensive: files.length > 0 // Use comprehensive if images provided
+      }
+      onComplete(campaignData)
     }
   }
 

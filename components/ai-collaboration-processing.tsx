@@ -7,7 +7,11 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Check, Loader2, AlertCircle, MessageSquare, Brain, Users, Sparkles } from "lucide-react"
 import { cn } from "@/lib/utils"
+<<<<<<< Updated upstream
 import { useProcessCampaign, useCampaignStatus, useCampaignResults } from "@/lib/queries"
+=======
+import { useFullCampaignFlow } from "@/lib/queries"
+>>>>>>> Stashed changes
 
 interface AICollaborationProcessingProps {
   files: File[]
@@ -21,9 +25,9 @@ interface AICollaborationProcessingProps {
 
 export function AICollaborationProcessing({ 
   files, 
-  description, 
-  category, 
-  platform, 
+  description,
+  category,
+  platform,
   selectedGoal,
   aiTeam,
   onComplete 
@@ -31,12 +35,21 @@ export function AICollaborationProcessing({
   const [currentPhase, setCurrentPhase] = useState(0)
   const [agentStates, setAgentStates] = useState<Record<string, any>>({})
   const [agentMessages, setAgentMessages] = useState<any[]>([])
+<<<<<<< Updated upstream
   const [campaignId, setCampaignId] = useState<string | null>(null)
+=======
+  const [progress, setProgress] = useState(0)
+>>>>>>> Stashed changes
   const hasStarted = useRef(false)
+  const isProcessing = useRef(false)
 
+<<<<<<< Updated upstream
   const processCampaignMutation = useProcessCampaign()
   const statusQuery = useCampaignStatus(campaignId, !!campaignId)
   const resultsQuery = useCampaignResults(campaignId, statusQuery.data?.status === 'completed')
+=======
+  const campaignMutation = useFullCampaignFlow()
+>>>>>>> Stashed changes
 
   const phases = [
     {
@@ -47,27 +60,27 @@ export function AICollaborationProcessing({
     {
       title: "Image Analysis Phase",
       description: "AI agents analyzing your product images",
-      duration: 3000
+      duration: 5000
     },
     {
       title: "Market Research Phase", 
       description: "Gathering competitive intelligence and trends",
+      duration: 8000
+    },
+    {
+      title: "Cultural Intelligence",
+      description: "Applying cultural adaptations for target markets",
       duration: 4000
     },
     {
-      title: "Strategy Development",
-      description: "Creating personalized campaign strategies",
-      duration: 3500
+      title: "Visual Asset Generation",
+      description: "Creating video scripts, images, and ad creatives",
+      duration: 25000
     },
     {
-      title: "Content Generation",
-      description: "Generating platform-specific content",
-      duration: 4500
-    },
-    {
-      title: "Final Optimization",
-      description: "Optimizing campaigns for maximum impact",
-      duration: 2000
+      title: "Campaign Strategy",
+      description: "Finalizing comprehensive campaign strategy",
+      duration: 10000
     }
   ]
 
@@ -106,8 +119,9 @@ export function AICollaborationProcessing({
   }
 
   useEffect(() => {
-    if (!hasStarted.current) {
+    if (!hasStarted.current && !isProcessing.current) {
       hasStarted.current = true
+      isProcessing.current = true
       
       // Initialize agent states
       const initialStates = aiTeam.reduce((acc, agent) => ({
@@ -116,6 +130,7 @@ export function AICollaborationProcessing({
       }), {})
       setAgentStates(initialStates)
 
+<<<<<<< Updated upstream
       // Start campaign processing with real data from form
       const campaignData = JSON.parse(localStorage.getItem('campaignData') || '{}')
       
@@ -174,48 +189,98 @@ export function AICollaborationProcessing({
             icon: agent.icon
           }])
         }, agentIndex * 800)
+=======
+      // Start real campaign generation
+      const product = {
+        name: description.split(' ').slice(0, 3).join(' ') || 'Product',
+        category: category,
+        description: description
+      }
+      
+      const target_markets = [platform || 'global']
+      const campaign_goals = [selectedGoal.id === 'viral-content' ? 'engagement' : 'brand_awareness']
+      const useComprehensive = files.length > 0
+      
+      console.log('Starting real API campaign generation:', {
+        product,
+        target_markets,
+        campaign_goals,
+        useComprehensive,
+        filesCount: files.length
+>>>>>>> Stashed changes
       })
-
-      // Simulate progress for this phase
-      let progress = 0
-      const progressInterval = setInterval(() => {
-        progress += Math.random() * 15 + 5
-        
-        aiTeam.forEach(agent => {
-          setAgentStates(prev => ({
-            ...prev,
-            [agent.id]: {
-              ...prev[agent.id],
-              progress: Math.min(progress, 100)
-            }
-          }))
+      
+      // Debug files array
+      console.log('Files received in processing:', files, 'Length:', files?.length)
+      if (files && files.length > 0) {
+        console.log('First file details:', {
+          name: files[0]?.name,
+          type: files[0]?.type,
+          size: files[0]?.size
         })
-
-        if (progress >= 100) {
-          clearInterval(progressInterval)
+      }
+      
+      // Ensure we have files array, even if empty
+      const safeFiles = files || []
+      
+      campaignMutation.mutate({
+        files: safeFiles,
+        product,
+        target_markets,
+        campaign_goals,
+        useComprehensive,
+        onProgress: (step: string, progressValue: number) => {
+          console.log('Progress update:', step, progressValue + '%')
+          setProgress(progressValue)
+          // Update current phase based on progress
+          const phaseIndex = Math.floor((progressValue / 100) * phases.length)
+          setCurrentPhase(Math.min(phaseIndex, phases.length - 1))
           
-          // Mark agents as complete for this phase
+          // Update agent states based on progress
           aiTeam.forEach(agent => {
             setAgentStates(prev => ({
               ...prev,
               [agent.id]: {
-                ...prev[agent.id],
-                status: 'complete',
-                progress: 100
+                status: progressValue === 100 ? 'complete' : 'active',
+                progress: progressValue,
+                currentTask: step
               }
             }))
           })
-
-          phaseIndex++
-          totalTime += phase.duration
-          
-          setTimeout(runPhase, 1000)
         }
-      }, phase.duration / 20)
+      })
     }
+  }, [])
 
-    runPhase()
-  }
+  // Add agent messages during real API processing
+  useEffect(() => {
+    if (campaignMutation.isPending && progress > 0) {
+      const phaseIndex = Math.floor((progress / 100) * phases.length)
+      const currentPhase = phases[phaseIndex] || phases[phases.length - 1]
+      
+      // Add agent message based on current progress
+      const randomAgent = aiTeam[Math.floor(Math.random() * aiTeam.length)]
+      if (randomAgent) {
+        const message = (agentMessageTemplates as any)[randomAgent.id]?.[Math.min(phaseIndex, (agentMessageTemplates as any)[randomAgent.id]?.length - 1)] || 'Processing your campaign...'
+        
+        setAgentMessages(prev => {
+          // Avoid duplicate messages
+          const lastMessage = prev[prev.length - 1]
+          if (lastMessage?.message === message) return prev
+          
+          return [...prev, {
+            id: Date.now(),
+            agentId: randomAgent.id,
+            agentName: randomAgent.name,
+            message,
+            timestamp: new Date(),
+            gradient: randomAgent.gradient,
+            icon: randomAgent.icon
+          }]
+        })
+      }
+    }
+  }, [progress, campaignMutation.isPending])
 
   // Handle completion with real API results
   useEffect(() => {
@@ -226,6 +291,7 @@ export function AICollaborationProcessing({
 
   // Update phases based on API status
   useEffect(() => {
+<<<<<<< Updated upstream
     if (statusQuery.data?.currentPhase) {
       const phaseIndex = phases.findIndex(p => p.title.toLowerCase().includes(statusQuery.data.currentPhase.toLowerCase()))
       if (phaseIndex >= 0) {
@@ -235,6 +301,22 @@ export function AICollaborationProcessing({
   }, [statusQuery.data?.currentPhase, phases])
 
   const error = processCampaignMutation.error || statusQuery.error || resultsQuery.error
+=======
+    if (campaignMutation.isSuccess && campaignMutation.data) {
+      console.log('Campaign generation successful:', campaignMutation.data)
+      onComplete(campaignMutation.data)
+    }
+  }, [campaignMutation.isSuccess, campaignMutation.data, onComplete])
+
+  // Handle errors
+  useEffect(() => {
+    if (campaignMutation.error) {
+      console.error('Campaign generation failed:', campaignMutation.error)
+    }
+  }, [campaignMutation.error])
+
+  const error = campaignMutation.error
+>>>>>>> Stashed changes
 
   return (
     <div className="max-w-7xl mx-auto space-y-8">

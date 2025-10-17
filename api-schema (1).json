@@ -1,0 +1,739 @@
+{
+  "api_base_url": "https://a5s7rnwjm0.execute-api.eu-west-1.amazonaws.com/dev",
+  "version": "2.0.0",
+  "last_updated": "2025-10-17",
+  "bedrock_agent_id": "PETCCX2JY2",
+  "bedrock_agent_alias_id": "GICENSE1H8",
+  "ai_orchestration": {
+    "bedrock_agent": {
+      "name": "AI Marketing Campaign Supervisor",
+      "model": "Anthropic Claude 3 Haiku (anthropic.claude-3-haiku-20240307-v1:0)",
+      "action_groups": [
+        "image-analysis: Amazon Rekognition for product image analysis",
+        "data-enrichment: YouTube API for market trend insights",
+        "cultural-intelligence: Cross-cultural adaptation and market intelligence",
+        "visual-asset-generator: Comprehensive visual asset creation",
+        "sentiment-analysis: Market sentiment analysis and actionable insights"
+      ],
+      "knowledge_base": "Cultural Intelligence Knowledge Base (XP9XRAELYG)",
+      "workflow": "Sequential execution: Image Analysis → Data Enrichment → Cultural Intelligence → Visual Asset Generation → Campaign Strategy"
+    }
+  },
+  "endpoints": {
+    "presigned_url": {
+      "path": "/api/upload/presigned-url",
+      "method": "POST",
+      "description": "Generate a presigned URL for uploading images to S3",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "required": {
+          "fileName": {
+            "type": "string",
+            "description": "Name of the file to upload",
+            "example": "product-image.jpg"
+          },
+          "fileType": {
+            "type": "string",
+            "description": "MIME type of the file",
+            "example": "image/jpeg",
+            "allowed_values": [
+              "image/jpeg",
+              "image/png",
+              "image/jpg",
+              "image/webp"
+            ]
+          }
+        }
+      },
+      "flow": [
+        "1. User selects image file in frontend",
+        "2. Frontend extracts fileName and fileType",
+        "3. POST request to presigned URL endpoint",
+        "4. Receive presigned URL and metadata",
+        "5. Use presigned URL to upload file directly to S3",
+        "6. Use imageHash/uploadId for subsequent API calls"
+      ],
+      "success_response": {
+        "status_code": 200,
+        "body": {
+          "uploadUrl": {
+            "type": "string",
+            "description": "Presigned URL for uploading to S3",
+            "example": "https://s3.eu-west-1.amazonaws.com/degenerals-mi-dev-images/uploads/..."
+          },
+          "imageHash": {
+            "type": "string",
+            "description": "Unique identifier for the uploaded image",
+            "example": "d97b315d-34fe-4a62-b8eb-6e58c2163dab"
+          },
+          "imageKey": {
+            "type": "string",
+            "description": "S3 key for the uploaded image",
+            "example": "uploads/anonymous/20251017_070427_d97b315d-34fe-4a62-b8eb-6e58c2163dab.jpg"
+          },
+          "uploadId": {
+            "type": "string",
+            "description": "Upload tracking ID",
+            "example": "d97b315d-34fe-4a62-b8eb-6e58c2163dab"
+          },
+          "expiresIn": {
+            "type": "number",
+            "description": "URL expiration time in seconds",
+            "example": 3600
+          },
+          "requiredHeaders": {
+            "type": "object",
+            "description": "Headers required for the S3 upload",
+            "example": {
+              "Content-Type": "image/jpeg"
+            }
+          }
+        }
+      },
+      "error_response": {
+        "status_code": 400,
+        "body": {
+          "error": {
+            "type": "string",
+            "examples": [
+              "fileName is required",
+              "fileType is required",
+              "Invalid file type"
+            ]
+          }
+        }
+      }
+    },
+    "upload_status": {
+      "path": "/api/upload",
+      "method": "GET",
+      "description": "Check the status of an uploaded image",
+      "headers": {},
+      "payload": {
+        "query_parameters": {
+          "imageHash": {
+            "type": "string",
+            "required": true,
+            "description": "Image hash from presigned URL response",
+            "example": "d97b315d-34fe-4a62-b8eb-6e58c2163dab"
+          }
+        }
+      },
+      "flow": [
+        "1. User uploads image using presigned URL",
+        "2. Frontend calls upload status with imageHash",
+        "3. Backend checks if image exists in S3",
+        "4. Returns upload status and metadata"
+      ],
+      "success_response": {
+        "status_code": 200,
+        "body": {
+          "status": {
+            "type": "string",
+            "example": "completed"
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "Public URL of the uploaded image",
+            "example": "https://degenerals-mi-dev-images.s3.eu-west-1.amazonaws.com/uploads/..."
+          },
+          "uploadedAt": {
+            "type": "string",
+            "description": "Upload timestamp",
+            "example": "2025-10-17T07:00:00Z"
+          }
+        }
+      },
+      "error_response": {
+        "status_code": 404,
+        "body": {
+          "message": "Not Found"
+        }
+      }
+    },
+    "basic_campaign_generation": {
+      "path": "/api/campaigns",
+      "method": "POST",
+      "description": "Generate a basic marketing campaign using Bedrock agent",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "required": {
+          "product": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Product name",
+                "example": "Gaming Laptop"
+              },
+              "category": {
+                "type": "string",
+                "description": "Product category",
+                "example": "Electronics"
+              }
+            }
+          },
+          "target_markets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of target markets",
+            "example": ["China", "Europe", "US"]
+          },
+          "campaign_goals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Campaign objectives",
+            "example": ["brand_awareness", "sales", "engagement"]
+          }
+        },
+        "optional": {
+          "product.description": {
+            "type": "string",
+            "description": "Additional product details",
+            "example": "High-performance gaming laptop with RGB lighting"
+          }
+        }
+      },
+      "flow": [
+        "1. Frontend collects product info and campaign preferences",
+        "2. POST request to campaigns endpoint",
+        "3. Backend invokes Bedrock agent with basic campaign generation",
+        "4. Agent generates platform-specific content strategies",
+        "5. Response includes campaign strategy and platform content"
+      ],
+      "success_response": {
+        "status_code": 200,
+        "body": {
+          "campaign_strategy": {
+            "type": "object",
+            "properties": {
+              "overview": {
+                "type": "string",
+                "description": "Campaign overview and strategy"
+              },
+              "key_objectives": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Primary campaign objectives"
+              },
+              "target_audience": {
+                "type": "object",
+                "description": "Target audience demographics and psychographics"
+              }
+            }
+          },
+          "platform_content": {
+            "type": "object",
+            "properties": {
+              "instagram": {
+                "type": "object",
+                "description": "Instagram-specific content strategy"
+              },
+              "tiktok": {
+                "type": "object",
+                "description": "TikTok-specific content strategy"
+              },
+              "facebook": {
+                "type": "object",
+                "description": "Facebook-specific content strategy"
+              },
+              "youtube": {
+                "type": "object",
+                "description": "YouTube-specific content strategy"
+              },
+              "twitter": {
+                "type": "object",
+                "description": "Twitter-specific content strategy"
+              }
+            }
+          },
+          "visual_insights": {
+            "type": "object",
+            "description": "Visual analysis results (if image provided)"
+          },
+          "market_trends": {
+            "type": "object",
+            "description": "Market trends and insights"
+          },
+          "success_metrics": {
+            "type": "object",
+            "description": "KPIs and success metrics"
+          },
+          "next_steps": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Recommended next steps"
+          }
+        }
+      },
+      "error_response": {
+        "status_code": 400,
+        "body": {
+          "error": {
+            "type": "string",
+            "examples": [
+              "Product field is required and must be an object",
+              "Target markets are required",
+              "Campaign goals are required"
+            ]
+          }
+        }
+      },
+      "typical_response_time": "15-30 seconds"
+    },
+    "sentiment_analysis": {
+      "path": "/api/sentiment-analysis",
+      "method": "POST",
+      "description": "Analyze market sentiment for products/brands using AWS Comprehend and generate actionable insights",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "required": {
+          "search_query": {
+            "type": "string",
+            "description": "Product or brand name to analyze sentiment for",
+            "example": "iPhone 15"
+          }
+        },
+        "optional": {
+          "product_name": {
+            "type": "string",
+            "description": "Specific product name for context",
+            "example": "iPhone 15 Pro Max"
+          },
+          "analysis_type": {
+            "type": "string",
+            "description": "Type of analysis to perform",
+            "allowed_values": [
+              "sentiment_only",
+              "action_items_only",
+              "comprehensive"
+            ],
+            "default": "comprehensive"
+          }
+        }
+      },
+      "response": {
+        "success": {
+          "status_code": 200,
+          "structure": {
+            "success": true,
+            "data": {
+              "analysis_id": "string (UUID)",
+              "search_query": "string",
+              "product_name": "string",
+              "sentiment_summary": {
+                "overall_sentiment": "POSITIVE|NEGATIVE|NEUTRAL|MIXED",
+                "confidence": "number (0-1)",
+                "total_analyzed": "number",
+                "sentiment_breakdown": {
+                  "POSITIVE": "number",
+                  "NEGATIVE": "number",
+                  "NEUTRAL": "number",
+                  "MIXED": "number"
+                },
+                "sentiment_percentages": {
+                  "positive": "number (0-100)",
+                  "negative": "number (0-100)",
+                  "neutral": "number (0-100)",
+                  "mixed": "number (0-100)"
+                },
+                "high_engagement_sentiment": {
+                  "positive": "number",
+                  "negative": "number"
+                }
+              },
+              "action_items": {
+                "priority_focus": "string",
+                "high_priority": ["array of strings"],
+                "medium_priority": ["array of strings"],
+                "low_priority": ["array of strings"],
+                "content_strategy": ["array of strings"],
+                "product_improvements": ["array of strings"]
+              },
+              "comprehensive_insights": {
+                "overall_sentiment": "string",
+                "priority_actions": ["array of strings"],
+                "key_insights": ["array of strings"]
+              },
+              "storage_location": "string",
+              "timestamp": "string (ISO)"
+            }
+          }
+        },
+        "error": {
+          "status_code": 400,
+          "structure": {
+            "success": false,
+            "error": "string (error message)"
+          }
+        }
+      },
+      "rate_limits": {
+        "requests_per_minute": 10,
+        "max_concurrent": 3
+      },
+      "constraints": {
+        "search_query_max_length": 200,
+        "processing_timeout": "300 seconds"
+      }
+    },
+    "comprehensive_campaign": {
+      "path": "/api/comprehensive-campaign",
+      "method": "POST",
+      "description": "Generate comprehensive marketing campaigns with visual assets using AI agent orchestration",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "required": {
+          "product": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Product name",
+                "example": "Premium Coffee Maker"
+              },
+              "category": {
+                "type": "string",
+                "description": "Product category",
+                "example": "Kitchen Appliances"
+              },
+              "description": {
+                "type": "string",
+                "description": "Product description",
+                "example": "High-end espresso machine with advanced features"
+              }
+            }
+          },
+          "target_markets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of target markets",
+            "example": ["China", "Europe"]
+          },
+          "campaign_goals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Campaign objectives",
+            "example": ["brand_awareness", "sales"]
+          }
+        },
+        "optional": {
+          "s3_image_key": {
+            "type": "string",
+            "description": "S3 key of uploaded product image (from upload flow)",
+            "example": "uploads/anonymous/20251016_232728_d5598965-b661-4767-9c9e-eac2d67b219c.jpg"
+          },
+          "image_url": {
+            "type": "string",
+            "description": "External image URL (alternative to S3 image)",
+            "example": "https://example.com/product-image.jpg"
+          }
+        }
+      },
+      "flow": [
+        "1. Frontend collects comprehensive campaign requirements",
+        "2. Optional: User uploads image and gets S3 key",
+        "3. POST request to comprehensive-campaign endpoint",
+        "4. Backend orchestrates multiple AI services:",
+        "   a. Image analysis (if image provided)",
+        "   b. Market data enrichment via YouTube API",
+        "   c. Cultural intelligence via knowledge base",
+        "   d. Visual asset generation (video scripts, social media images, thumbnails, ad creatives)",
+        "   e. Comprehensive campaign generation via Bedrock agent",
+        "5. Response includes enhanced campaign with cultural adaptations AND generated visual assets"
+      ],
+      "success_response": {
+        "status_code": 200,
+        "body": {
+          "content": {
+            "type": "string",
+            "description": "JSON string containing the complete campaign strategy",
+            "note": "Parse this JSON string to get the structured campaign data"
+          }
+        },
+        "parsed_content_structure": {
+          "campaign_strategy": {
+            "type": "object",
+            "description": "Comprehensive campaign strategy with cultural considerations"
+          },
+          "platform_content": {
+            "type": "object",
+            "description": "Platform-specific content with cultural adaptations"
+          },
+          "visual_insights": {
+            "type": "object",
+            "description": "Image analysis results and visual recommendations"
+          },
+          "market_trends": {
+            "type": "object",
+            "description": "Market trends from data enrichment"
+          },
+          "cultural_adaptations": {
+            "type": "object",
+            "description": "Cultural intelligence insights and adaptations"
+          },
+          "generated_assets": {
+            "type": "object",
+            "description": "Generated visual assets organized by type and platform",
+            "properties": {
+              "video_scripts": {
+                "type": "array",
+                "description": "Generated video scripts for different platforms (YouTube, TikTok, Instagram, Facebook)",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "platform": { "type": "string", "example": "youtube" },
+                    "title": {
+                      "type": "string",
+                      "example": "iPhone 15 Pro - Revolutionary Camera System"
+                    },
+                    "duration": { "type": "string", "example": "60 seconds" },
+                    "url": {
+                      "type": "string",
+                      "example": "https://s3.amazonaws.com/.../scripts/youtube.txt"
+                    }
+                  }
+                }
+              },
+              "social_images": {
+                "type": "array",
+                "description": "Generated social media images optimized for each platform",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "platform": { "type": "string", "example": "instagram" },
+                    "format": { "type": "string", "example": "1024x1024" },
+                    "url": {
+                      "type": "string",
+                      "example": "https://s3.amazonaws.com/.../images/instagram.png"
+                    },
+                    "prompt": {
+                      "type": "string",
+                      "example": "Premium product with modern aesthetic"
+                    }
+                  }
+                }
+              },
+              "thumbnails": {
+                "type": "array",
+                "description": "Generated video thumbnails",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "youtube_thumbnail"
+                    },
+                    "format": { "type": "string", "example": "1152x896" },
+                    "url": {
+                      "type": "string",
+                      "example": "https://s3.amazonaws.com/.../thumbnails/youtube.png"
+                    }
+                  }
+                }
+              },
+              "ad_creatives": {
+                "type": "array",
+                "description": "Generated advertising creatives",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": { "type": "string", "example": "display_ad" },
+                    "format": { "type": "string", "example": "1024x1024" },
+                    "url": {
+                      "type": "string",
+                      "example": "https://s3.amazonaws.com/.../ads/display.png"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "success_metrics": {
+            "type": "object",
+            "description": "Enhanced KPIs with cultural considerations and visual asset performance tracking"
+          }
+        }
+      },
+      "error_response": {
+        "status_code": 400,
+        "body": {
+          "error": {
+            "type": "string",
+            "examples": [
+              "Product information is required",
+              "Target markets are required",
+              "Invalid image URL or S3 key"
+            ]
+          }
+        }
+      },
+      "typical_response_time": "30-60 seconds",
+      "processing_stages": [
+        "Image analysis (if provided): 2-5 seconds",
+        "Market data enrichment: 5-10 seconds",
+        "Cultural intelligence: 3-5 seconds",
+        "Visual asset generation: 15-30 seconds",
+        "Campaign strategy generation: 5-15 seconds"
+      ]
+    }
+  },
+  "common_error_codes": {
+    "400": {
+      "description": "Bad Request - Invalid input parameters",
+      "common_causes": [
+        "Missing required fields",
+        "Invalid data types",
+        "Invalid file formats"
+      ]
+    },
+    "404": {
+      "description": "Not Found - Resource doesn't exist",
+      "common_causes": [
+        "Invalid image hash",
+        "Image not uploaded",
+        "Invalid endpoint"
+      ]
+    },
+    "500": {
+      "description": "Internal Server Error - Backend processing error",
+      "common_causes": [
+        "Bedrock agent timeout",
+        "AI service unavailable",
+        "Database connection issues"
+      ]
+    },
+    "503": {
+      "description": "Service Unavailable - Temporary service issues",
+      "common_causes": [
+        "High traffic",
+        "AI service rate limits",
+        "Maintenance mode"
+      ]
+    }
+  },
+  "recommended_frontend_flow": {
+    "simple_campaign": [
+      "1. User fills out product form (name, category, description)",
+      "2. User selects target markets from dropdown",
+      "3. User selects campaign goals (checkboxes)",
+      "4. Call /api/campaigns endpoint",
+      "5. Show loading state (15-30s)",
+      "6. Display campaign results with platform-specific content"
+    ],
+    "comprehensive_campaign_with_image": [
+      "1. User fills out product form",
+      "2. User uploads product image:",
+      "   a. Call /api/upload/presigned-url",
+      "   b. Upload image to S3 using presigned URL",
+      "   c. Call /api/upload to verify upload status",
+      "3. User selects target markets and goals",
+      "4. Call /api/comprehensive-campaign with s3_image_key",
+      "5. Show detailed loading state (30-60s) with progress indicators:",
+      "   a. 'Analyzing product image...'",
+      "   b. 'Gathering market insights...'",
+      "   c. 'Applying cultural intelligence...'",
+      "   d. 'Generating visual assets...'",
+      "   e. 'Finalizing campaign strategy...'",
+      "6. Display enhanced campaign with cultural adaptations AND downloadable visual assets"
+    ],
+    "comprehensive_campaign_with_url": [
+      "1. User fills out product form",
+      "2. User provides external image URL",
+      "3. User selects target markets and goals",
+      "4. Call /api/comprehensive-campaign with image_url",
+      "5. Show detailed loading state (30-60s) with progress indicators",
+      "6. Display enhanced campaign results with generated visual assets"
+    ]
+  },
+  "loading_states": {
+    "short_operations": {
+      "duration": "1-5 seconds",
+      "operations": ["presigned URL generation", "upload status check"],
+      "ui_recommendation": "Spinner or progress indicator"
+    },
+    "medium_operations": {
+      "duration": "15-30 seconds",
+      "operations": ["basic campaign generation"],
+      "ui_recommendation": "Progress bar with steps: 'Analyzing product...' → 'Generating content...' → 'Finalizing campaign...'"
+    },
+    "long_operations": {
+      "duration": "30-60 seconds",
+      "operations": ["comprehensive campaign generation with visual assets"],
+      "ui_recommendation": "Progress bar with detailed steps: 'Processing image...' → 'Analyzing market trends...' → 'Applying cultural intelligence...' → 'Generating visual assets...' → 'Finalizing campaign...'"
+    }
+  },
+  "rate_limits": {
+    "presigned_url": "100 requests per minute per IP",
+    "campaign_generation": "10 requests per minute per IP",
+    "comprehensive_campaign": "5 requests per minute per IP"
+  },
+  "file_upload_constraints": {
+    "max_file_size": "10MB",
+    "supported_formats": ["image/jpeg", "image/png", "image/jpg", "image/webp"],
+    "recommended_dimensions": "1024x1024 or larger",
+    "presigned_url_expiry": "1 hour"
+  },
+  "visual_asset_generation": {
+    "description": "Automated generation of professional visual assets for marketing campaigns",
+    "asset_types": {
+      "video_scripts": {
+        "platforms": ["YouTube", "TikTok", "Instagram", "Facebook"],
+        "format": "Text files with structured video content",
+        "storage": "S3 bucket with organized folder structure"
+      },
+      "social_images": {
+        "platforms": ["Instagram", "Facebook", "Twitter", "LinkedIn"],
+        "formats": ["1024x1024", "1152x896"],
+        "generator": "Amazon Titan Image Generator",
+        "style": "Professional, brand-appropriate imagery"
+      },
+      "thumbnails": {
+        "types": ["YouTube thumbnails", "Video previews"],
+        "format": "1152x896 optimized for video platforms",
+        "features": "Eye-catching designs with product focus"
+      },
+      "ad_creatives": {
+        "types": ["Display ads", "Banner creatives", "Social media ads"],
+        "format": "1024x1024 square format",
+        "optimization": "Conversion-focused creative design"
+      }
+    },
+    "ai_models": {
+      "content_generation": "Anthropic Claude 3 Haiku",
+      "image_generation": "Amazon Titan Image Generator",
+      "optimization": "Staggered execution to prevent API throttling"
+    },
+    "delivery": {
+      "format": "Direct S3 URLs for immediate download",
+      "organization": "Structured by campaign ID and asset type",
+      "availability": "Instant access via HTTPS URLs"
+    }
+  },
+  "data_persistence": {
+    "campaign_results": "Stored in DynamoDB for 30 days",
+    "uploaded_images": "Stored in S3 with lifecycle policy (30 days)",
+    "generated_assets": "Stored in S3 under generated-assets/{campaign_id}/ structure for 30 days",
+    "cultural_intelligence": "Insights cached for reuse across similar campaigns"
+  }
+}

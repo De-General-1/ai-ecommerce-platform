@@ -65,6 +65,8 @@ export default function CampaignResultsPage() {
           results={results}
           selectedGoal={campaignData.goal}
           aiTeam={campaignData.team}
+          category={campaignData.category}
+          platform={campaignData.targetPlatform}
           onReset={handleReset}
         />
       </div>

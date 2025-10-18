@@ -24,10 +24,10 @@ export function GeneratedAssets({ assets }: GeneratedAssetsProps) {
               <p className="text-sm mb-3">{prompt}</p>
               <div className="flex gap-2">
                 <Button size="sm">Generate Image</Button>
-                <Button variant="outline" size="sm">
+                {/* <Button variant="outline" size="sm">
                   <Eye className="w-4 h-4 mr-2" />
                   Preview
-                </Button>
+                </Button> */}
               </div>
             </div>
           ))}
@@ -55,9 +55,9 @@ export function GeneratedAssets({ assets }: GeneratedAssetsProps) {
               <p className="text-sm">{script.content}</p>
               <div className="flex gap-2 mt-3">
                 <Button size="sm">Use Script</Button>
-                <Button variant="outline" size="sm">
+                {/* <Button variant="outline" size="sm">
                   Edit
-                </Button>
+                </Button> */}
               </div>
             </div>
           ))}
@@ -85,9 +85,9 @@ export function GeneratedAssets({ assets }: GeneratedAssetsProps) {
               </div>
               <div className="flex gap-2">
                 <Button size="sm">Use Template</Button>
-                <Button variant="outline" size="sm">
+                {/* <Button variant="outline" size="sm">
                   Customize
-                </Button>
+                </Button> */}
                 <Button variant="outline" size="sm">
                   <Download className="w-4 h-4 mr-2" />
                   Export

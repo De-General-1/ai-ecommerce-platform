@@ -1,5 +1,5 @@
 // Simple test script to verify API integration
-const API_BASE = 'https://a5s7rnwjm0.execute-api.eu-west-1.amazonaws.com/dev'
+const API_BASE = 'https://u4xf9rvuwj.execute-api.eu-west-1.amazonaws.com/dev'
 
 // Test Basic Campaign Generation
 async function testBasicCampaign() {

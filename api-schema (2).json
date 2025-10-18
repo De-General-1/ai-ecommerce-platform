@@ -1,5 +1,5 @@
 {
-  "api_base_url": "https://a5s7rnwjm0.execute-api.eu-west-1.amazonaws.com/dev",
+  "api_base_url": "https://u4xf9rvuwj.execute-api.eu-west-1.amazonaws.com/dev",
   "version": "2.1.0",
   "last_updated": "2025-10-17",
   "bedrock_agent_id": "PETCCX2JY2",

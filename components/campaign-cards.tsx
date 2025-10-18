@@ -96,11 +96,11 @@ export function CampaignCards({ campaigns }: CampaignCardsProps) {
               </div>
             </div>
 
-            <div className="flex gap-2 pt-4">
+            {/* <div className="flex gap-2 pt-4">
               <Button>Launch Campaign</Button>
               <Button variant="outline">Customize</Button>
               <Button variant="outline">Preview</Button>
-            </div>
+            </div> */}
           </CardContent>
         </Card>
       ))}

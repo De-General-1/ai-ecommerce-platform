@@ -25,3 +25,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+api-schema (2).json
+api-schema.json
+expected_response.json
+expected_response_2.json
+INTEGRATION_STATUS.md
+example_response.txt

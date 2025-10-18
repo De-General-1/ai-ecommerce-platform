@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AICollaborationProcessing } from "@/components/ai-collaboration-processing";
+import { EnthusiasticProcessing } from "@/components/enthusiastic-processing";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
@@ -56,29 +56,26 @@ export default function CampaignProcessingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-end mb-6">
-          <Button
-            variant="outline"
-            onClick={handleNewCampaign}
-            className="hover:bg-slate-100"
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            Start New Campaign
-          </Button>
-        </div>
-
-        <AICollaborationProcessing
-          files={campaignData.files}
-          description={campaignData.productDescription}
-          category={campaignData.category}
-          platform={campaignData.targetPlatform}
-          selectedGoal={campaignData.goal}
-          aiTeam={campaignData.team}
-          onComplete={handleComplete}
-        />
+    <>
+      <div className="fixed top-4 right-4 z-50">
+        <Button
+          variant="outline"
+          onClick={handleNewCampaign}
+          className="bg-white/90 backdrop-blur-sm hover:bg-white hover:text-slate-900 shadow-lg"
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Start New Campaign
+        </Button>
       </div>
-    </div>
+
+      <EnthusiasticProcessing
+        selectedGoal={campaignData.goal}
+        onComplete={handleComplete}
+        files={campaignData.files}
+        description={campaignData.productDescription}
+        category={campaignData.category}
+        platform={campaignData.targetPlatform}
+      />
+    </>
   );
 }

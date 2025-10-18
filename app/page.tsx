@@ -15,7 +15,7 @@ export default function HomePage() {
 
   useEffect(() => {
     // Prefetch campaign route for faster navigation
-    router.prefetch('/campaign')
+    router.prefetch('/api/simple-capaign')
   }, [router])
 
   return (

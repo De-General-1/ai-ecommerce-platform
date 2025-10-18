@@ -3,8 +3,7 @@
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { EnhancedResults } from "@/components/enhanced-results"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft } from "lucide-react"
+
 
 export default function CampaignResultsPage() {
   const router = useRouter()
@@ -29,9 +28,7 @@ export default function CampaignResultsPage() {
     router.push('/campaign')
   }
 
-  const handleBack = () => {
-    router.push('/campaign/processing')
-  }
+
 
   if (!results || !campaignData) {
     return (
@@ -50,24 +47,11 @@ export default function CampaignResultsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="container mx-auto px-4 py-8">
-        <Button 
-          variant="ghost" 
-          onClick={handleBack}
-          className="mb-6 hover:bg-slate-100 cursor-pointer"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Processing
-        </Button>
-        
-        <EnhancedResults
-          results={results}
-          selectedGoal={campaignData.goal}
-          aiTeam={campaignData.team}
-          onReset={handleReset}
-        />
-      </div>
-    </div>
+    <EnhancedResults
+      results={results}
+      selectedGoal={campaignData.goal}
+      aiTeam={campaignData.team}
+      onReset={handleReset}
+    />
   )
 }

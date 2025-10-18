@@ -80,7 +80,7 @@ export function AICollaborationProcessing({
       console.log("DEBUG: Making direct fetch to presigned URL endpoint");
 
       const presignedResponse = await fetch(
-        "https://a5s7rnwjm0.execute-api.eu-west-1.amazonaws.com/dev/api/upload/presigned-url",
+        "https://u4xf9rvuwj.execute-api.eu-west-1.amazonaws.com/dev/api/uploads/get-presigned-url",
         {
           method: "POST",
           headers: {
@@ -88,7 +88,7 @@ export function AICollaborationProcessing({
             Accept: "application/json",
             Origin: "http://localhost:3000",
           },
-          mode: "cors",
+       
           body: JSON.stringify(payload),
         }
       );
@@ -126,33 +126,58 @@ export function AICollaborationProcessing({
 
       console.log("DEBUG: File uploaded successfully to S3");
 
-      // Step 3: Create campaign - use comprehensive endpoint for "Go Viral Globally"
-      const isComprehensiveCampaign = selectedGoal?.title?.trim() === "Go Viral Globally";
-      const endpoint = isComprehensiveCampaign 
-        ? "https://a5s7rnwjm0.execute-api.eu-west-1.amazonaws.com/dev/api/comprehensive-campaign"
-        : "https://a5s7rnwjm0.execute-api.eu-west-1.amazonaws.com/dev/api/campaigns";
+      // Step 3: Create campaign - different endpoints for different goals
+      const goalTitle = selectedGoal?.title?.trim();
+      let endpoint;
+      
+      if (goalTitle === "Go Viral Globally") {
+        endpoint = "https://u4xf9rvuwj.execute-api.eu-west-1.amazonaws.com/dev/api/comprehensive-campaign";
+      } else if (goalTitle === "Create Viral Content & Launch") {
+        endpoint = "https://u4xf9rvuwj.execute-api.eu-west-1.amazonaws.com/dev/api/simple-campaign";
+      } else {
+        endpoint = "https://u4xf9rvuwj.execute-api.eu-west-1.amazonaws.com/dev/api/campaigns";
+      }
 
       const campaignData = {
-        product: {
-          ...product,
-          imageUrl: `https://degenerals-mi-dev-images.s3.eu-west-1.amazonaws.com/${imageKey}`,
-          imageKey,
+        product_info: {
+          name: product.name,
+          description: product.description,
+          category: category.toLowerCase(),
+          price: "$299.99",
+          key_features: [
+            "High-quality materials",
+            "Premium design",
+            "Excellent performance",
+            "User-friendly interface"
+          ]
         },
-        target_audience:
-          "Target audience based on product category and description",
-        platform_preferences: [platform, "Instagram", "TikTok"],
-        budget_range: "$5,000 - $15,000",
-        target_markets: ["United States", "Germany", "Japan"],
-        campaign_objectives: ["brand_awareness", "product_launch"],
-        ...(isComprehensiveCampaign && {
-          s3_image_key: imageKey,
-          image_url: `https://degenerals-mi-dev-images.s3.eu-west-1.amazonaws.com/${imageKey}`
-        })
+        s3_info: {
+          bucket: "degenerals-mi-dev-images",
+          key: imageKey
+        },
+        target_markets: {
+          markets: ["North America", "Europe", "Asia"]
+        },
+        campaign_objectives: {
+          target_audience: "Tech enthusiasts, professionals, early adopters",
+          target_age_range: "25-55",
+          platform_preferences: ["Instagram", "TikTok", "YouTube", "LinkedIn"],
+          income_level: "middle to upper",
+          geographic_focus: "Global",
+          campaign_duration: "30 days",
+          budget: "$50,000",
+          primary_goal: "Increase brand awareness and drive sales",
+          secondary_goals: [
+            "Build social media engagement",
+            "Generate user-generated content",
+            "Establish thought leadership"
+          ]
+        }
       };
 
-      console.log(`DEBUG: Selected goal title: "${selectedGoal?.title}"`);  
-      console.log(`DEBUG: Is comprehensive campaign: ${isComprehensiveCampaign}`);
-      console.log(`DEBUG: Creating ${isComprehensiveCampaign ? 'comprehensive' : 'basic'} campaign with data:`, campaignData);
+      console.log(`DEBUG: Selected goal title: "${goalTitle}"`);  
+      console.log(`DEBUG: Using endpoint: ${endpoint}`);
+      console.log(`DEBUG: Creating campaign with data:`, campaignData);
       const campaignResponse = await fetch(endpoint, {
           method: "POST",
           headers: {
@@ -295,28 +320,42 @@ export function AICollaborationProcessing({
           "Files were lost during localStorage serialization. Creating mock file for testing."
         );
 
-        // For now, create a mock file to test the API call
-        // In production, we should store files differently or pass them directly
-        const mockFile = new File(["mock content"], "test-product.jpg", {
-          type: "image/jpeg",
-        });
-
-        console.log("DEBUG: Using mock file:", {
-          name: mockFile.name,
-          type: mockFile.type,
-          size: mockFile.size,
-        });
+        // Create a valid mock image file for testing
+        const canvas = document.createElement('canvas');
+        canvas.width = 100;
+        canvas.height = 100;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.fillStyle = '#4F46E5';
+          ctx.fillRect(0, 0, 100, 100);
+          ctx.fillStyle = '#FFFFFF';
+          ctx.font = '16px Arial';
+          ctx.fillText('TEST', 30, 55);
+        }
+        
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const mockFile = new File([blob], "test-product.jpg", {
+              type: "image/jpeg",
+            });
+            
+            console.log("DEBUG: Using mock image file:", {
+              name: mockFile.name,
+              type: mockFile.type,
+              size: mockFile.size,
+            });
+            
+            directCreateCampaign(mockFile, {
+              name: `${category} Product`,
+              description: description,
+            });
+          }
+        }, 'image/jpeg', 0.8);
+        
+        return;
 
         setIsProcessing(true);
         setApiError(null);
-
-        // Direct API call with mock file
-        directCreateCampaign(mockFile, {
-          name: `${category} Product`,
-          description: description,
-        });
-
-        return;
       }
 
       const file = files[0];

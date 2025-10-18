@@ -1,0 +1,397 @@
+{
+  "simple_campaign_response_schema": {
+    "description": "Complete UI schema for /simple-campaign endpoint to populate all frontend components",
+    "type": "object",
+    "required": ["campaign", "platform_recommendations", "market_insights"],
+    "properties": {
+      "campaign": {
+        "type": "object",
+        "description": "Main campaign data nested under results",
+        "required": ["content_ideas", "campaigns", "generated_assets"],
+        "properties": {
+          "content_ideas": {
+            "type": "array",
+            "description": "Content ideas for ContentIdeas component",
+            "items": {
+              "type": "object",
+              "required": ["topic", "platform", "caption", "hashtags", "engagement_score"],
+              "properties": {
+                "topic": {
+                  "type": "string",
+                  "description": "Content topic/title",
+                  "example": "Summer Fashion Trends 2024"
+                },
+                "platform": {
+                  "type": "string",
+                  "description": "Target platform",
+                  "example": "Instagram"
+                },
+                "caption": {
+                  "type": "string",
+                  "description": "Ready-to-use caption text",
+                  "example": "Discover the hottest summer trends that will make you stand out! ✨"
+                },
+                "hashtags": {
+                  "type": "array",
+                  "items": {"type": "string"},
+                  "description": "Relevant hashtags",
+                  "example": ["#SummerFashion", "#OOTD", "#TrendAlert"]
+                },
+                "engagement_score": {
+                  "type": "number",
+                  "description": "Predicted engagement score (0-100)",
+                  "example": 87
+                }
+              }
+            }
+          },
+          "campaigns": {
+            "type": "array",
+            "description": "Campaign details for CampaignCards component",
+            "items": {
+              "type": "object",
+              "required": ["name", "duration", "posts_per_week", "platforms", "estimated_reach", "calendar", "adaptations"],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "summer-campaign-2024"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Campaign name",
+                  "example": "Summer Fashion Launch Campaign"
+                },
+                "duration": {
+                  "type": "string",
+                  "description": "Campaign duration",
+                  "example": "4 weeks"
+                },
+                "posts_per_week": {
+                  "type": "number",
+                  "description": "Posting frequency",
+                  "example": 5
+                },
+                "platforms": {
+                  "type": "array",
+                  "items": {"type": "string"},
+                  "description": "Target platforms",
+                  "example": ["Instagram", "TikTok", "Facebook"]
+                },
+                "estimated_reach": {
+                  "type": "string",
+                  "description": "Estimated audience reach",
+                  "example": "50K-100K"
+                },
+                "calendar": {
+                  "type": "object",
+                  "description": "Weekly content calendar",
+                  "example": {
+                    "Week 1": "Product teasers and behind-the-scenes content",
+                    "Week 2": "Influencer collaborations and user-generated content",
+                    "Week 3": "Launch announcement and product showcases",
+                    "Week 4": "Customer testimonials and social proof"
+                  }
+                },
+                "adaptations": {
+                  "type": "object",
+                  "description": "Platform-specific content adaptations",
+                  "example": {
+                    "Instagram": "High-quality photos with Stories integration",
+                    "TikTok": "Short-form videos with trending sounds",
+                    "Facebook": "Longer-form posts with community engagement"
+                  }
+                },
+                "engagement_score": {
+                  "type": "number",
+                  "description": "Expected campaign engagement score",
+                  "example": 85
+                }
+              }
+            }
+          },
+          "generated_assets": {
+            "type": "object",
+            "description": "Generated marketing assets for GeneratedAssets component",
+            "required": ["image_prompts", "video_scripts", "email_templates", "blog_outlines"],
+            "properties": {
+              "image_prompts": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "AI image generation prompts",
+                "example": [
+                  "A vibrant summer fashion flat lay with trendy accessories on a marble background",
+                  "Young woman wearing colorful summer outfit in urban setting, golden hour lighting"
+                ]
+              },
+              "video_scripts": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["type", "content"],
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "TikTok Reel"
+                    },
+                    "content": {
+                      "type": "string",
+                      "example": "Hook: 'POV: You found the perfect summer outfit' - Show outfit transformation in 15 seconds with trending audio"
+                    }
+                  }
+                }
+              },
+              "email_templates": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["subject", "body"],
+                  "properties": {
+                    "subject": {
+                      "type": "string",
+                      "example": "Your Summer Wardrobe Upgrade is Here! ☀️"
+                    },
+                    "body": {
+                      "type": "string",
+                      "example": "Hi [Name], Get ready to turn heads this summer with our latest collection..."
+                    }
+                  }
+                }
+              },
+              "blog_outlines": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["title", "points"],
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "example": "10 Must-Have Summer Fashion Trends for 2024"
+                    },
+                    "points": {
+                      "type": "array",
+                      "items": {"type": "string"},
+                      "example": [
+                        "Vibrant tropical prints and patterns",
+                        "Sustainable fashion choices",
+                        "Versatile accessories for day-to-night looks"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "platform_recommendations": {
+        "type": "object",
+        "description": "Platform recommendations (root level)",
+        "required": ["primary_platforms", "rationale"],
+        "properties": {
+          "primary_platforms": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Recommended primary platforms",
+            "example": ["Instagram", "TikTok", "Pinterest"]
+          },
+          "rationale": {
+            "type": "string",
+            "description": "Reasoning for platform selection",
+            "example": "Instagram and TikTok offer the highest engagement for fashion content among 18-35 demographics"
+          }
+        }
+      },
+      "market_insights": {
+        "type": "object",
+        "description": "Market insights and trends (root level)",
+        "required": ["trending_content_types", "cultural_considerations", "audience_preferences", "youtube_videos"],
+        "properties": {
+          "trending_content_types": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Current trending content formats",
+            "example": ["Outfit transitions", "Styling tips", "Behind-the-scenes content"]
+          },
+          "cultural_considerations": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Cultural factors to consider",
+            "example": ["Modest fashion preferences in certain regions", "Seasonal variations by geography"]
+          },
+          "audience_preferences": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Target audience preferences",
+            "example": ["Authentic, unfiltered content", "Sustainable fashion focus", "Affordable luxury positioning"]
+          },
+          "youtube_videos": {
+            "type": "array",
+            "description": "Related YouTube videos for market intelligence",
+            "items": {
+              "type": "object",
+              "required": ["title", "channelTitle", "thumbnailUrl", "url", "viewCount", "likeCount", "commentCount"],
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Summer Fashion Haul 2024 | Trending Pieces You Need"
+                },
+                "channelTitle": {
+                  "type": "string",
+                  "example": "Fashion Forward"
+                },
+                "thumbnailUrl": {
+                  "type": "string",
+                  "example": "https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg"
+                },
+                "url": {
+                  "type": "string",
+                  "example": "https://youtube.com/watch?v=VIDEO_ID"
+                },
+                "viewCount": {
+                  "type": "number",
+                  "example": 125000
+                },
+                "likeCount": {
+                  "type": "number",
+                  "example": 8500
+                },
+                "commentCount": {
+                  "type": "number",
+                  "example": 450
+                }
+              }
+            }
+          }
+        }
+      },
+      "analytics": {
+        "type": "object",
+        "description": "Analytics data for AnalyticsDashboard component",
+        "properties": {
+          "estimatedReach": {
+            "type": "number",
+            "description": "Estimated audience reach",
+            "example": 75000
+          },
+          "reachChange": {
+            "type": "string",
+            "description": "Reach change indicator",
+            "example": "+12%"
+          },
+          "reachTrend": {
+            "type": "string",
+            "enum": ["up", "down", "neutral"],
+            "example": "up"
+          },
+          "engagementChange": {
+            "type": "string",
+            "example": "+8.5%"
+          },
+          "engagementTrend": {
+            "type": "string",
+            "enum": ["up", "down", "neutral"],
+            "example": "up"
+          },
+          "conversionRate": {
+            "type": "number",
+            "description": "Expected conversion rate percentage",
+            "example": 3.2
+          },
+          "conversionChange": {
+            "type": "string",
+            "example": "+0.8%"
+          },
+          "conversionTrend": {
+            "type": "string",
+            "enum": ["up", "down", "neutral"],
+            "example": "up"
+          },
+          "estimatedViews": {
+            "type": "number",
+            "example": 250000
+          },
+          "projectedShares": {
+            "type": "number",
+            "example": 12500
+          },
+          "newFollowers": {
+            "type": "number",
+            "example": 3200
+          }
+        }
+      },
+      "recommendations": {
+        "type": "array",
+        "description": "AI recommendations for optimization",
+        "items": {
+          "type": "object",
+          "required": ["type", "title", "description"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["timing", "performance", "content"],
+              "example": "timing"
+            },
+            "title": {
+              "type": "string",
+              "example": "Optimal Posting Times"
+            },
+            "description": {
+              "type": "string",
+              "example": "Post between 6-9 PM for maximum engagement with your target audience"
+            }
+          }
+        }
+      }
+    }
+  },
+  "ui_components_mapping": {
+    "SuccessHero": {
+      "data_source": "Calculated from campaign.campaigns.length, campaign.content_ideas average engagement_score, campaign.content_ideas.length"
+    },
+    "OverviewStats": {
+      "data_source": "Props passed from parent + calculated campaign counts"
+    },
+    "AnalyticsDashboard": {
+      "data_source": "analytics object + calculated metrics from campaign data"
+    },
+    "CampaignCards": {
+      "data_source": "campaign.campaigns array"
+    },
+    "ContentIdeas": {
+      "data_source": "campaign.content_ideas array"
+    },
+    "GeneratedAssets": {
+      "data_source": "campaign.generated_assets object"
+    },
+    "YouTubeVideos": {
+      "data_source": "market_insights.youtube_videos array"
+    },
+    "AITeamContributions": {
+      "data_source": "Calculated metrics from various campaign data points"
+    }
+  },
+  "nice_to_have_enhancements": {
+    "campaign_performance_metrics": {
+      "roi_projection": "number",
+      "cost_per_acquisition": "number",
+      "lifetime_value_impact": "number"
+    },
+    "competitive_analysis": {
+      "competitor_campaigns": "array of competitor campaign insights",
+      "market_gap_opportunities": "array of identified opportunities"
+    },
+    "seasonal_adjustments": {
+      "seasonal_trends": "object with seasonal content recommendations",
+      "holiday_calendar": "array of relevant marketing dates"
+    },
+    "advanced_targeting": {
+      "demographic_insights": "object with detailed audience data",
+      "psychographic_profiles": "array of audience personality insights"
+    },
+    "content_calendar_integration": {
+      "suggested_posting_schedule": "object with optimal posting times",
+      "content_themes_by_week": "object with weekly content themes"
+    }
+  }
+}

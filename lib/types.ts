@@ -6,7 +6,7 @@ export interface Product {
   category?: string
 }
 
-// Basic Campaign Request (for /api/campaigns)
+// Basic Campaign Request (for /api/api/simple-capaigns)
 export interface BasicCampaignRequest {
   product: Product
   goal: string

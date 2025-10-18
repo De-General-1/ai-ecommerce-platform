@@ -88,9 +88,9 @@ export function ContentIdeas({ ideas }: ContentIdeasProps) {
 
             <div className="flex gap-2">
               <Button size="sm">Use This Idea</Button>
-              <Button variant="outline" size="sm">
+              {/* <Button variant="outline" size="sm">
                 Customize
-              </Button>
+              </Button> */}
             </div>
           </CardContent>
         </Card>
